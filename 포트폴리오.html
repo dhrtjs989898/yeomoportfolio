@@ -1,0 +1,3450 @@
+﻿<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f8f4f4" />
+    <title>R — Creative Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #f8f4f4;
+        --white: #fffdfd;
+        --ink: #111114;
+        --muted: #817b80;
+        --pink: #f326a3;
+        --yellow: #ffe65c;
+        --blue: #b9dcfa;
+        --lav: #d8d5f0;
+        --line: #e9e3e5;
+        --sans: "DM Sans", "Noto Sans KR", sans-serif;
+        --cond: "Barlow Condensed", Impact, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: clamp(10px, 3vw, 42px);
+        background:
+          radial-gradient(circle at 15% 0%, #343034, transparent 36rem), #202022;
+        color: var(--ink);
+        font-family: var(--sans);
+      }
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+      button {
+        color: inherit;
+        cursor: pointer;
+      }
+      button:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 3px solid var(--pink);
+        outline-offset: 3px;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      .app-window {
+        width: min(1280px, 100%);
+        min-height: min(850px, calc(100vh - 56px));
+        margin: auto;
+        overflow: hidden;
+        border: 1px solid #e5dfe2;
+        border-radius: 34px;
+        background: var(--paper);
+        box-shadow: 0 28px 90px #0008;
+        display: grid;
+        grid-template-rows: 52px minmax(0, 1fr);
+      }
+      .topbar {
+        display: grid;
+        grid-template-columns: 115px 1fr 230px;
+        align-items: center;
+        padding: 0 20px;
+        border-bottom: 1px solid var(--line);
+        background: var(--white);
+      }
+      .traffic {
+        display: flex;
+        gap: 7px;
+      }
+      .traffic i {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #f2716a;
+      }
+      .traffic i:nth-child(2) {
+        background: #eec45d;
+      }
+      .traffic i:nth-child(3) {
+        background: #76bf78;
+      }
+      .window-title {
+        text-align: center;
+        font-size: 11px;
+        font-weight: 700;
+        color: #514b50;
+      }
+      .top-right {
+        text-align: right;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .app-body {
+        min-height: 720px;
+        display: grid;
+        grid-template-columns: 82px minmax(0, 1fr);
+      }
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 18px 7px 14px;
+        border-right: 1px solid var(--line);
+        background: var(--white);
+      }
+      .brand {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 10px;
+        border: 0;
+        border-radius: 15px;
+        background: var(--ink);
+        color: #fff;
+        font: 900 20px var(--cond);
+        transform: rotate(-4deg);
+      }
+      .side-nav {
+        display: grid;
+        gap: 8px;
+        width: 100%;
+      }
+      .nav-btn {
+        width: 100%;
+        min-height: 53px;
+        display: grid;
+        place-items: center;
+        gap: 2px;
+        padding: 6px 2px;
+        border: 0;
+        border-radius: 15px;
+        background: transparent;
+        color: #777177;
+        font-size: 9px;
+        font-weight: 700;
+        transition: 0.18s;
+      }
+      .nav-btn .nav-icon {
+        font-size: 17px;
+      }
+      .nav-btn:hover {
+        transform: translateY(-2px);
+        background: #f6f0f3;
+      }
+      .nav-btn.active {
+        background: #f4edf1;
+        color: var(--ink);
+        box-shadow: inset 0 0 0 1px #e8dfe4;
+      }
+      .sidebar-spacer {
+        flex: 1;
+      }
+      .avatar {
+        width: 37px;
+        height: 37px;
+        display: grid;
+        place-items: center;
+        border: 2px solid white;
+        border-radius: 50%;
+        background: var(--pink);
+        color: white;
+        font-weight: 800;
+      }
+      .main-area {
+        min-width: 0;
+        overflow: auto;
+        padding: clamp(16px, 2.3vw, 30px);
+      }
+      .page {
+        animation: enter 0.3s ease;
+      }
+      .page[hidden] {
+        display: none;
+      }
+      .page-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 15px;
+        margin-bottom: 19px;
+      }
+      .page-heading h1 {
+        margin: 4px 0 0;
+        font-size: clamp(28px, 4vw, 45px);
+        letter-spacing: -0.06em;
+      }
+      .page-heading p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.7;
+      }
+      .kicker {
+        color: var(--muted);
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+      }
+      .action-button {
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--pink);
+        color: white;
+        font-weight: 800;
+        box-shadow: 0 4px 11px #f326a33b;
+      }
+      .card {
+        padding: 18px;
+        border: 1px solid #ece5e8;
+        border-radius: 21px;
+        background: var(--white);
+        box-shadow: 0 5px 16px #2b1b240a;
+      }
+      .home-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.75fr);
+        gap: 15px;
+      }
+      .home-hero {
+        position: relative;
+        min-height: 440px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+        padding: clamp(22px, 4vw, 42px);
+        border-radius: 27px;
+        background: linear-gradient(
+          135deg,
+          #f4a8d4 0%,
+          #f8c4cb 39%,
+          #c2d7f0 100%
+        );
+        isolation: isolate;
+      }
+      .home-hero:before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        width: 360px;
+        height: 360px;
+        right: -65px;
+        top: 90px;
+        border-radius: 48% 52% 62% 38%;
+        background:
+          radial-gradient(circle at 35% 35%, #fff6 0 6%, transparent 7%),
+          repeating-linear-gradient(135deg, #fff6 0 2px, transparent 2px 11px);
+        transform: rotate(-19deg);
+      }
+      .hero-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .hero-brand {
+        padding: 8px 12px;
+        border: 1px solid #ffffffad;
+        border-radius: 999px;
+        background: #17131840;
+        color: white;
+        font-size: 10px;
+        font-weight: 800;
+        backdrop-filter: blur(8px);
+      }
+      .hero-index {
+        font: 800 12px var(--cond);
+        letter-spacing: 0.12em;
+        color: #fff;
+      }
+      .home-hero h1 {
+        margin: 0;
+        color: white;
+        font: 900 clamp(72px, 11vw, 142px)/0.74 var(--cond);
+        letter-spacing: 0.025em;
+        text-shadow: 0 5px 24px #29202a25;
+      }
+      .home-hero h1 span {
+        display: block;
+        font-size: 0.34em;
+        letter-spacing: 0.2em;
+        margin-bottom: 20px;
+      }
+      .hero-bottom {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 15px;
+        color: #fff;
+      }
+      .hero-bottom p {
+        max-width: 390px;
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.75;
+      }
+      .round-link {
+        width: 54px;
+        height: 54px;
+        flex: none;
+        border: 0;
+        border-radius: 50%;
+        background: var(--yellow);
+        font-size: 24px;
+        transition: 0.2s;
+      }
+      .round-link:hover {
+        transform: rotate(45deg);
+      }
+      .home-side {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .hello-card {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: var(--ink);
+        color: white;
+      }
+      .hello-card .big-r {
+        font: 900 94px/0.8 var(--cond);
+        color: var(--yellow);
+      }
+      .hello-card p {
+        max-width: 230px;
+        color: #ddd6dc;
+        font-size: 13px;
+        line-height: 1.8;
+      }
+      .mini-label {
+        font-size: 9px;
+        letter-spacing: 0.14em;
+        color: var(--muted);
+        font-weight: 800;
+      }
+      .hello-card .mini-label {
+        color: #bbb4ba;
+      }
+      .quick-card {
+        background: var(--yellow);
+      }
+      .quick-card strong {
+        font-size: 22px;
+        letter-spacing: -0.05em;
+      }
+      .quick-card p {
+        margin: 7px 0 0;
+        color: #645d42;
+        font-size: 11px;
+        line-height: 1.6;
+      }
+      .home-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 14px;
+        padding: 15px 2px 0;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.06em;
+      }
+      .project-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 16px;
+      }
+      .project-card {
+        min-height: 115px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 15px;
+        border-radius: 18px;
+        color: var(--ink);
+      }
+      .project-card:nth-child(1) {
+        background: var(--blue);
+      }
+      .project-card:nth-child(2) {
+        background: var(--lav);
+      }
+      .project-card:nth-child(3) {
+        background: #f4c6df;
+      }
+      .project-card span {
+        font-size: 9px;
+        letter-spacing: 0.12em;
+      }
+      .project-card strong {
+        font-size: 15px;
+      }
+      .profile-grid {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 15px;
+      }
+      .profile-intro {
+        background: linear-gradient(145deg, #ffe65c, #fff3a1);
+      }
+      .profile-mark {
+        width: 90px;
+        height: 90px;
+        display: grid;
+        place-items: center;
+        border-radius: 26px;
+        background: var(--pink);
+        color: white;
+        font: 900 50px var(--cond);
+        transform: rotate(-5deg);
+      }
+      .profile-intro h2 {
+        margin: 25px 0 7px;
+        font-size: 27px;
+        letter-spacing: -0.06em;
+      }
+      .profile-intro p {
+        color: #625d62;
+        font-size: 13px;
+        line-height: 1.85;
+      }
+      .profile-details {
+        display: grid;
+        gap: 0;
+      }
+      .detail {
+        display: grid;
+        grid-template-columns: 118px 1fr;
+        gap: 12px;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 12px;
+        line-height: 1.7;
+      }
+      .detail:first-child {
+        padding-top: 0;
+      }
+      .detail:last-child {
+        border: 0;
+        padding-bottom: 0;
+      }
+      .detail b {
+        font-size: 10px;
+        letter-spacing: 0.1em;
+      }
+      .detail span {
+        color: #625d62;
+      }
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 20px;
+      }
+      .skill-tags span {
+        padding: 7px 10px;
+        border: 1px solid #e8e0e5;
+        border-radius: 999px;
+        background: white;
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .studio-feature {
+        position: relative;
+        min-height: 350px;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        border-radius: 24px;
+        background: linear-gradient(140deg, #615b60, #252327);
+        color: white;
+      }
+      .studio-feature:before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f326a3, #ffe65c);
+        opacity: 0.88;
+        filter: blur(1px);
+        left: 18%;
+        top: 6%;
+      }
+      .studio-feature:after {
+        content: "";
+        position: absolute;
+        width: 240px;
+        height: 240px;
+        border: 2px solid #ffffff80;
+        border-radius: 50%;
+        right: 12%;
+        bottom: -20%;
+        box-shadow:
+          0 0 0 22px #ffffff18,
+          0 0 0 48px #ffffff10;
+      }
+      .studio-overlay {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        padding: 26px;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 15px;
+        background: linear-gradient(transparent, #171318b8);
+      }
+      .studio-overlay h2 {
+        margin: 0;
+        font: 900 clamp(34px, 6vw, 70px)/0.85 var(--cond);
+        letter-spacing: 0.03em;
+      }
+      .studio-overlay p {
+        margin: 0 0 9px;
+        font-size: 10px;
+        letter-spacing: 0.14em;
+      }
+      .play-button {
+        width: 58px;
+        height: 58px;
+        flex: none;
+        border: 0;
+        border-radius: 50%;
+        background: var(--yellow);
+        font-size: 21px;
+      }
+      .studio-bottom {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 13px;
+      }
+      .gallery-tile {
+        position: relative;
+        min-height: 195px;
+        aspect-ratio: 1.15;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 14px;
+        overflow: hidden;
+        border: 0;
+        border-radius: 19px;
+        text-align: left;
+        transition: 0.2s;
+      }
+      .gallery-tile:hover {
+        transform: translateY(-4px) rotate(-1deg);
+      }
+      .gallery-tile:nth-child(6n + 1) {
+        background: linear-gradient(140deg, #e8c8bd, #b6c4df);
+      }
+      .gallery-tile:nth-child(6n + 2) {
+        background: linear-gradient(145deg, #d3ddc8, #aac6bd);
+      }
+      .gallery-tile:nth-child(6n + 3) {
+        background: linear-gradient(145deg, #f3d4a5, #d6a7bd);
+      }
+      .gallery-tile:nth-child(6n + 4) {
+        background: linear-gradient(140deg, #ccd7ed, #858fb8);
+      }
+      .gallery-tile:nth-child(6n + 5) {
+        background: linear-gradient(145deg, #ead7bb, #c2a386);
+      }
+      .gallery-tile:nth-child(6n) {
+        background: linear-gradient(145deg, #d8d2ef, #edb8cf);
+      }
+      .gallery-tile:before {
+        content: "";
+        position: absolute;
+        width: 58%;
+        aspect-ratio: 1;
+        left: 22%;
+        top: 20%;
+        border-radius: 50%;
+        background: #fff9;
+        mix-blend-mode: soft-light;
+        box-shadow: 36px 18px 0 -10px #3a344044;
+        transition: 0.3s;
+      }
+      .gallery-tile:nth-child(3n + 2):before {
+        border-radius: 8px;
+        transform: rotate(35deg);
+      }
+      .gallery-tile:nth-child(3n):before {
+        width: 38%;
+        left: 32%;
+        border-radius: 48% 48% 5% 5%;
+        background: #694d5580;
+      }
+      .gallery-tile:hover:before {
+        transform: scale(1.1) rotate(8deg);
+      }
+      .gallery-tile small,
+      .gallery-tile strong {
+        position: relative;
+        z-index: 1;
+      }
+      .gallery-tile small {
+        font-size: 9px;
+        letter-spacing: 0.14em;
+      }
+      .gallery-tile strong {
+        font-size: 14px;
+      }
+      .tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        padding: 23px;
+      }
+      .tag {
+        padding: 12px 17px;
+        border: 1px solid #e8e0e5;
+        border-radius: 999px;
+        background: white;
+        font-size: 12px;
+        font-weight: 700;
+        transition: 0.18s;
+      }
+      .tag:hover,
+      .tag.selected {
+        border-color: var(--pink);
+        background: #fff0f8;
+        color: #ad0870;
+        transform: translateY(-2px);
+      }
+      .tag-result {
+        margin-top: 14px;
+      }
+      .tag-result h2 {
+        font-size: 13px;
+      }
+      .tag-result p {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .toast {
+        position: fixed;
+        z-index: 12;
+        left: 50%;
+        bottom: 20px;
+        transform: translate(-50%, 18px);
+        padding: 11px 15px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: white;
+        font-size: 12px;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.22s;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      .file-input {
+        display: none;
+      }
+      .video-dialog {
+        width: min(900px, calc(100vw - 28px));
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--white);
+      }
+      .video-dialog::backdrop {
+        background: #1119;
+        backdrop-filter: blur(4px);
+      }
+      .video-dialog video {
+        width: 100%;
+        max-height: 75vh;
+        background: #111;
+        border-radius: 12px;
+      }
+      .video-dialog button {
+        display: block;
+        margin: 0 0 8px auto;
+        border: 0;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        background: var(--pink);
+        color: white;
+        font-size: 20px;
+      }
+      .video-dialog p {
+        margin: 10px 5px;
+        font-weight: 700;
+      }
+      @keyframes enter {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @media (max-width: 850px) {
+        body {
+          padding: 10px;
+        }
+        .app-window {
+          min-height: calc(100vh - 20px);
+          border-radius: 24px;
+        }
+        .app-body {
+          grid-template-columns: 1fr;
+          grid-template-rows: minmax(0, 1fr) 65px;
+        }
+        .sidebar {
+          grid-row: 2;
+          grid-column: 1;
+          position: sticky;
+          bottom: 0;
+          z-index: 5;
+          flex-direction: row;
+          justify-content: center;
+          gap: 4px;
+          padding: 6px;
+          border-top: 1px solid var(--line);
+          border-right: 0;
+        }
+        .brand,
+        .sidebar-spacer {
+          display: none;
+        }
+        .side-nav {
+          display: flex;
+          justify-content: center;
+          gap: 4px;
+        }
+        .nav-btn {
+          width: 64px;
+          min-height: 50px;
+        }
+        .avatar {
+          margin-left: 8px;
+        }
+        .main-area {
+          grid-row: 1;
+          grid-column: 1;
+          padding: 13px;
+        }
+        .home-grid {
+          grid-template-columns: 1fr;
+        }
+        .home-hero {
+          min-height: 380px;
+        }
+        .home-side {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+        .hello-card {
+          min-height: 170px;
+        }
+        .quick-card {
+          min-height: 170px;
+        }
+        .gallery-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .profile-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 540px) {
+        .topbar {
+          grid-template-columns: 45px 1fr 95px;
+          padding: 0 12px;
+        }
+        .window-title {
+          font-size: 9px;
+        }
+        .top-right {
+          font-size: 8px;
+        }
+        .main-area {
+          padding: 10px;
+        }
+        .page-heading {
+          align-items: flex-start;
+        }
+        .page-heading p {
+          font-size: 11px;
+        }
+        .home-hero {
+          min-height: 350px;
+          padding: 22px;
+        }
+        .home-hero h1 {
+          font-size: clamp(70px, 19vw, 110px);
+        }
+        .hero-bottom p {
+          font-size: 11px;
+        }
+        .home-side {
+          grid-template-columns: 1fr;
+        }
+        .hello-card,
+        .quick-card {
+          min-height: 155px;
+        }
+        .project-strip {
+          grid-template-columns: 1fr;
+        }
+        .project-card {
+          min-height: 85px;
+        }
+        .profile-grid {
+          grid-template-columns: 1fr;
+        }
+        .profile-intro {
+          min-height: 270px;
+        }
+        .gallery-grid {
+          gap: 8px;
+        }
+        .gallery-tile {
+          min-height: 145px;
+          padding: 10px;
+        }
+        .gallery-tile strong {
+          font-size: 12px;
+        }
+        .detail {
+          grid-template-columns: 90px 1fr;
+        }
+        .studio-feature {
+          min-height: 280px;
+        }
+        .top-right {
+          display: none;
+        }
+        .topbar {
+          grid-template-columns: 40px 1fr;
+        }
+        .window-title {
+          text-align: right;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *:before,
+        *:after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+    <style>
+      .home-feature-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(240px, 0.75fr);
+        gap: 15px;
+      }
+      .home-right {
+        display: grid;
+        grid-template-rows: 185px minmax(0, 1fr);
+        gap: 14px;
+        min-height: 0;
+      }
+      .frame-card {
+        min-width: 0;
+      }
+      .frame-stage {
+        position: relative;
+        min-height: 330px;
+        aspect-ratio: 1.42;
+        overflow: hidden;
+        border-radius: 22px;
+        background: linear-gradient(135deg, #f4a8d4, #c2d7f0 65%, #ffe65c);
+        isolation: isolate;
+      }
+      .frame-stage:before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          #1713183b,
+          transparent 35%,
+          transparent 65%,
+          #17131878
+        );
+      }
+      .frame-art {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background: linear-gradient(140deg, #f4a8d4, #c2d7f0);
+      }
+      .frame-art:before {
+        content: "";
+        position: absolute;
+        width: 60%;
+        aspect-ratio: 1;
+        left: 20%;
+        top: 15%;
+        border-radius: 48% 52% 62% 38%;
+        background:
+          radial-gradient(circle at 35% 35%, #fff 0 3%, transparent 4%),
+          linear-gradient(135deg, #fff9, #f326a366);
+        box-shadow: 30px 20px 0 -10px #ffe65c88;
+        transform: rotate(-18deg);
+      }
+      .frame-art.art-two {
+        background: linear-gradient(145deg, #d3ddc8, #aac6bd);
+      }
+      .frame-art.art-two:before {
+        width: 45%;
+        left: 27%;
+        top: 18%;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #f7f0df, #507d70);
+        transform: rotate(32deg);
+      }
+      .frame-art.art-three {
+        background: linear-gradient(145deg, #f3d4a5, #d6a7bd);
+      }
+      .frame-art.art-three:before {
+        width: 38%;
+        left: 32%;
+        top: 12%;
+        border-radius: 48% 48% 5% 5%;
+        background: linear-gradient(90deg, #794e68, #f1bd85);
+        transform: none;
+      }
+      .frame-media {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .frame-title {
+        position: absolute;
+        z-index: 2;
+        right: 18px;
+        top: 17px;
+        color: white;
+        text-align: right;
+        font: 900 clamp(35px, 5vw, 67px)/0.84 var(--cond);
+        letter-spacing: 0.035em;
+        text-shadow: 0 3px 18px #1118;
+        pointer-events: none;
+      }
+      .frame-title small {
+        display: block;
+        margin-bottom: 9px;
+        font: 800 9px var(--sans);
+        letter-spacing: 0.2em;
+      }
+      .frame-caption {
+        position: absolute;
+        z-index: 2;
+        left: 16px;
+        right: 16px;
+        bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .frame-caption span {
+        padding: 7px 10px;
+        border: 1px solid #ffffff80;
+        border-radius: 999px;
+        background: #17131845;
+        backdrop-filter: blur(8px);
+      }
+      .frame-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .frame-controls p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .frame-control-buttons {
+        display: flex;
+        gap: 6px;
+      }
+      .frame-control-buttons button {
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: white;
+      }
+      .frame-control-buttons button:hover {
+        background: var(--yellow);
+      }
+      .focus-card {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .focus-list {
+        display: grid;
+        gap: 8px;
+      }
+      .focus-item {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 60px minmax(0, 1fr);
+        align-items: center;
+        gap: 10px;
+        padding: 7px;
+        border: 1px solid transparent;
+        border-radius: 14px;
+        background: white;
+        text-align: left;
+        transition: 0.18s;
+      }
+      .focus-item:hover,
+      .focus-item.active {
+        border-color: #f4a8d5;
+        background: #fff0f8;
+      }
+      .focus-thumb {
+        width: 60px;
+        height: 49px;
+        display: block;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #f4a8d4, #c2d7f0);
+      }
+      .focus-item:nth-child(2) .focus-thumb {
+        background: linear-gradient(145deg, #d3ddc8, #aac6bd);
+      }
+      .focus-item:nth-child(3) .focus-thumb {
+        background: linear-gradient(145deg, #f3d4a5, #d6a7bd);
+      }
+      .focus-item strong {
+        display: block;
+        font-size: 11px;
+      }
+      .focus-item small {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 9px;
+      }
+      .focus-summary {
+        margin-top: auto;
+        padding: 12px;
+        border-radius: 15px;
+        background: #f8f4f4;
+      }
+      .focus-summary span {
+        font-size: 8px;
+        letter-spacing: 0.14em;
+        font-weight: 800;
+        color: var(--muted);
+      }
+      .focus-summary p {
+        margin: 6px 0 0;
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .profile-widget {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        overflow: hidden;
+        background: var(--ink);
+        color: white;
+      }
+      .profile-photo-wrap {
+        width: 83px;
+        height: 83px;
+        flex: none;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        border: 2px solid #fff8;
+        border-radius: 23px;
+        background: linear-gradient(135deg, #f326a3, #ffe65c);
+        color: white;
+        font: 900 44px var(--cond);
+      }
+      .profile-photo-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .profile-widget-copy {
+        min-width: 0;
+      }
+      .profile-widget-copy .mini-label {
+        color: #bbb4ba;
+      }
+      .profile-widget-copy strong {
+        display: block;
+        margin-top: 7px;
+        font-size: 14px;
+      }
+      .profile-widget-copy p {
+        margin: 5px 0 0;
+        color: #ddd6dc;
+        font-size: 10px;
+        line-height: 1.5;
+      }
+      .profile-photo-button {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        width: 29px;
+        height: 29px;
+        border: 1px solid #fff7;
+        border-radius: 50%;
+        background: #ffffff20;
+        color: white;
+      }
+      .profile-image-input,
+      .home-media-input {
+        display: none;
+      }
+      .home-upload-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+      }
+      .home-upload-row .action-button {
+        font-size: 10px;
+        padding: 8px 12px;
+      }
+      @media (max-width: 850px) {
+        .home-feature-grid {
+          grid-template-columns: 1fr;
+        }
+        .home-right {
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto;
+        }
+        .profile-widget {
+          min-height: 150px;
+        }
+        .focus-card {
+          min-height: 290px;
+        }
+        .frame-stage {
+          min-height: 300px;
+        }
+      }
+      @media (max-width: 540px) {
+        .home-right {
+          grid-template-columns: 1fr;
+        }
+        .profile-widget {
+          min-height: 145px;
+        }
+        .frame-stage {
+          min-height: 245px;
+          aspect-ratio: 1.1;
+        }
+        .frame-title {
+          font-size: 42px;
+        }
+        .focus-card {
+          min-height: 300px;
+        }
+      }
+    </style>
+    <style>
+      .studio-feature.has-thumbnail:before,
+      .studio-feature.has-thumbnail:after {
+        display: none;
+      }
+      .frame-title,
+      .frame-caption {
+        transition:
+          opacity 1.2s ease,
+          transform 1.2s ease;
+      }
+      .frame-stage.captions-faded .frame-title,
+      .frame-stage.captions-faded .frame-caption {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      .frame-stage:hover .frame-title,
+      .frame-stage:hover .frame-caption {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .avatar {
+        border-color: #fff;
+        background: var(--ink);
+        color: #fff;
+        cursor: pointer;
+      }
+      .profile-photo-wrap {
+        background: var(--ink);
+        color: white;
+      }
+      .profile-widget-copy strong {
+        font-size: 12px;
+        letter-spacing: 0.04em;
+      }
+      .manage-grid {
+        display: grid;
+        grid-template-columns: minmax(230px, 0.8fr) minmax(0, 1.2fr);
+        gap: 15px;
+      }
+      .manage-actions {
+        display: grid;
+        gap: 10px;
+      }
+      .manage-action {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        background: white;
+        text-align: left;
+      }
+      .manage-action:hover {
+        border-color: #f4a8d5;
+        background: #fff8fc;
+      }
+      .manage-action strong {
+        font-size: 12px;
+      }
+      .manage-action small {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .manage-action b {
+        font-size: 18px;
+        color: var(--pink);
+      }
+      .manage-help {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.7;
+      }
+      .manage-work-list {
+        display: grid;
+        gap: 8px;
+      }
+      .manage-work {
+        display: grid;
+        grid-template-columns: 58px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 10px;
+        padding: 8px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: white;
+      }
+      .manage-work-thumb {
+        width: 58px;
+        height: 48px;
+        border-radius: 9px;
+        background: linear-gradient(135deg, #f4a8d4, #c2d7f0);
+      }
+      .manage-work:nth-child(2) .manage-work-thumb {
+        background: linear-gradient(145deg, #d3ddc8, #aac6bd);
+      }
+      .manage-work:nth-child(3) .manage-work-thumb {
+        background: linear-gradient(145deg, #f3d4a5, #d6a7bd);
+      }
+      .manage-work strong {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 11px;
+      }
+      .manage-work small {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 9px;
+      }
+      .manage-work button {
+        padding: 8px 10px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--ink);
+        color: white;
+        font-size: 9px;
+        font-weight: 700;
+      }
+      .manage-comment {
+        width: 100%;
+        min-height: 80px;
+        margin-top: 12px;
+        padding: 11px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        resize: vertical;
+        font: 12px/1.6 var(--sans);
+      }
+      .manage-note {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      @media (max-width: 700px) {
+        .manage-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <style>
+      #profile-initial {
+        display: none !important;
+      }
+      .profile-widget:after {
+        display: none !important;
+      }
+      .profile-widget {
+        background: #fff !important;
+      }
+      .profile-photo-wrap {
+        background: transparent !important;
+      }
+      #manage-button {
+        background: #fff !important;
+        color: #625d62 !important;
+        border: 1px solid #ece7ea !important;
+        box-shadow: none !important;
+      }
+      .frame-embed {
+        border: 0;
+      }
+      .media-error {
+        position: absolute;
+        z-index: 4;
+        left: 12px;
+        right: 12px;
+        bottom: 64px;
+        padding: 11px 13px;
+        border: 1px solid #ffffff88;
+        border-radius: 12px;
+        background: #171318c9;
+        color: white;
+        font-size: 11px;
+        line-height: 1.6;
+        backdrop-filter: blur(8px);
+      }
+      .video-dialog iframe {
+        width: 100%;
+        height: min(70vh, 560px);
+        border: 0;
+        border-radius: 12px;
+        background: #111;
+      }
+      .media-help {
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .video-dialog a {
+        display: inline-block;
+        margin: 0 5px 5px;
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 700;
+      }
+    </style>
+    <style>
+      .frame-title small {
+        font-size: 12px;
+        line-height: 1.4;
+        text-shadow: 0 2px 8px #000;
+      }
+      .frame-caption {
+        font-size: 13px;
+        text-shadow: 0 1px 5px #000;
+      }
+      .frame-caption span {
+        padding: 8px 12px;
+        border-color: #ffffffa8;
+        background: #111c;
+        font-size: 13px;
+        font-weight: 800;
+      }
+      .studio-showcase .studio-overlay p {
+        font-size: 12px;
+        line-height: 1.5;
+        text-shadow: 0 2px 8px #000;
+      }
+      .studio-showcase .studio-overlay h2 {
+        font-size: clamp(32px, 4vw, 50px);
+        line-height: 1.05;
+        text-shadow: 0 2px 12px #0008;
+      }
+      .studio-showcase .play-button {
+        box-shadow: 0 3px 14px #0006;
+      }
+      .studio-showcase {
+        display: grid;
+        grid-template-columns: 1.18fr 1fr;
+        min-height: 385px;
+        overflow: hidden;
+        border: 1px solid #ece5e8;
+        border-radius: 21px;
+        background: var(--white);
+        box-shadow: 0 5px 16px #2b1b240a;
+      }
+      .studio-showcase .studio-feature {
+        min-height: 385px;
+        height: 100%;
+        border-right: 1px solid var(--line);
+        border-radius: 0;
+        background: linear-gradient(140deg, #615b60, #252327);
+      }
+      .studio-showcase .studio-overlay {
+        min-height: 385px;
+        align-items: end;
+      }
+      .studio-project-copy {
+        align-self: center;
+        padding: clamp(24px, 5vw, 68px);
+        color: var(--ink);
+      }
+      .studio-category {
+        color: var(--muted);
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+      }
+      .studio-summary {
+        margin: 18px 0 28px;
+        color: #625d62;
+        font-size: 13px;
+        line-height: 1.85;
+      }
+      .studio-meta-grid {
+        display: grid;
+        grid-template-columns: 1.35fr 0.8fr;
+        gap: 18px 24px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+      .studio-meta-grid div {
+        display: grid;
+        align-content: start;
+        gap: 7px;
+      }
+      .studio-meta-grid div:first-child {
+        grid-row: span 2;
+      }
+      .studio-meta-grid small {
+        color: var(--muted);
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+      }
+      .studio-meta-grid span {
+        color: #625d62;
+        font-size: 10px;
+        line-height: 1.8;
+      }
+      @media (max-width: 760px) {
+        .studio-showcase {
+          grid-template-columns: 1fr;
+        }
+        .studio-showcase .studio-feature,
+        .studio-showcase .studio-overlay {
+          min-height: 280px;
+        }
+        .studio-showcase .studio-feature {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .studio-project-copy {
+          padding: 27px;
+        }
+        .studio-meta-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .studio-meta-grid div:first-child {
+          grid-column: 1/-1;
+          grid-row: auto;
+        }
+      }
+    </style>
+    <style>
+      .profile-intro.has-photo {
+        position: relative;
+        overflow: hidden;
+        background-color: #171318;
+        background-size: cover;
+        background-position: center;
+      }
+      .profile-intro.has-photo:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, #17131840, #171318b8);
+      }
+      .profile-intro.has-photo > * {
+        position: relative;
+        z-index: 1;
+      }
+      .profile-intro.has-photo h2,
+      .profile-intro.has-photo p {
+        color: #fff;
+      }
+      .profile-intro.has-photo p {
+        color: #ffffffdc;
+      }
+      .profile-intro.has-photo .profile-mark {
+        background: #ffffff28;
+        border: 1px solid #ffffff90;
+        backdrop-filter: blur(6px);
+      }
+      .profile-mark img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .skill-bars {
+        display: grid;
+        gap: 14px;
+        margin-top: 22px;
+      }
+      .skill-bar > div {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 6px;
+        font-size: 10px;
+      }
+      .skill-bar b {
+        font-size: 10px;
+      }
+      .skill-bar > div span {
+        color: var(--muted);
+        font-size: 9px;
+      }
+      .skill-bar i {
+        display: block;
+        height: 7px;
+        overflow: hidden;
+        border-radius: 99px;
+        background: #eee8eb;
+      }
+      .skill-bar em {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--pink), #ff8bc9);
+      }
+      .url-form {
+        display: grid;
+        gap: 8px;
+      }
+      .url-form h3 {
+        margin: 8px 0 2px;
+        font-size: 13px;
+      }
+      .url-form label {
+        margin-top: 5px;
+        font-size: 10px;
+        font-weight: 800;
+        color: #625d62;
+      }
+      .url-form input,
+      .url-form textarea {
+        width: 100%;
+        padding: 10px 11px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: #fff;
+        font: 11px/1.5 var(--sans);
+      }
+      .url-form textarea {
+        min-height: 64px;
+        resize: vertical;
+      }
+      .url-form .action-button {
+        justify-self: start;
+        margin-top: 4px;
+        font-size: 11px;
+      }
+      .source-forms {
+        display: grid;
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .manage-grid {
+        align-items: start;
+      }
+      .gallery-tile.has-image:before {
+        display: none;
+      }
+      .gallery-empty {
+        grid-column: 1/-1;
+        margin: 0;
+        padding: 28px;
+        border: 1px dashed var(--line);
+        border-radius: 18px;
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+      }
+    </style>
+    <style>
+      @media (max-width: 700px) {
+        html,
+        body {
+          max-width: 100%;
+          overflow-x: hidden;
+        }
+        body {
+          min-height: 100dvh;
+          padding: 0;
+        }
+        .app-window {
+          width: 100%;
+          min-height: 100dvh;
+          border: 0;
+          border-radius: 0;
+          grid-template-rows: 48px minmax(0, 1fr);
+          box-shadow: none;
+        }
+        .app-body {
+          min-height: 0;
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: minmax(0, 1fr) auto;
+        }
+        .main-area {
+          grid-row: 1;
+          grid-column: 1;
+          min-height: 0;
+          padding: 12px 12px 18px;
+          overflow-x: hidden;
+          overflow-y: auto;
+          overscroll-behavior: contain;
+          -webkit-overflow-scrolling: touch;
+        }
+        .sidebar {
+          grid-row: 2;
+          grid-column: 1;
+          position: sticky;
+          bottom: 0;
+          min-width: 0;
+          min-height: 60px;
+          padding: 5px 5px calc(5px + env(safe-area-inset-bottom));
+          gap: 5px;
+          background: #fffdfdf2;
+        }
+        .side-nav {
+          display: flex;
+          flex: 1;
+          min-width: 0;
+          justify-content: space-around;
+          gap: 3px;
+        }
+        .nav-btn {
+          flex: 1;
+          width: auto;
+          min-width: 0;
+          min-height: 50px;
+          padding: 5px 1px;
+          font-size: 8px;
+        }
+        .nav-btn .nav-icon {
+          font-size: 16px;
+        }
+        .avatar {
+          flex: none;
+          width: 35px;
+          height: 35px;
+          margin: 0 0 0 2px;
+        }
+        .page-heading {
+          gap: 10px;
+        }
+        .page-heading h1 {
+          font-size: clamp(28px, 8vw, 40px);
+        }
+        .home-feature-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 12px;
+        }
+        .home-right {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: auto;
+          gap: 12px;
+        }
+        .frame-stage {
+          width: 100%;
+          min-height: 0;
+          aspect-ratio: 1.2;
+        }
+        .profile-widget {
+          min-height: 130px;
+        }
+        .focus-card {
+          min-height: 0;
+        }
+        .focus-list {
+          gap: 6px;
+        }
+        .focus-item {
+          grid-template-columns: 54px minmax(0, 1fr);
+          gap: 8px;
+        }
+        .focus-thumb {
+          width: 54px;
+          height: 45px;
+        }
+        .profile-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 12px;
+        }
+        .profile-intro {
+          min-height: 230px;
+        }
+        .skill-bars {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 12px;
+        }
+        .manage-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 12px;
+        }
+        .manage-work {
+          grid-template-columns: 50px minmax(0, 1fr);
+          gap: 8px;
+        }
+        .manage-work-thumb {
+          width: 50px;
+          height: 44px;
+        }
+        .manage-work button {
+          grid-column: 2;
+          justify-self: start;
+        }
+        .url-form input,
+        .url-form textarea {
+          font-size: 16px;
+        }
+        .url-form .action-button {
+          width: 100%;
+          min-height: 42px;
+        }
+        .source-forms {
+          gap: 18px;
+        }
+        .studio-page {
+          min-width: 0;
+        }
+        .studio-showcase {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .studio-showcase .studio-feature,
+        .studio-showcase .studio-overlay {
+          min-height: 270px;
+        }
+        .studio-showcase .studio-feature {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .studio-project-copy {
+          min-width: 0;
+          padding: 22px;
+        }
+        .studio-summary {
+          font-size: 12px;
+        }
+        .studio-meta-grid {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: 14px;
+        }
+        .studio-meta-grid div:first-child {
+          grid-column: 1/-1;
+          grid-row: auto;
+        }
+        .gallery-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+        }
+        .gallery-tile {
+          min-width: 0;
+          min-height: 138px;
+          aspect-ratio: 1;
+          padding: 10px;
+        }
+        .gallery-tile strong {
+          overflow-wrap: anywhere;
+        }
+        .video-dialog {
+          max-width: calc(100vw - 20px);
+          padding: 10px;
+        }
+        .video-dialog iframe {
+          height: 58vh;
+        }
+      }
+      @media (max-width: 390px) {
+        .topbar {
+          grid-template-columns: 34px minmax(0, 1fr) 70px;
+          padding: 0 9px;
+        }
+        .window-title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          text-align: center;
+          font-size: 8px;
+        }
+        .top-right {
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 7px;
+        }
+        .nav-btn {
+          font-size: 7px;
+        }
+        .avatar {
+          width: 32px;
+          height: 32px;
+          font-size: 12px;
+        }
+        .main-area {
+          padding: 10px 9px 15px;
+        }
+        .home-hero {
+          min-height: 320px;
+          padding: 18px;
+        }
+        .frame-stage {
+          aspect-ratio: 1.05;
+        }
+        .frame-title {
+          right: 12px;
+          top: 12px;
+        }
+        .frame-title small {
+          font-size: 10px;
+        }
+        .frame-caption {
+          left: 8px;
+          right: 8px;
+          bottom: 9px;
+          gap: 4px;
+        }
+        .frame-caption span {
+          padding: 6px 8px;
+          font-size: 11px;
+        }
+        .manage-card,
+        .card {
+          padding: 14px;
+        }
+        .studio-showcase .studio-feature,
+        .studio-showcase .studio-overlay {
+          min-height: 230px;
+        }
+      }
+    </style>
+    <style>
+      .profile-widget {
+        position: relative;
+        min-height: 185px;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+        background: #272326 !important;
+        color: #fff;
+      }
+      .profile-widget .profile-photo-wrap {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        border-radius: inherit;
+        overflow: hidden;
+        background: #272326 !important;
+        transform: none;
+      }
+      .profile-widget .profile-photo-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .profile-widget:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        display: block !important;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          transparent 20%,
+          rgba(20, 16, 19, 0.78) 100%
+        );
+      }
+      .profile-widget-copy {
+        position: absolute;
+        z-index: 1;
+        left: 17px;
+        right: 17px;
+        bottom: 16px;
+        color: #fff;
+      }
+      .profile-widget-copy .mini-label {
+        color: #fff;
+        opacity: 0.85;
+        font-size: 8px;
+        letter-spacing: 0.14em;
+      }
+      .profile-widget-copy strong {
+        display: block;
+        margin-top: 5px;
+        font: 900 clamp(25px, 3vw, 36px)/0.95 var(--cond);
+        letter-spacing: 0.035em;
+      }
+      .profile-widget-copy p {
+        margin: 5px 0 0;
+        color: #fff;
+        font-size: 10px;
+        line-height: 1.5;
+      }
+      @media (max-width: 700px) {
+        .profile-widget {
+          min-height: 170px;
+        }
+      }
+    </style>
+    <style>
+      .tag-work-results {
+        display: grid;
+        gap: 10px;
+        margin-top: 16px;
+      }
+      .tag-work-item {
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        background: #fff;
+      }
+      .tag-work-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .tag-work-item strong {
+        font-size: 14px;
+      }
+      .tag-work-open {
+        flex: none;
+        padding: 7px 11px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--ink);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .tag-work-open:hover {
+        background: var(--pink);
+      }
+      .gallery-tile.tag-focus {
+        outline: 4px solid var(--pink);
+        outline-offset: 3px;
+      }
+      .tag-work-item p {
+        margin: 6px 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.7;
+      }
+      .tag-work-item small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.6;
+      }
+      .tag-work-hashtags {
+        margin-top: 8px;
+        color: #ad0870;
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .studio-editing-tags {
+        display: block;
+        margin-top: 7px;
+        color: #ad0870;
+        font-size: 10px;
+        line-height: 1.6;
+        font-weight: 700;
+      }
+      .gallery-work-tags {
+        color: #fff !important;
+        font-size: 9px !important;
+        letter-spacing: 0.02em !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-window">
+      <header class="topbar">
+        <div class="traffic" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="window-title">Y Studio · Creative Workspace</div>
+        <div class="top-right">YEOM OKSEON · 염옥선</div>
+      </header>
+      <div class="app-body">
+        <aside class="sidebar">
+          <button class="brand" data-page="home" aria-label="홈">Y</button>
+          <nav class="side-nav" aria-label="페이지 메뉴">
+            <button class="nav-btn active" data-page="home">
+              <span class="nav-icon">⌂</span><span>홈</span>
+            </button>
+            <button class="nav-btn" data-page="profile">
+              <span class="nav-icon">◉</span><span>프로필</span>
+            </button>
+            <button class="nav-btn" data-page="studio">
+              <span class="nav-icon">▷</span><span>스튜디오</span>
+            </button>
+            <button class="nav-btn" data-page="gallery">
+              <span class="nav-icon">▧</span><span>갤러리</span>
+            </button>
+            <button class="nav-btn" data-page="tags">
+              <span class="nav-icon">#</span><span>태그</span>
+            </button>
+          </nav>
+          <div class="sidebar-spacer"></div>
+          <button class="avatar" id="manage-button" aria-label="위젯 관리">
+            ⋯
+          </button>
+        </aside>
+        <main class="main-area">
+          <section class="page" id="home-page">
+            <div class="page-heading">
+              <div>
+                <span class="kicker">CREATIVE PORTFOLIO</span>
+                <p>시청자의 감정을 컷 하나로 움직이는 편집자</p>
+              </div>
+              <span class="kicker">PERSONAL PORTFOLIO · 2026</span>
+            </div>
+            <div class="home-feature-grid">
+              <div>
+                <article class="card frame-card">
+                  <div class="frame-stage" id="frame-stage">
+                    <div class="frame-art" id="frame-art"></div>
+                    <img
+                      class="frame-media"
+                      id="frame-image"
+                      alt=""
+                      hidden
+                    /><video
+                      class="frame-media"
+                      id="frame-video"
+                      playsinline
+                      muted
+                      hidden
+                    ></video
+                    ><iframe
+                      class="frame-media frame-embed"
+                      id="frame-embed"
+                      title="대표 작업 미리보기"
+                      allow="autoplay; encrypted-media; picture-in-picture"
+                      allowfullscreen
+                      hidden
+                    ></iframe>
+                    <div class="frame-title">
+                      <small
+                        >YOUR FRAME ·
+                        <span id="frame-number">01 / 03</span></small
+                      ><span id="frame-title">YOUR<br />FRAME</span>
+                    </div>
+                    <div class="frame-caption">
+                      <span id="frame-caption">Selected work · 01</span
+                      ><span id="frame-kind">IMAGE / FILM</span>
+                    </div>
+                    <div class="media-error" id="media-error" hidden></div>
+                  </div>
+                  <p id="frame-help" hidden></p>
+                </article>
+              </div>
+              <div class="home-right">
+                <article class="card profile-widget">
+                  <div class="profile-photo-wrap" id="profile-photo-wrap">
+                    <span id="profile-initial">R</span
+                    ><img id="profile-photo" alt="염옥선 프로필 사진" hidden />
+                  </div>
+                  <div class="profile-widget-copy">
+                    <span class="mini-label">PERSONAL PORTFOLIO · 2026</span
+                    ><strong>YEOM OKSEON</strong>
+                    <p>염옥선<br />SHORT-FORM · YOUTUBE EDITOR</p>
+                  </div>
+                </article>
+                <article class="card focus-card">
+                  <div class="panel-heading">
+                    <h2>CURRENT FOCUS</h2>
+                    <span id="focus-count">SELECTED 00</span>
+                  </div>
+                  <div class="focus-list" id="focus-list">
+                    <button class="focus-item active" data-work="0">
+                      <span class="focus-thumb"></span
+                      ><span
+                        ><strong>Quiet afternoon</strong
+                        ><small>브랜드 필름 · 00:42</small></span
+                      ></button
+                    ><button class="focus-item" data-work="1">
+                      <span class="focus-thumb"></span
+                      ><span
+                        ><strong>Growing slowly</strong
+                        ><small>이미지 에세이 · 01</small></span
+                      ></button
+                    ><button class="focus-item" data-work="2">
+                      <span class="focus-thumb"></span
+                      ><span
+                        ><strong>Blue hour</strong
+                        ><small>캠페인 영상 · 00:28</small></span
+                      >
+                    </button>
+                  </div>
+                  <div class="focus-summary">
+                    <span>SHORT COMMENT</span>
+                    <p id="focus-comment">
+                      느린 오후의 빛과 작은 움직임을 따라가며, 일상의 온기를
+                      담았습니다.
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+          <section class="page" id="profile-page" hidden>
+            <div class="page-heading">
+              <div>
+                <span class="kicker">01 / PROFILE · RESUME</span>
+                <h1>프로필</h1>
+                <p>
+                  관찰한 것을 나만의 시선으로 정리하고 결과물로 만드는
+                  크리에이터입니다.
+                </p>
+              </div>
+            </div>
+            <div class="profile-grid">
+              <article class="card profile-intro">
+                <div class="profile-mark">
+                  <span id="profile-mark-initial">R.</span
+                  ><img
+                    id="profile-mark-image"
+                    alt="염옥선 프로필 사진"
+                    hidden
+                  />
+                </div>
+                <h2>안녕하세요,<br />영상편집자 염옥선입니다.</h2>
+                <p>
+                  숏폼의 빠른 호흡부터 유튜브 콘텐츠의 긴 이야기까지, 콘텐츠에
+                  어울리는 리듬과 감정선을 고민합니다.
+                </p>
+              </article>
+              <article class="card">
+                <div class="profile-details">
+                  <div class="detail">
+                    <b>ABOUT</b
+                    ><span
+                      >좋은 질문과 섬세한 관찰을 바탕으로 장면의 의미를 찾고,
+                      보기 쉽고 선명한 결과물로 표현합니다.</span
+                    >
+                  </div>
+                  <div class="detail">
+                    <b>INTEREST</b
+                    ><span
+                      >브랜딩 · 영상 콘텐츠 · 사진 · 아트 디렉션 ·
+                      에디토리얼</span
+                    >
+                  </div>
+                  <div class="detail">
+                    <b>STRENGTH</b
+                    ><span
+                      >세심한 관찰, 유연한 협업, 끝까지 완성도를 다듬는
+                      태도</span
+                    >
+                  </div>
+                  <div class="detail">
+                    <b>CONTACT</b
+                    ><span>okseon46@naver.com<br />Gwangju, Korea</span>
+                  </div>
+                </div>
+                <div class="skill-bars">
+                  <div class="skill-bar">
+                    <div><b>Visual Storytelling</b><span>90%</span></div>
+                    <i><em style="width: 90%"></em></i>
+                  </div>
+                  <div class="skill-bar">
+                    <div><b>Video Editing</b><span>85%</span></div>
+                    <i><em style="width: 85%"></em></i>
+                  </div>
+                  <div class="skill-bar">
+                    <div><b>Photography</b><span>82%</span></div>
+                    <i><em style="width: 82%"></em></i>
+                  </div>
+                  <div class="skill-bar">
+                    <div><b>Premiere Pro</b><span>85%</span></div>
+                    <i><em style="width: 85%"></em></i>
+                  </div>
+                  <div class="skill-bar">
+                    <div><b>After Effects</b><span>68%</span></div>
+                    <i><em style="width: 68%"></em></i>
+                  </div>
+                  <div class="skill-bar">
+                    <div><b>Photoshop</b><span>78%</span></div>
+                    <i><em style="width: 78%"></em></i>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+          <section class="page" id="studio-page" hidden>
+            <div class="page-heading studio-heading">
+              <div>
+                <span class="kicker">A SELECTION OF STORIES</span>
+                <h1>스튜디오</h1>
+                <p>장면과 감정이 만나는 순간을 편집합니다.</p>
+              </div>
+            </div>
+            <div class="studio-showcase">
+              <div class="studio-feature">
+                <div class="studio-overlay">
+                  <div>
+                    <p>SELECTED FILM · 01</p>
+                    <h2 id="studio-project-title">강민호 우승 영상</h2>
+                  </div>
+                  <button
+                    class="play-button"
+                    id="video-play"
+                    aria-label="영상 재생"
+                  >
+                    ▶
+                  </button>
+                </div>
+              </div>
+              <article class="studio-project-copy">
+                <span class="studio-category">YOUTUBE · SPORTS FILM</span>
+                <p class="studio-summary" id="studio-project-summary">
+                  경기 장면과 인터뷰, 우승 세리머니를 교차 편집해 경기의
+                  긴장감에서 승리의 기쁨으로 이어지는 흐름을 담았습니다.
+                </p>
+                <div class="studio-meta-grid">
+                  <div>
+                    <small>EDITING NOTES</small
+                    ><span id="studio-editing-notes"
+                      >경기·인터뷰·세리머니 교차 편집 · 인물 클로즈업 · 자막
+                      리듬</span
+                    >
+                    <span
+                      class="studio-editing-tags"
+                      id="studio-editing-tags"
+                    ></span>
+                  </div>
+                  <div>
+                    <small>TOOLS</small
+                    ><span id="studio-tools">프리미어 프로</span>
+                  </div>
+                  <div>
+                    <small>YEAR</small><span id="studio-year">2026</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+          <section class="page" id="gallery-page" hidden>
+            <div class="page-heading">
+              <div>
+                <span class="kicker">03 / GALLERY · STILL IMAGE</span>
+                <h1>이미지편집</h1>
+                <p>
+                  빛과 색, 사물을 다른시선으로 편집한 이미지 작업을 모았습니다.
+                </p>
+              </div>
+            </div>
+            <div class="gallery-grid" id="gallery-grid"></div>
+          </section>
+          <section class="page" id="tags-page" hidden>
+            <div class="page-heading">
+              <div>
+                <span class="kicker">04 / TAGS · KEYWORD INDEX</span>
+                <h1>태그</h1>
+                <p>
+                  작업을 이루는 관심사와 키워드입니다. 태그를 눌러 선택해
+                  보세요.
+                </p>
+              </div>
+            </div>
+            <div class="card tag-cloud" id="tag-cloud">
+              <button class="tag">#브랜딩</button
+              ><button class="tag">#영상제작</button
+              ><button class="tag">#사진</button
+              ><button class="tag">#아트디렉션</button
+              ><button class="tag">#스토리텔링</button
+              ><button class="tag">#에디토리얼</button
+              ><button class="tag">#라이프스타일</button
+              ><button class="tag">#필름룩</button
+              ><button class="tag">#디자인</button
+              ><button class="tag">#광주크리에이터</button
+              ><button class="tag">#기록</button
+              ><button class="tag">#협업</button>
+            </div>
+            <article class="card tag-result">
+              <h2 id="tag-title">키워드를 선택하세요</h2>
+              <p id="tag-copy">
+                선택한 키워드를 포트폴리오의 관심 분야로 표시합니다.
+              </p>
+              <div
+                class="tag-work-results"
+                id="tag-work-results"
+                aria-live="polite"
+              ></div>
+            </article>
+          </section>
+          <section class="page" id="manage-page" hidden>
+            <div class="page-heading">
+              <div>
+                <span class="kicker">R WIDGET · OWNER TOOLS</span>
+                <h1>위젯 관리</h1>
+                <p>스튜디오·갤러리 작업물과 홈 대표 작업을 관리하세요.</p>
+              </div>
+              <button class="secondary-button" id="manage-home">
+                홈으로 돌아가기
+              </button>
+            </div>
+            <div class="manage-grid">
+              <article class="card">
+                <div class="panel-heading">
+                  <h2>홈 프로필 사진</h2>
+                  <span>HOME CARD</span>
+                </div>
+                <div class="url-form">
+                  <label for="home-photo-url">홈 프로필 사진 URL</label>
+                  <input
+                    id="home-photo-url"
+                    type="url"
+                    placeholder="https://example.com/home-profile.jpg"
+                  />
+                  <button
+                    class="action-button"
+                    id="save-home-photo"
+                    type="button"
+                  >
+                    홈 사진 적용
+                  </button>
+                  <p class="manage-note" id="home-photo-note">
+                    홈 화면 프로필 카드에 표시할 사진 링크입니다.
+                  </p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="panel-heading">
+                  <h2>프로필 페이지 사진</h2>
+                  <span>PROFILE PAGE</span>
+                </div>
+                <div class="url-form">
+                  <label for="profile-page-photo-url"
+                    >프로필 페이지 사진 URL</label
+                  >
+                  <input
+                    id="profile-page-photo-url"
+                    type="url"
+                    placeholder="https://example.com/profile-page.jpg"
+                  />
+                  <button
+                    class="action-button"
+                    id="save-profile-page-photo"
+                    type="button"
+                  >
+                    프로필 사진 적용
+                  </button>
+                  <p class="manage-note" id="profile-page-photo-note">
+                    프로필 페이지 소개 카드에 표시할 사진 링크입니다.
+                  </p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="source-forms">
+                  <form class="url-form" id="studio-work-form">
+                    <h3>스튜디오 영상 추가</h3>
+                    <label for="studio-work-title">영상 제목</label
+                    ><input
+                      id="studio-work-title"
+                      required
+                      placeholder="작업 제목"
+                    /><label for="studio-work-url">영상 URL</label
+                    ><input
+                      id="studio-work-url"
+                      type="url"
+                      required
+                      placeholder="Google Drive 공유 링크 또는 직접 MP4 링크"
+                    /><label for="studio-work-description">영상 코멘트</label
+                    ><textarea
+                      id="studio-work-description"
+                      required
+                      placeholder="영상 소개"
+                    ></textarea
+                    ><label for="studio-work-editing-notes">편집 노트</label
+                    ><textarea
+                      id="studio-work-editing-notes"
+                      required
+                      placeholder="편집 방식과 영상 흐름"
+                    ></textarea
+                    ><label for="studio-work-tags">해시태그</label
+                    ><input
+                      id="studio-work-tags"
+                      placeholder="#영상제작, #브랜딩, #스토리텔링"
+                    /><label for="studio-work-tools">사용 도구</label
+                    ><input
+                      id="studio-work-tools"
+                      required
+                      placeholder="예: 프리미어 프로"
+                    /><label for="studio-work-year">제작 연도</label
+                    ><input
+                      id="studio-work-year"
+                      inputmode="numeric"
+                      required
+                      placeholder="2026"
+                    /><label for="studio-work-duration"
+                      >재생 시간 (예: 01:23)</label
+                    ><input
+                      id="studio-work-duration"
+                      placeholder="03:12"
+                    /><button class="action-button" type="submit">
+                      스튜디오 영상 등록
+                    </button>
+                  </form>
+                  <form class="url-form" id="gallery-work-form">
+                    <h3>갤러리 이미지 추가</h3>
+                    <label for="gallery-work-title">이미지 제목</label
+                    ><input
+                      id="gallery-work-title"
+                      required
+                      placeholder="작업 제목"
+                    /><label for="gallery-work-url">이미지 URL</label
+                    ><input
+                      id="gallery-work-url"
+                      type="url"
+                      required
+                      placeholder="Google Drive 공유 링크 또는 이미지 URL"
+                    /><label for="gallery-work-description">이미지 코멘트</label
+                    ><textarea
+                      id="gallery-work-description"
+                      placeholder="짧은 소개와 코멘트"
+                    ></textarea
+                    ><label for="gallery-work-tags">해시태그</label
+                    ><input
+                      id="gallery-work-tags"
+                      placeholder="#사진, #디자인, #기록"
+                    /><button class="action-button" type="submit">
+                      갤러리 이미지 등록
+                    </button>
+                  </form>
+                </div>
+                <p class="manage-note" id="manage-note">
+                  등록한 작업물은 홈 대표 작업 목록에서 선택할 수 있습니다.
+                </p>
+              </article>
+              <article class="card">
+                <div class="panel-heading">
+                  <h2>홈 대표 작업</h2>
+                  <span id="manage-work-count">00 WORKS</span>
+                </div>
+                <p class="manage-help">
+                  스튜디오 영상과 갤러리 이미지 중 홈 프리뷰에 표시할 작업을
+                  선택하세요.
+                </p>
+                <div class="manage-work-list" id="manage-work-list"></div>
+                <label class="mini-label" for="manage-comment"
+                  >선택 작업 코멘트</label
+                ><textarea
+                  id="manage-comment"
+                  class="manage-comment"
+                  placeholder="선택한 작업의 짧은 코멘트"
+                ></textarea
+                ><button
+                  class="action-button"
+                  id="save-comment"
+                  style="margin-top: 9px"
+                >
+                  코멘트 저장
+                </button>
+              </article>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <dialog class="video-dialog" id="video-dialog">
+      <form method="dialog"><button aria-label="닫기">×</button></form>
+      <video id="video-player" controls playsinline muted hidden></video
+      ><iframe
+        id="video-embed"
+        title="영상 미리보기"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+        hidden
+      ></iframe>
+      <p id="dialog-title"></p>
+      <p id="dialog-help" class="media-help"></p>
+      <a id="drive-open-link" target="_blank" rel="noopener" hidden
+        >Google Drive에서 열기 ↗</a
+      >
+    </dialog>
+    <script>
+      // 미디어 링크 설정: 각 url에 Google Drive의 공유 링크를 넣으세요.
+      // 공유 권한은 '링크가 있는 모든 사용자'로 설정해야 합니다. 직접 MP4 URL도 사용할 수 있습니다.
+      // Drive 공유 페이지는 미리보기 iframe, 직접 미디어 주소는 브라우저 video/img 요소로 표시합니다.
+      // durationSeconds는 Drive iframe 영상의 자동 다음 작업 전환 시간(초)입니다.
+      const MEDIA_CONFIG = [
+        {
+          title: "강민호 우승 영상",
+          kind: "VIDEO",
+          description:
+            "강민호의 우승을 기념하는 스포츠 하이라이트. 경기의 흐름을 따라 긴장감을 쌓고 승리의 순간을 중심에 둡니다.",
+          comment:
+            "우승의 순간을 중심으로 경기의 흐름과 승리의 감정을 압축한 스포츠 하이라이트입니다.",
+          style: "긴장감을 단계적으로 쌓고 클라이맥스를 강조하는 스포츠 편집",
+          editingNotes:
+            "경기·인터뷰·세리머니 교차 편집 · 인물 클로즈업 · 자막 리듬",
+          tags: ["#컷편집"],
+          tools: "프리미어 프로",
+          year: "2026",
+          summary:
+            "강민호의 우승 순간을 중심으로 경기의 흐름과 승리의 감정을 전하는 하이라이트",
+          url: "https://drive.google.com/file/d/1p-NeMWZ-RmQcppQuptBhNNyNYxFknoMf/view?usp=sharing",
+          duration: "03:12",
+          durationSeconds: 192,
+          art: "art-one",
+        },
+        {
+          title: "Growing slowly",
+          kind: "IMAGE",
+          description:
+            "조용히 자라나는 식물의 형태와 색을 가까이에서 기록한 이미지 에세이입니다.",
+          url: "여기에 Growing slowly 이미지의 Google Drive 공유 링크 입력",
+          duration: "01",
+          durationSeconds: 6,
+          art: "art-two",
+        },
+        {
+          title: "Blue hour",
+          kind: "VIDEO",
+          description:
+            "해가 진 뒤 도시의 푸른 빛과 그 안을 걷는 사람들의 리듬을 담았습니다.",
+          url: "여기에 Blue hour 영상의 Google Drive 공유 링크 입력",
+          duration: "00:28",
+          durationSeconds: 28,
+          art: "art-three",
+        },
+      ];
+      (() => {
+        const pages = [...document.querySelectorAll(".page")],
+          nav = [...document.querySelectorAll(".nav-btn")],
+          main = document.querySelector(".main-area");
+        function showPage(name) {
+          pages.forEach((page) => (page.hidden = page.id !== name + "-page"));
+          nav.forEach((button) =>
+            button.classList.toggle("active", button.dataset.page === name),
+          );
+          history.replaceState(null, "", "#" + name);
+          if (name === "home") {
+            paused = true;
+            showWork(currentWork, false);
+          } else stopFrame();
+          main.scrollTop = 0;
+        }
+        nav.forEach((button) =>
+          button.addEventListener("click", () => showPage(button.dataset.page)),
+        );
+        document
+          .querySelectorAll("[data-go]")
+          .forEach((button) =>
+            button.addEventListener("click", () => showPage(button.dataset.go)),
+          );
+        document
+          .querySelector(".brand")
+          .addEventListener("click", () => showPage("home"));
+        document
+          .querySelector("#tag-cloud")
+          .addEventListener("click", (event) => {
+            const button = event.target.closest(".tag");
+            if (!button) return;
+            document
+              .querySelectorAll("#tag-cloud .tag")
+              .forEach((tag) =>
+                tag.classList.toggle("selected", tag === button),
+              );
+            renderTagResults(button.textContent.trim());
+          });
+        const videoDialog = document.querySelector("#video-dialog"),
+          player = document.querySelector("#video-player"),
+          videoEmbed = document.querySelector("#video-embed");
+        let studioWork = MEDIA_CONFIG.find((work) => work.kind === "VIDEO");
+        function isConfiguredURL(value) {
+          return Boolean(
+            value &&
+            value.trim() &&
+            !value.startsWith("PASTE_") &&
+            !value.includes("여기에"),
+          );
+        }
+        function driveFileId(value) {
+          try {
+            const parsed = new URL(value);
+            if (!/(^|\.)drive\.google\.com$/.test(parsed.hostname)) return "";
+            return (
+              parsed.pathname.match(/\/file\/d\/([^/]+)/)?.[1] ||
+              parsed.searchParams.get("id") ||
+              ""
+            );
+          } catch {
+            return "";
+          }
+        }
+        function drivePreviewURL(value) {
+          try {
+            const parsed = new URL(value);
+            if (!/(^|\.)drive\.google\.com$/.test(parsed.hostname)) return "";
+            const id = driveFileId(value);
+            return id
+              ? "https://drive.google.com/file/d/" +
+                  encodeURIComponent(id) +
+                  "/preview?autoplay=1&mute=1"
+              : parsed.pathname.includes("/preview")
+                ? value
+                : "";
+          } catch {
+            return "";
+          }
+        }
+        function thumbnailURL(work) {
+          if (work.thumbnail) return work.thumbnail;
+          const id = driveFileId(work.url);
+          if (id)
+            return (
+              "https://drive.google.com/thumbnail?id=" +
+              encodeURIComponent(id) +
+              "&sz=w640"
+            );
+          return work.kind === "IMAGE" && isConfiguredURL(work.url)
+            ? work.url
+            : "";
+        }
+        function setStudioThumbnail() {
+          const feature = document.querySelector(".studio-feature"),
+            source = studioWork && thumbnailURL(studioWork);
+          if (!feature || !source) return;
+          const preview = new Image();
+          preview.onload = () => {
+            feature.style.backgroundImage =
+              'linear-gradient(0deg,#171318c9,transparent 72%),url("' +
+              source.replace(/"/g, "%22") +
+              '")';
+            feature.style.backgroundSize = "cover";
+            feature.style.backgroundPosition = "center";
+            feature.classList.add("has-thumbnail");
+          };
+          preview.src = source;
+        }
+        function mediaErrorMessage() {
+          return "재생할 수 없습니다. URL을 확인하고 Google Drive 공유 권한을 “링크가 있는 모든 사용자”로 설정해 주세요. 용량이 큰 파일은 Drive 미리보기 제한이 있을 수 있습니다.";
+        }
+        function openStudioVideo() {
+          if (!studioWork || !isConfiguredURL(studioWork.url)) {
+            document.querySelector("#dialog-title").textContent =
+              studioWork?.title || "스튜디오 영상";
+            document.querySelector("#dialog-help").textContent =
+              "HTML 상단의 MEDIA_CONFIG에 Google Drive 영상 링크를 입력해 주세요.";
+            player.hidden = true;
+            videoEmbed.hidden = true;
+            document.querySelector("#drive-open-link").hidden = true;
+            videoDialog.showModal();
+            return;
+          }
+          document.querySelector("#dialog-title").textContent =
+            studioWork.title;
+          const preview = drivePreviewURL(studioWork.url);
+          videoDialog.showModal();
+          if (preview) {
+            player.pause();
+            player.removeAttribute("src");
+            player.hidden = true;
+            videoEmbed.src = preview;
+            videoEmbed.hidden = false;
+            document.querySelector("#dialog-help").textContent =
+              "Drive 미리보기가 열리지 않으면 공유 권한을 확인하고 Drive에서 직접 여세요.";
+            const link = document.querySelector("#drive-open-link");
+            link.href = studioWork.url;
+            link.hidden = false;
+          } else {
+            videoEmbed.hidden = true;
+            videoEmbed.src = "about:blank";
+            player.src = studioWork.url;
+            player.loop = false;
+            player.muted = true;
+            player.playsInline = true;
+            player.hidden = false;
+            player.play().catch(() => {
+              document.querySelector("#dialog-help").textContent =
+                "자동 재생이 차단되었습니다. 영상 플레이어의 재생 버튼을 눌러 주세요.";
+            });
+            document.querySelector("#drive-open-link").hidden = true;
+          }
+        }
+        document
+          .querySelector("#video-play")
+          .addEventListener("click", openStudioVideo);
+        videoDialog.addEventListener("close", () => {
+          player.pause();
+          player.removeAttribute("src");
+          videoEmbed.src = "about:blank";
+        });
+        const grid = document.querySelector("#gallery-grid"),
+          MANAGED_WORKS_KEY = "rPortfolioManagedWorks",
+          PROFILE_PHOTO_KEY = "rPortfolioProfilePhoto",
+          HOME_PHOTO_KEY = "rPortfolioHomeProfilePhoto",
+          PROFILE_PAGE_PHOTO_KEY = "rPortfolioProfilePagePhoto",
+          HOME_WORK_KEY = "rPortfolioHomeWork",
+          COMMENTS_KEY = "rPortfolioComments";
+        function readJSON(key, fallback) {
+          try {
+            return JSON.parse(localStorage.getItem(key)) ?? fallback;
+          } catch {
+            return fallback;
+          }
+        }
+        function readManagedWorks() {
+          const items = readJSON(MANAGED_WORKS_KEY, []);
+          return Array.isArray(items)
+            ? items.filter(
+                (work) =>
+                  work && work.title && work.url && isConfiguredURL(work.url),
+              )
+            : [];
+        }
+        const works = MEDIA_CONFIG.concat(readManagedWorks());
+        function renderTagCloud() {
+          const cloud = document.querySelector("#tag-cloud"),
+            known = new Set(
+              [...cloud.querySelectorAll(".tag")].map((tag) =>
+                tag.textContent.trim(),
+              ),
+            );
+          works.forEach((work) =>
+            (work.tags || []).forEach((tag) => {
+              const normalized = tag.startsWith("#") ? tag : "#" + tag;
+              if (known.has(normalized)) return;
+              known.add(normalized);
+              const button = document.createElement("button");
+              button.className = "tag";
+              button.type = "button";
+              button.textContent = normalized;
+              cloud.append(button);
+            }),
+          );
+        }
+        function renderTagResults(tag) {
+          const results = document.querySelector("#tag-work-results");
+          document.querySelector("#tag-title").textContent = tag + " 작업물";
+          const matched = works.filter((work) =>
+            (work.tags || []).some(
+              (item) => (item.startsWith("#") ? item : "#" + item) === tag,
+            ),
+          );
+          document.querySelector("#tag-copy").textContent = matched.length
+            ? tag + " 태그가 설정된 작업물입니다."
+            : "이 태그가 설정된 작업물이 아직 없습니다.";
+          results.replaceChildren();
+          matched.forEach((work) => {
+            const item = document.createElement("article"),
+              heading = document.createElement("div"),
+              title = document.createElement("strong"),
+              open = document.createElement("button"),
+              description = document.createElement("p"),
+              notes = document.createElement("small"),
+              hashtags = document.createElement("div");
+            item.className = "tag-work-item";
+            heading.className = "tag-work-heading";
+            title.textContent = work.title;
+            open.type = "button";
+            open.className = "tag-work-open";
+            open.textContent = "보러가기 ↗";
+            open.addEventListener("click", () => openTaggedWork(work));
+            heading.append(title, open);
+            description.textContent = work.description || "";
+            notes.textContent = "EDITING NOTES · " + (work.editingNotes || "—");
+            hashtags.className = "tag-work-hashtags";
+            hashtags.textContent = (work.tags || []).join("  ");
+            item.append(heading, description, notes, hashtags);
+            results.append(item);
+          });
+        }
+        function openTaggedWork(work) {
+          if (work.kind === "VIDEO") {
+            studioWork = work;
+            renderStudioInfo();
+            const feature = document.querySelector(".studio-feature");
+            feature.classList.remove("has-thumbnail");
+            feature.style.backgroundImage = "";
+            setStudioThumbnail();
+            showPage("studio");
+            return;
+          }
+          renderGallery();
+          showPage("gallery");
+          const tile = document.querySelector(
+            '.gallery-tile[data-work-index="' + works.indexOf(work) + '"]',
+          );
+          if (tile) {
+            tile.classList.add("tag-focus");
+            tile.scrollIntoView({ behavior: "smooth", block: "center" });
+            setTimeout(() => tile.classList.remove("tag-focus"), 2400);
+          }
+        }
+        renderTagCloud();
+        studioWork =
+          [...works]
+            .reverse()
+            .find(
+              (work) => work.kind === "VIDEO" && isConfiguredURL(work.url),
+            ) || studioWork;
+        function renderStudioInfo() {
+          if (!studioWork) return;
+          document.querySelector("#studio-project-title").textContent =
+            studioWork.title;
+          document.querySelector("#studio-project-summary").textContent =
+            studioWork.description || "등록한 스튜디오 영상입니다.";
+          document.querySelector("#studio-editing-notes").textContent =
+            studioWork.editingNotes || "—";
+          document.querySelector("#studio-editing-tags").textContent = (
+            studioWork.tags || []
+          ).join("  ");
+          document.querySelector("#studio-tools").textContent =
+            studioWork.tools || "—";
+          document.querySelector("#studio-year").textContent =
+            studioWork.year || String(new Date().getFullYear());
+        }
+        const savedComments = readJSON(COMMENTS_KEY, {});
+        works.forEach((work) => {
+          if (savedComments[work.title])
+            work.comment = savedComments[work.title];
+        });
+        let currentWork = Math.max(
+            0,
+            works.findIndex(
+              (work) => work.title === localStorage.getItem(HOME_WORK_KEY),
+            ),
+          ),
+          slideTimer,
+          driveAdvanceTimer,
+          captionFadeTimer,
+          paused = false;
+        const frameImage = document.querySelector("#frame-image"),
+          frameVideo = document.querySelector("#frame-video"),
+          frameEmbed = document.querySelector("#frame-embed"),
+          frameArt = document.querySelector("#frame-art");
+        function driveImageURL(value) {
+          const id = driveFileId(value);
+          return id
+            ? "https://drive.google.com/thumbnail?id=" +
+                encodeURIComponent(id) +
+                "&sz=w1600"
+            : value;
+        }
+        function persistManagedWorks() {
+          try {
+            localStorage.setItem(
+              MANAGED_WORKS_KEY,
+              JSON.stringify(works.filter((work) => work.managed)),
+            );
+          } catch {
+            document.querySelector("#manage-note").textContent =
+              "브라우저 저장 공간을 사용할 수 없어 이번 등록 내용만 표시됩니다.";
+          }
+        }
+        function persistHomeWork() {
+          try {
+            localStorage.setItem(
+              HOME_WORK_KEY,
+              works[currentWork]?.title || "",
+            );
+          } catch {}
+        }
+        function fadeFrameTitleSoon() {
+          clearTimeout(captionFadeTimer);
+          const stage = document.querySelector("#frame-stage");
+          stage.classList.remove("captions-faded");
+          captionFadeTimer = setTimeout(() => {
+            if (!paused && works[currentWork]?.kind === "VIDEO")
+              stage.classList.add("captions-faded");
+          }, 4200);
+        }
+        function stopFrame() {
+          clearTimeout(slideTimer);
+          clearTimeout(driveAdvanceTimer);
+          clearTimeout(captionFadeTimer);
+          document
+            .querySelector("#frame-stage")
+            .classList.remove("captions-faded");
+          frameVideo.pause();
+          frameVideo.hidden = true;
+          frameImage.hidden = true;
+          frameEmbed.src = "about:blank";
+          frameEmbed.hidden = true;
+        }
+        function renderFocusButtons() {
+          const list = document.querySelector("#focus-list");
+          list.replaceChildren();
+          works.forEach((work, index) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className =
+              "focus-item" + (index === currentWork ? " active" : "");
+            button.dataset.work = index;
+            const thumb = document.createElement("span");
+            thumb.className = "focus-thumb";
+            const thumbURL = thumbnailURL(work);
+            if (thumbURL) {
+              thumb.style.backgroundImage = 'url("' + thumbURL + '")';
+              thumb.style.backgroundSize = "cover";
+              thumb.style.backgroundPosition = "center";
+            }
+            const copy = document.createElement("span"),
+              title = document.createElement("strong"),
+              type = document.createElement("small");
+            title.textContent = work.title;
+            type.textContent =
+              (work.kind === "VIDEO" ? "영상" : "이미지") +
+              " · " +
+              work.duration;
+            copy.append(title, type);
+            button.append(thumb, copy);
+            button.addEventListener("click", () => {
+              paused = false;
+              showWork(index, true);
+            });
+            list.append(button);
+          });
+          document.querySelector("#focus-count").textContent =
+            "SELECTED " + String(works.length).padStart(2, "0");
+        }
+        function formatDuration(seconds) {
+          const total = Math.max(0, Math.floor(seconds));
+          return (
+            String(Math.floor(total / 60)).padStart(2, "0") +
+            ":" +
+            String(total % 60).padStart(2, "0")
+          );
+        }
+        function durationSeconds(value) {
+          const match = String(value || "")
+            .trim()
+            .match(/^(\d{1,3}):(\d{2})$/);
+          return match ? Number(match[1]) * 60 + Number(match[2]) : 30;
+        }
+        frameVideo.addEventListener("loadedmetadata", () => {
+          const work = works[currentWork];
+          if (
+            work?.kind !== "VIDEO" ||
+            frameVideo.hidden ||
+            !Number.isFinite(frameVideo.duration)
+          )
+            return;
+          work.durationSeconds = Math.round(frameVideo.duration);
+          work.duration = formatDuration(frameVideo.duration);
+          document.querySelector("#frame-caption").textContent =
+            work.title + " · " + work.duration;
+          renderFocusButtons();
+          renderManager();
+        });
+        function showWork(index, play = true) {
+          if (!works.length) return;
+          currentWork = (index + works.length) % works.length;
+          persistHomeWork();
+          const work = works[currentWork],
+            buttons = [...document.querySelectorAll(".focus-item")];
+          buttons.forEach((button, i) =>
+            button.classList.toggle("active", i === currentWork),
+          );
+          document
+            .querySelector("#frame-stage")
+            .classList.remove("captions-faded");
+          document.querySelector("#frame-number").textContent =
+            String(currentWork + 1).padStart(2, "0") +
+            " / " +
+            String(works.length).padStart(2, "0");
+          document.querySelector("#frame-title").textContent = work.title;
+          document.querySelector("#frame-caption").textContent =
+            work.title + " · " + work.duration;
+          document.querySelector("#frame-kind").textContent = work.kind;
+          document.querySelector("#focus-comment").textContent =
+            work.comment || work.description;
+          document.querySelector("#media-error").hidden = true;
+          clearTimeout(slideTimer);
+          clearTimeout(driveAdvanceTimer);
+          clearTimeout(captionFadeTimer);
+          frameVideo.pause();
+          frameVideo.removeAttribute("src");
+          frameVideo.hidden = true;
+          frameImage.removeAttribute("src");
+          frameImage.hidden = true;
+          frameEmbed.src = "about:blank";
+          frameEmbed.hidden = true;
+          frameArt.hidden = false;
+          frameArt.className = "frame-art " + (work.art || "art-one");
+          if (work.kind === "VIDEO" && !play) {
+            const poster = thumbnailURL(work);
+            if (poster) {
+              frameArt.hidden = true;
+              frameImage.src = poster;
+              frameImage.hidden = false;
+            }
+          } else if (work.kind === "IMAGE" && isConfiguredURL(work.url)) {
+            frameArt.hidden = true;
+            frameImage.src = thumbnailURL(work) || work.url;
+            frameImage.hidden = false;
+          } else if (isConfiguredURL(work.url)) {
+            const preview = drivePreviewURL(work.url);
+            frameArt.hidden = true;
+            if (preview) {
+              frameEmbed.src = preview;
+              frameEmbed.hidden = false;
+              if (work.kind === "VIDEO" && !paused) {
+                fadeFrameTitleSoon();
+                driveAdvanceTimer = setTimeout(
+                  () => showWork(currentWork + 1, true),
+                  Math.max(5, Number(work.durationSeconds) || 30) * 1000,
+                );
+              }
+            } else if (work.kind === "VIDEO") {
+              frameVideo.src = work.url;
+              frameVideo.loop = false;
+              frameVideo.muted = true;
+              frameVideo.playsInline = true;
+              frameVideo.hidden = false;
+              frameVideo.load();
+              if (play && !paused)
+                frameVideo
+                  .play()
+                  .then(fadeFrameTitleSoon)
+                  .catch(() => {});
+            } else {
+              frameImage.src = work.url;
+              frameImage.hidden = false;
+            }
+          } else if (work.kind === "VIDEO") {
+            document.querySelector("#media-error").textContent =
+              "코드 상단 MEDIA_CONFIG 또는 위젯 관리에서 이 영상의 URL을 등록해 주세요.";
+            document.querySelector("#media-error").hidden = false;
+          }
+          if (play && !paused && work.kind === "IMAGE")
+            slideTimer = setTimeout(
+              () => showWork(currentWork + 1, true),
+              6500,
+            );
+        }
+        function renderGallery() {
+          grid.replaceChildren();
+          const samples = [
+            ["OBJECT", "Still life, 01"],
+            ["FORM", "Soft geometry"],
+            ["PORTRAIT", "Quiet afternoon"],
+            ["NATURE", "Growing slowly"],
+            ["EDITORIAL", "Blue hour"],
+            ["OBJECT", "Everyday ritual"],
+          ];
+          samples.forEach((sample, position) => {
+            if (
+              works.some(
+                (work) =>
+                  work.kind === "IMAGE" &&
+                  work.title === sample[1] &&
+                  (isConfiguredURL(work.url) || work.managed),
+              )
+            )
+              return;
+            const tile = document.createElement("button");
+            tile.className = "gallery-tile";
+            tile.type = "button";
+            const label = document.createElement("small"),
+              title = document.createElement("strong");
+            label.textContent =
+              String(position + 1).padStart(2, "0") + " / " + sample[0];
+            title.textContent = sample[1];
+            tile.append(label, title);
+            grid.append(tile);
+          });
+          const imageWorks = works
+            .map((work, index) => ({ work, index }))
+            .filter(
+              (item) =>
+                item.work.kind === "IMAGE" &&
+                (isConfiguredURL(item.work.url) || item.work.managed),
+            );
+          imageWorks.forEach(({ work, index }, position) => {
+            const tile = document.createElement("button");
+            tile.className = "gallery-tile has-image";
+            tile.type = "button";
+            tile.dataset.workIndex = String(index);
+            const source = thumbnailURL(work);
+            if (source) {
+              tile.style.backgroundImage =
+                'linear-gradient(0deg,#171318aa,transparent 60%),url("' +
+                source +
+                '")';
+              tile.style.backgroundSize = "cover";
+              tile.style.backgroundPosition = "center";
+            }
+            const label = document.createElement("small"),
+              title = document.createElement("strong"),
+              hashtags = document.createElement("small");
+            label.textContent =
+              String(position + 1).padStart(2, "0") + " / IMAGE";
+            title.textContent = work.title;
+            hashtags.className = "gallery-work-tags";
+            hashtags.textContent = (work.tags || []).join("  ");
+            tile.append(label, title, hashtags);
+            tile.addEventListener("click", () => {
+              showWork(index, false);
+              showPage("home");
+            });
+            grid.append(tile);
+          });
+          if (!grid.children.length) {
+            const empty = document.createElement("p");
+            empty.className = "gallery-empty";
+            empty.textContent =
+              "위젯 관리에서 갤러리 이미지 URL을 등록하면 이곳에 표시됩니다.";
+            grid.append(empty);
+          }
+        }
+        function setProfilePhoto(scope, value, save = true) {
+          const photoURL = driveImageURL(value);
+          if (!photoURL) return;
+          const home = scope === "home",
+            image = document.querySelector(
+              home ? "#profile-photo" : "#profile-mark-image",
+            ),
+            initial = document.querySelector(
+              home ? "#profile-initial" : "#profile-mark-initial",
+            ),
+            note = document.querySelector(
+              home ? "#home-photo-note" : "#profile-page-photo-note",
+            ),
+            input = document.querySelector(
+              home ? "#home-photo-url" : "#profile-page-photo-url",
+            ),
+            storageKey = home ? HOME_PHOTO_KEY : PROFILE_PAGE_PHOTO_KEY;
+          image.onload = () => {
+            image.hidden = false;
+            initial.hidden = true;
+          };
+          image.onerror = () => {
+            note.textContent =
+              "이미지를 불러오지 못했습니다. 링크와 공유 권한을 확인하세요.";
+            image.hidden = true;
+          };
+          image.src = photoURL;
+          if (!home) {
+            const intro = document.querySelector(".profile-intro");
+            intro.style.backgroundImage =
+              "linear-gradient(180deg,#17131840,#171318b8),url(" +
+              photoURL +
+              ")";
+            intro.classList.add("has-photo");
+          }
+          input.value = value;
+          if (save) {
+            try {
+              localStorage.setItem(storageKey, value);
+            } catch {}
+          }
+        }
+        const savedHomePhoto = localStorage.getItem(HOME_PHOTO_KEY),
+          savedProfilePagePhoto = localStorage.getItem(PROFILE_PAGE_PHOTO_KEY),
+          legacyProfilePhoto = localStorage.getItem(PROFILE_PHOTO_KEY);
+        if (savedHomePhoto || legacyProfilePhoto)
+          setProfilePhoto("home", savedHomePhoto || legacyProfilePhoto, false);
+        if (savedProfilePagePhoto || legacyProfilePhoto)
+          setProfilePhoto(
+            "profile",
+            savedProfilePagePhoto || legacyProfilePhoto,
+            false,
+          );
+        [
+          ["home", "#save-home-photo"],
+          ["profile", "#save-profile-page-photo"],
+        ].forEach(([scope, buttonSelector]) => {
+          document
+            .querySelector(buttonSelector)
+            .addEventListener("click", () => {
+              const home = scope === "home",
+                input = document.querySelector(
+                  home ? "#home-photo-url" : "#profile-page-photo-url",
+                ),
+                note = document.querySelector(
+                  home ? "#home-photo-note" : "#profile-page-photo-note",
+                ),
+                value = input.value.trim();
+              if (!value) {
+                note.textContent = "사진 URL을 입력해 주세요.";
+                return;
+              }
+              setProfilePhoto(scope, value, true);
+              note.textContent = "사진 링크를 적용했습니다.";
+            });
+        });
+        function renderManager() {
+          const list = document.querySelector("#manage-work-list");
+          list.replaceChildren();
+          works.forEach((work, index) => {
+            const row = document.createElement("div");
+            row.className = "manage-work";
+            const thumb = document.createElement("span");
+            thumb.className = "manage-work-thumb";
+            const source = thumbnailURL(work);
+            if (source)
+              thumb.style.backgroundImage =
+                'center/cover no-repeat url("' + source + '")';
+            const info = document.createElement("span"),
+              title = document.createElement("strong"),
+              meta = document.createElement("small"),
+              select = document.createElement("button");
+            title.textContent = work.title;
+            meta.textContent =
+              (work.kind === "VIDEO" ? "스튜디오 영상" : "갤러리 이미지") +
+              " · " +
+              work.duration;
+            select.type = "button";
+            select.textContent =
+              index === currentWork ? "선택됨" : "대표로 설정";
+            select.addEventListener("click", () => {
+              currentWork = index;
+              persistHomeWork();
+              renderFocusButtons();
+              renderManager();
+              showPage("home");
+            });
+            info.append(title, meta);
+            row.append(thumb, info, select);
+            list.append(row);
+          });
+          document.querySelector("#manage-work-count").textContent =
+            String(works.length).padStart(2, "0") + " WORKS";
+          document.querySelector("#manage-comment").value =
+            works[currentWork]?.comment ||
+            works[currentWork]?.description ||
+            "";
+        }
+        function registerWork(event, kind) {
+          event.preventDefault();
+          const prefix = kind === "VIDEO" ? "studio-work" : "gallery-work",
+            title = document
+              .querySelector("#" + prefix + "-title")
+              .value.trim(),
+            url = document.querySelector("#" + prefix + "-url").value.trim(),
+            description = document
+              .querySelector("#" + prefix + "-description")
+              .value.trim(),
+            editingNotes =
+              kind === "VIDEO"
+                ? document
+                    .querySelector("#studio-work-editing-notes")
+                    .value.trim()
+                : "",
+            tags = (
+              document
+                .querySelector("#" + prefix + "-tags")
+                .value.match(/#[^\s,，]+|[^\s,，]+/g) || []
+            )
+              .map((tag) => "#" + tag.replace(/^#/, "").trim())
+              .filter((tag) => tag.length > 1),
+            tools =
+              kind === "VIDEO"
+                ? document.querySelector("#studio-work-tools").value.trim()
+                : "",
+            year =
+              kind === "VIDEO"
+                ? document.querySelector("#studio-work-year").value.trim()
+                : "";
+          if (!title || !isConfiguredURL(url)) {
+            document.querySelector("#manage-note").textContent =
+              "제목과 유효한 공유 링크를 입력해 주세요.";
+            return;
+          }
+          const duration =
+              kind === "VIDEO"
+                ? document
+                    .querySelector("#studio-work-duration")
+                    .value.trim() || "00:30"
+                : "01",
+            work = {
+              title,
+              kind,
+              url,
+              description,
+              comment: description,
+              editingNotes: editingNotes || "—",
+              tags,
+              tools: tools || "—",
+              year: year || String(new Date().getFullYear()),
+              duration,
+              durationSeconds: kind === "VIDEO" ? durationSeconds(duration) : 6,
+              art: kind === "VIDEO" ? "art-one" : "art-two",
+              managed: true,
+            };
+          works.push(work);
+          persistManagedWorks();
+          renderTagCloud();
+          renderFocusButtons();
+          renderManager();
+          renderGallery();
+          event.target.reset();
+          document.querySelector("#manage-note").textContent =
+            (kind === "VIDEO" ? "스튜디오 영상" : "갤러리 이미지") +
+            "을 등록했습니다. 오른쪽 홈 대표 작업에서 선택할 수 있습니다.";
+          if (kind === "VIDEO") {
+            studioWork = work;
+            const titleNode = document.querySelector("#studio-project-title"),
+              summaryNode = document.querySelector("#studio-project-summary");
+            titleNode.textContent = work.title;
+            summaryNode.textContent =
+              work.description || "등록한 스튜디오 영상입니다.";
+            document.querySelector("#studio-editing-notes").textContent =
+              work.editingNotes;
+            document.querySelector("#studio-editing-tags").textContent = (
+              work.tags || []
+            ).join("  ");
+            document.querySelector("#studio-tools").textContent = work.tools;
+            document.querySelector("#studio-year").textContent = work.year;
+            const feature = document.querySelector(".studio-feature");
+            feature.classList.remove("has-thumbnail");
+            feature.style.backgroundImage = "";
+            setStudioThumbnail();
+          }
+        }
+        document
+          .querySelector("#studio-work-form")
+          .addEventListener("submit", (event) => registerWork(event, "VIDEO"));
+        document
+          .querySelector("#gallery-work-form")
+          .addEventListener("submit", (event) => registerWork(event, "IMAGE"));
+        document
+          .querySelector("#save-comment")
+          .addEventListener("click", () => {
+            if (!works[currentWork]) return;
+            works[currentWork].comment =
+              document.querySelector("#manage-comment").value.trim() ||
+              works[currentWork].description ||
+              "대표 작업으로 선정한 프로젝트입니다.";
+            const comments = readJSON(COMMENTS_KEY, {});
+            comments[works[currentWork].title] = works[currentWork].comment;
+            try {
+              localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+            } catch {}
+            document.querySelector("#manage-note").textContent =
+              "코멘트를 저장했습니다.";
+            document.querySelector("#focus-comment").textContent =
+              works[currentWork].comment;
+            persistManagedWorks();
+            renderManager();
+          });
+        document
+          .querySelector("#manage-button")
+          .addEventListener("click", () => {
+            renderManager();
+            showPage("manage");
+          });
+        document
+          .querySelector("#manage-home")
+          .addEventListener("click", () => showPage("home"));
+        frameVideo.addEventListener("ended", () =>
+          showWork(currentWork + 1, true),
+        );
+        frameVideo.addEventListener("error", () => {
+          if (isConfiguredURL(works[currentWork]?.url)) {
+            document.querySelector("#media-error").textContent =
+              mediaErrorMessage();
+            document.querySelector("#media-error").hidden = false;
+          }
+        });
+        frameImage.addEventListener("error", () => {
+          document.querySelector("#media-error").textContent =
+            mediaErrorMessage();
+          document.querySelector("#media-error").hidden = false;
+        });
+        renderFocusButtons();
+        renderManager();
+        renderGallery();
+        renderStudioInfo();
+        setStudioThumbnail();
+        const hash = location.hash.slice(1);
+        if (hash && document.getElementById(hash + "-page")) {
+          showPage(hash);
+        } else showPage("home");
+      })();
+    </script>
+  </body>
+</html>
