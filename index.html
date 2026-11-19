@@ -4,6 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#f8f4f4" />
+    <link
+      rel="preload"
+      as="image"
+      href="빈티지%20감성의%20macOS%20크리에이티브%20데스크톱.png"
+    />
     <title>R — Creative Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,8 +37,9 @@
         margin: 0;
         min-height: 100vh;
         padding: clamp(10px, 3vw, 42px);
-        background:
-          radial-gradient(circle at 15% 0%, #343034, transparent 36rem), #202022;
+        background: #000
+          url("빈티지%20감성의%20macOS%20크리에이티브%20데스크톱.png") center /
+          contain fixed no-repeat;
         color: var(--ink);
         font-family: var(--sans);
       }
@@ -700,6 +706,16 @@
         background: #111;
         border-radius: 12px;
       }
+      .video-dialog img {
+        width: 100%;
+        max-height: 75vh;
+        object-fit: contain;
+        border-radius: 12px;
+        background: #111;
+      }
+      .video-dialog img[hidden] {
+        display: none;
+      }
       .video-dialog button {
         display: block;
         margin: 0 0 8px auto;
@@ -974,7 +990,7 @@
         top: 17px;
         color: white;
         text-align: right;
-        font: 900 clamp(35px, 5vw, 67px)/0.84 var(--cond);
+        font: 900 clamp(25px, 3.5vw, 47px)/0.84 var(--cond);
         letter-spacing: 0.035em;
         text-shadow: 0 3px 18px #1118;
         pointer-events: none;
@@ -1197,7 +1213,7 @@
           aspect-ratio: 1.1;
         }
         .frame-title {
-          font-size: 42px;
+          font-size: 29px;
         }
         .focus-card {
           min-height: 300px;
@@ -1350,6 +1366,473 @@
           grid-template-columns: 1fr;
         }
       }
+      :root {
+        --cursor-start-x: 50%;
+        --cursor-start-y: 35%;
+        --safari-x: 67.8%;
+        --safari-y: 95.1%;
+        --t-cursor: 1800ms;
+        --t-click: 2600ms;
+        --t-window: 3200ms;
+        --t-fullscreen: 4200ms;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body.intro-pending,
+      body.intro-active {
+        min-height: 100dvh;
+        padding: 0;
+        overflow: hidden;
+        background: #000;
+      }
+      body.portfolio-visible {
+        padding: clamp(10px, 3vw, 42px);
+        background: #000
+          url("빈티지%20감성의%20macOS%20크리에이티브%20데스크톱.png") center /
+          contain fixed no-repeat;
+      }
+      body.intro-pending .app-window,
+      body.intro-active .app-window {
+        visibility: hidden;
+        opacity: 0;
+      }
+      .app-window {
+        transition: opacity 0.55s ease;
+      }
+      .intro-scene {
+        position: fixed;
+        z-index: 1000;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background: #000;
+        color: #111;
+      }
+      .intro-scene[hidden] {
+        display: none;
+      }
+      .stage {
+        --stage-width: 100vw;
+        position: relative;
+        width: min(100vw, 159.879dvh);
+        aspect-ratio: 1586 / 992;
+        overflow: hidden;
+        container-type: inline-size;
+        background: #000;
+        isolation: isolate;
+      }
+      .desktop-image {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+      }
+      .intro-scene.is-started .desktop-image {
+        opacity: 1;
+      }
+      .desktop-image.fallback-image {
+        object-fit: fill;
+      }
+      .skip-intro,
+      .sound-toggle {
+        position: fixed;
+        z-index: 1010;
+        top: max(14px, env(safe-area-inset-top));
+        padding: 9px 14px;
+        border: 1px solid #ffffffaa;
+        border-radius: 999px;
+        background: #111b;
+        color: #fff;
+        font-size: 12px;
+        backdrop-filter: blur(12px);
+      }
+      .skip-intro {
+        right: max(14px, env(safe-area-inset-right));
+      }
+      .sound-toggle {
+        left: max(14px, env(safe-area-inset-left));
+      }
+      .scene-dock {
+        position: absolute;
+        z-index: 5;
+        inset: 0;
+        border: 0;
+        background: transparent;
+        pointer-events: none;
+      }
+      .scene-dock:before {
+        content: "";
+        position: absolute;
+        left: 23.5%;
+        bottom: 1.2%;
+        width: 53%;
+        height: 7.4%;
+        min-height: 28px;
+        border: 1px solid #ffffff45;
+        border-radius: 24px;
+        background: #ffffff3b;
+        box-shadow:
+          0 10px 30px #0003,
+          inset 0 1px #ffffff50;
+        backdrop-filter: blur(18px) saturate(1.25);
+        pointer-events: none;
+      }
+      .dock-app {
+        position: absolute;
+        top: var(--safari-y);
+        width: 3.6%;
+        aspect-ratio: 1;
+        padding: 0;
+        border: 0;
+        border-radius: 24%;
+        background: transparent;
+        pointer-events: auto;
+        transform: translate(-50%, -50%);
+        transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .dock-app svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        filter: drop-shadow(0 2px 2px #0003);
+      }
+      .dock-app[data-app="premiere"] {
+        left: 27.8%;
+      }
+      .dock-app[data-app="after-effects"] {
+        left: 33.8%;
+      }
+      .dock-app[data-app="photoshop"] {
+        left: 39.8%;
+      }
+      .dock-app[data-app="illustrator"] {
+        left: 45.8%;
+      }
+      .dock-app[data-app="photos"] {
+        left: 51.8%;
+      }
+      .dock-app[data-app="messages"] {
+        left: 57.8%;
+      }
+      .dock-app[data-app="phone"] {
+        left: 63.8%;
+      }
+      .dock-app[data-app="safari"] {
+        left: var(--safari-x);
+        cursor: pointer;
+      }
+      .dock-app[data-app="settings"] {
+        left: 73.8%;
+      }
+      .dock-app.is-hovered {
+        z-index: 2;
+        transform: translate(-50%, -68%) scale(1.35);
+      }
+      .dock-app[data-app="phone"].is-neighbor,
+      .dock-app[data-app="settings"].is-neighbor {
+        transform: translate(-50%, -61%) scale(1.15);
+      }
+      .dock-app.is-bouncing {
+        animation: dock-bounce 0.3s ease-in-out 2;
+      }
+      @keyframes dock-bounce {
+        0%,
+        100% {
+          transform: translate(-50%, -68%) scale(1.35);
+        }
+        35% {
+          transform: translate(-50%, -90%) scale(1.35);
+        }
+        65% {
+          transform: translate(-50%, -68%) scale(1.35);
+        }
+      }
+      .desktop-cursor {
+        position: absolute;
+        z-index: 20;
+        left: var(--cursor-start-x);
+        top: var(--cursor-start-y);
+        width: 2.1%;
+        min-width: 14px;
+        opacity: 0;
+        pointer-events: none;
+        filter: drop-shadow(0 1px 1px #0009);
+      }
+      .desktop-cursor svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .intro-scene.is-started .desktop-cursor {
+        opacity: 1;
+      }
+      .desktop-cursor.is-clicking {
+        transform: scale(0.85);
+        transform-origin: 12% 8%;
+      }
+      .safari-window {
+        position: absolute;
+        z-index: 10;
+        left: 14%;
+        top: 9%;
+        width: 72%;
+        height: 78%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid #ffffffc9;
+        border-radius: 18px;
+        background: #f7f7f8;
+        box-shadow: 0 20px 65px #0005;
+        opacity: 0;
+        transform: scale(0.035);
+        transform-origin: 74.7% 110.5%;
+        transition:
+          left 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+          top 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+          width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+          height 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+          border-radius 0.8s ease,
+          box-shadow 0.8s ease,
+          transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.25s ease;
+      }
+      .intro-scene.is-window-open .safari-window {
+        opacity: 1;
+        transform: scale(1);
+      }
+      .intro-scene.is-fullscreen .safari-window {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100dvh;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        transform: none;
+      }
+      .intro-scene.is-fullscreen .safari-toolbar {
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+        opacity: 0;
+        border: 0;
+      }
+      .intro-scene.is-fullscreen .stage {
+        overflow: visible;
+      }
+      .safari-toolbar {
+        position: relative;
+        z-index: 1;
+        height: 48px;
+        flex: none;
+        display: grid;
+        grid-template-columns: 74px minmax(140px, 1fr) 74px;
+        align-items: center;
+        gap: 12px;
+        padding: 0 14px;
+        border-bottom: 1px solid #dedee1;
+        background: #f4f4f5;
+        transition:
+          opacity 0.4s ease,
+          height 0.4s ease;
+      }
+      .safari-lights {
+        display: flex;
+        gap: 7px;
+      }
+      .safari-lights i {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: #ff5f57;
+      }
+      .safari-lights i:nth-child(2) {
+        background: #febc2e;
+      }
+      .safari-lights i:nth-child(3) {
+        background: #28c840;
+      }
+      .safari-address {
+        height: 29px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 1px solid #dedee1;
+        border-radius: 999px;
+        background: #fff;
+        color: #444;
+        font:
+          500 12px/1 ui-monospace,
+          monospace;
+        white-space: nowrap;
+      }
+      .safari-address span {
+        min-width: 0;
+        overflow: hidden;
+      }
+      .safari-address span:after {
+        content: "▏";
+        animation: address-caret 0.8s steps(2, end) infinite;
+      }
+      .safari-address.is-complete span:after {
+        content: "";
+      }
+      @keyframes address-caret {
+        to {
+          opacity: 0;
+        }
+      }
+      .safari-actions {
+        text-align: right;
+        color: #777;
+        font-size: 15px;
+      }
+      .safari-content {
+        flex: 1;
+        min-height: 0;
+        overflow: auto;
+        background: #fff;
+        color: #111;
+        opacity: 0;
+        transition: opacity 0.55s ease 0.15s;
+      }
+      .intro-scene.is-window-open .safari-content {
+        opacity: 1;
+      }
+      .safari-portfolio-hero {
+        min-height: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: center;
+        padding: clamp(22px, 6vw, 88px);
+      }
+      .safari-portfolio-copy {
+        max-width: 820px;
+      }
+      .safari-portfolio-copy .eyebrow {
+        margin: 0 0 14px;
+        font-size: 10px;
+        letter-spacing: 0.22em;
+      }
+      .safari-portfolio-copy h1 {
+        margin: 0;
+        font:
+          800 clamp(32px, 6vw, 82px)/0.95 Arial,
+          sans-serif;
+        letter-spacing: -0.06em;
+      }
+      .safari-portfolio-copy p {
+        max-width: 360px;
+        margin: 20px 0 0;
+        color: #555;
+        font-size: clamp(12px, 1.2vw, 16px);
+        line-height: 1.8;
+      }
+      .safari-lower-section {
+        min-height: 34vh;
+        padding: 42px 7%;
+        border-top: 1px solid #eee;
+      }
+      .safari-lower-section h2 {
+        margin: 0;
+        font-size: clamp(20px, 3vw, 36px);
+      }
+      .intro-tools {
+        position: fixed;
+        z-index: 1010;
+        right: 14px;
+        bottom: max(14px, env(safe-area-inset-bottom));
+        display: flex;
+        gap: 8px;
+      }
+      .intro-tool-button {
+        width: 38px;
+        height: 38px;
+        border: 1px solid #ffffffa3;
+        border-radius: 50%;
+        background: #111c;
+        color: #fff;
+        font-size: 18px;
+        backdrop-filter: blur(12px);
+      }
+      #intro-replay {
+        display: none;
+      }
+      body.portfolio-visible #intro-replay {
+        display: grid;
+      }
+      body.portfolio-visible .intro-scene,
+      body.portfolio-visible .skip-intro,
+      body.portfolio-visible .sound-toggle {
+        display: none;
+      }
+      .intro-scene.is-leaving {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      @media (max-width: 700px) and (orientation: portrait) {
+        .stage {
+          width: 100vw;
+        }
+        .scene-dock:before {
+          min-height: 22px;
+          border-radius: 12px;
+        }
+        .dock-app {
+          border-radius: 20%;
+        }
+        .safari-toolbar {
+          height: 42px;
+          grid-template-columns: 50px minmax(100px, 1fr) 40px;
+          gap: 6px;
+          padding: 0 8px;
+        }
+        .safari-lights {
+          gap: 4px;
+        }
+        .safari-lights i {
+          width: 8px;
+          height: 8px;
+        }
+        .safari-address {
+          height: 25px;
+          font-size: 10px;
+        }
+        .safari-portfolio-hero {
+          grid-template-columns: 1fr;
+          gap: 20px;
+          padding: 28px 22px;
+        }
+        .safari-portfolio-copy h1 {
+          font-size: clamp(34px, 12vw, 54px);
+        }
+        .safari-portfolio-copy p {
+          margin-top: 12px;
+        }
+        .intro-scene.is-fullscreen .safari-window {
+          width: 100vw;
+          height: 100dvh;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *:before,
+        *:after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+      }
     </style>
     <style>
       #profile-initial {
@@ -1415,14 +1898,14 @@
         text-shadow: 0 2px 8px #000;
       }
       .frame-caption {
-        font-size: 13px;
+        font-size: 9px;
         text-shadow: 0 1px 5px #000;
       }
       .frame-caption span {
         padding: 8px 12px;
         border-color: #ffffffa8;
         background: #111c;
-        font-size: 13px;
+        font-size: 9px;
         font-weight: 800;
       }
       .studio-showcase .studio-overlay p {
@@ -1431,7 +1914,7 @@
         text-shadow: 0 2px 8px #000;
       }
       .studio-showcase .studio-overlay h2 {
-        font-size: clamp(32px, 4vw, 50px);
+        font-size: clamp(22px, 2.8vw, 35px);
         line-height: 1.05;
         text-shadow: 0 2px 12px #0008;
       }
@@ -2045,8 +2528,1433 @@
         letter-spacing: 0.02em !important;
       }
     </style>
+    <style>
+      /* Homepage workspace styling based on the supplied reference. */
+      #home-page {
+        --paper: #f7f3f4;
+      }
+      #home-page .page-heading {
+        margin-bottom: 13px;
+      }
+      #home-page .page-heading p {
+        margin-top: 2px;
+        font-size: 10px;
+      }
+      #home-page .home-feature-grid {
+        grid-template-columns: minmax(0, 2.15fr) minmax(250px, 0.78fr);
+        gap: 14px;
+        align-items: start;
+      }
+      #home-page .frame-card {
+        padding: 0;
+        overflow: hidden;
+        border-color: #e8dfe4;
+        border-radius: 25px;
+        box-shadow: 0 10px 28px #281b240d;
+      }
+      #home-page .frame-stage {
+        min-height: 470px;
+        aspect-ratio: 1.38;
+        border-radius: 24px;
+        background: linear-gradient(135deg, #2e292e, #7b746f 55%, #c7b990);
+      }
+      #home-page .frame-stage:before {
+        background: linear-gradient(
+          90deg,
+          #1713185c,
+          transparent 35%,
+          transparent 72%,
+          #17131820
+        );
+      }
+      #home-page .frame-art:before {
+        background:
+          radial-gradient(circle at 35% 35%, #fff 0 3%, transparent 4%),
+          linear-gradient(135deg, #fff9, #f326a366);
+      }
+      #home-page .frame-title {
+        top: 22px;
+        right: 24px;
+        max-width: 46%;
+        font-size: clamp(25px, 3.5vw, 47px);
+        line-height: 0.88;
+        letter-spacing: 0.09em;
+      }
+      #home-page .frame-title small {
+        text-align: right;
+      }
+      #home-page .frame-caption {
+        left: 17px;
+        right: auto;
+        bottom: 18px;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+      #home-page .frame-caption span {
+        padding: 7px 11px;
+        border-color: #ffffffa0;
+        background: #171318a8;
+        font-size: 9px;
+      }
+      #home-page .home-right {
+        grid-template-rows: 62px 94px auto minmax(0, 1fr);
+        gap: 11px;
+      }
+      #home-page .profile-widget {
+        min-height: 62px;
+        padding: 10px 48px 10px 16px;
+        border-radius: 19px;
+        background: #151316 !important;
+      }
+      #home-page .profile-photo-wrap {
+        position: absolute;
+        right: 54px;
+        width: 34px;
+        height: 34px;
+        border: 1px solid #ffffff80;
+        border-radius: 10px;
+        background: #343035;
+      }
+      #home-page .profile-widget:after {
+        inset: 16px 17px auto auto;
+        width: 30px;
+        height: 27px;
+        background: repeating-linear-gradient(
+          115deg,
+          #fff 0 4px,
+          transparent 4px 8px
+        );
+        opacity: 0.95;
+      }
+      #home-page .profile-widget-copy {
+        position: static;
+        min-width: 0;
+      }
+      #home-page .profile-widget-copy .mini-label {
+        font-size: 7px;
+        letter-spacing: 0.15em;
+      }
+      #home-page .profile-widget-copy strong {
+        margin-top: 3px;
+        font: 800 12px/1.1 var(--sans);
+        letter-spacing: 0.01em;
+      }
+      #home-page .profile-widget-copy p {
+        display: none;
+      }
+      #home-page .home-profile-banner {
+        min-height: 94px;
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 11px;
+        border-color: #ece4e8;
+        border-radius: 19px;
+        background: #fffdfd;
+        box-shadow: 0 5px 18px #281b2408;
+      }
+      #home-page .home-profile-photo {
+        width: 68px;
+        height: 68px;
+        flex: none;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #f326a3, #ffe65c);
+        color: white;
+        font: 900 30px var(--cond);
+      }
+      #home-page .home-profile-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #home-page .home-profile-copy {
+        min-width: 0;
+      }
+      #home-page .home-profile-copy small {
+        color: #948b91;
+        font-size: 7px;
+        font-weight: 800;
+        letter-spacing: 0.13em;
+      }
+      #home-page .home-profile-copy strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 12px;
+      }
+      #home-page .home-profile-copy p {
+        margin: 3px 0 0;
+        color: #817b80;
+        font-size: 8px;
+      }
+      #home-page .home-prompt-card,
+      #home-page .focus-card {
+        padding: 16px;
+        border-color: #ece4e8;
+        border-radius: 20px;
+        background: #fffdfd;
+        box-shadow: 0 5px 18px #281b2408;
+      }
+      #home-page .home-prompt-card h2,
+      #home-page .focus-card .panel-heading h2 {
+        margin: 0;
+        font-size: 12px;
+        letter-spacing: -0.02em;
+      }
+      #home-page .home-prompt-head,
+      #home-page .focus-card .panel-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      #home-page .home-prompt-head small,
+      #home-page .focus-card .panel-heading > span {
+        color: #948b91;
+        font-size: 8px;
+      }
+      #home-page .home-prompt-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 12px;
+      }
+      #home-page .home-prompt-tags span {
+        padding: 6px 9px;
+        border: 1px solid #e9e1e5;
+        border-radius: 999px;
+        color: #625d62;
+        background: #fff;
+        font-size: 9px;
+        font-weight: 700;
+      }
+      #home-page .home-prompt-tags span:first-child {
+        border-color: #ffb3db;
+        color: #d91183;
+        background: #fff0f8;
+      }
+      #home-page .focus-card {
+        min-height: 0;
+      }
+      #home-page .focus-card .panel-heading {
+        margin-bottom: 10px;
+      }
+      #home-page .focus-list {
+        gap: 5px;
+      }
+      #home-page .focus-item {
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 9px;
+        padding: 5px;
+        border-radius: 12px;
+      }
+      #home-page .focus-thumb {
+        width: 44px;
+        height: 38px;
+        border-radius: 9px;
+      }
+      #home-page .focus-item strong {
+        font-size: 9px;
+      }
+      #home-page .focus-item small {
+        margin-top: 2px;
+        font-size: 8px;
+      }
+      #home-page .focus-summary {
+        margin-top: 9px;
+        padding: 9px 10px;
+        background: #f8f5f6;
+      }
+      #home-page .focus-summary p {
+        font-size: 9px;
+      }
+      @media (max-width: 850px) {
+        #home-page .home-feature-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        #home-page .home-right {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          grid-template-rows: 62px 94px auto auto;
+        }
+        #home-page .profile-widget {
+          grid-column: 1 / -1;
+        }
+        #home-page .home-profile-banner {
+          grid-column: 1 / -1;
+        }
+        #home-page .frame-stage {
+          min-height: 360px;
+        }
+      }
+      @media (max-width: 540px) {
+        #home-page .home-right {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: 62px 94px auto auto;
+        }
+        #home-page .frame-stage {
+          min-height: 280px;
+          aspect-ratio: 1.08;
+        }
+        #home-page .frame-title {
+          top: 17px;
+          right: 16px;
+          font-size: 29px;
+        }
+      }
+      /* Photo-led cards for the profile, gallery, and keyword pages. */
+      #home-page .profile-photo-wrap {
+        display: none;
+      }
+      #profile-page .profile-grid {
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        align-items: stretch;
+        gap: 14px;
+      }
+      #profile-page .profile-intro {
+        padding: 16px;
+        border-color: #ece4e8;
+        border-radius: 21px;
+        background: #fffdfd !important;
+        box-shadow: 0 8px 22px #281b240a;
+      }
+      #profile-page .profile-intro:before {
+        display: none;
+      }
+      #profile-page .profile-intro.has-photo h2,
+      #profile-page .profile-intro.has-photo p {
+        color: var(--ink);
+      }
+      #profile-page .profile-mark {
+        width: 100%;
+        height: clamp(260px, 42vw, 440px);
+        margin: 0 0 12px;
+        overflow: hidden;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #ead8dd, #dedce8);
+        transform: none;
+      }
+      #profile-page .profile-card-label {
+        color: #948b91;
+        font-size: 8px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+      }
+      #profile-page .profile-intro h2 {
+        margin: 8px 0;
+        font-size: 26px;
+      }
+      #profile-page .profile-intro p {
+        margin-bottom: 3px;
+        color: #817b80;
+        line-height: 1.8;
+      }
+      #profile-page > .profile-grid > .card:not(.profile-intro) {
+        border-color: #ece4e8;
+        border-radius: 21px;
+      }
+      #gallery-page .gallery-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+      #gallery-page .gallery-tile {
+        min-width: 0;
+        min-height: 0;
+        aspect-ratio: auto;
+        display: block;
+        padding: 8px 8px 10px;
+        overflow: hidden;
+        border: 1px solid #ece4e8;
+        border-radius: 19px;
+        background: #fff !important;
+        box-shadow: 0 7px 18px #281b240c;
+        text-align: center;
+        cursor: zoom-in;
+      }
+      #gallery-page .gallery-photo {
+        width: 100%;
+        aspect-ratio: 1;
+        display: block;
+        overflow: hidden;
+        border-radius: 12px;
+        background: linear-gradient(145deg, #e8d8df, #d8dcec);
+        background-size: cover;
+        background-position: center;
+      }
+      #gallery-page .gallery-tile:nth-child(3n + 2) .gallery-photo {
+        background-image: linear-gradient(145deg, #e7d9c9, #bca991);
+      }
+      #gallery-page .gallery-tile:nth-child(3n) .gallery-photo {
+        background-image: linear-gradient(145deg, #d3ddcf, #aab9a1);
+      }
+      #gallery-page .gallery-tile:before {
+        display: none;
+      }
+      #gallery-page .gallery-tile small {
+        display: none;
+      }
+      #gallery-page .gallery-tile strong {
+        display: block;
+        margin-top: 8px;
+        color: #29262a;
+        font-size: 10px;
+      }
+      #gallery-page .gallery-empty {
+        grid-column: 1 / -1;
+      }
+      #gallery-page .gallery-work-tags {
+        display: none !important;
+      }
+      #tags-page .tag-cloud {
+        gap: 6px;
+        padding: 16px;
+        border-color: #ece4e8;
+        border-radius: 20px;
+        background: #fffdfd;
+        box-shadow: 0 7px 18px #281b2408;
+      }
+      #tags-page .tag {
+        padding: 7px 10px;
+        border-color: #e9e1e5;
+        font-size: 9px;
+      }
+      #tags-page .tag-result {
+        padding: 18px;
+        border-color: #ece4e8;
+        border-radius: 20px;
+        background: #fffdfd;
+      }
+      #tags-page .tag-result-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      #tags-page .tag-result-head > span {
+        color: #948b91;
+        font-size: 8px;
+      }
+      #tags-page .tag-result h2 {
+        margin: 0;
+        font-size: 13px;
+      }
+      #tags-page .tag-result > p {
+        margin: 5px 0 0;
+        color: #948b91;
+        font-size: 9px;
+      }
+      #tags-page .tag-work-results {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 198px));
+        gap: 10px;
+      }
+      #tags-page .tag-work-item {
+        min-width: 0;
+        padding: 8px;
+        overflow: hidden;
+        border-color: #ece4e8;
+        border-radius: 16px;
+        box-shadow: 0 5px 14px #281b240a;
+      }
+      #tags-page .tag-work-thumb {
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 11px;
+        background: linear-gradient(145deg, #e8d8df, #d8dcec);
+        background-size: cover;
+        background-position: center;
+      }
+      #tags-page .tag-work-heading {
+        padding: 7px 2px 0;
+      }
+      #tags-page .tag-work-item strong {
+        font-size: 10px;
+      }
+      #tags-page .tag-work-open {
+        padding: 6px 8px;
+        font-size: 8px;
+      }
+      #tags-page .tag-work-item p,
+      #tags-page .tag-work-item small,
+      #tags-page .tag-work-hashtags {
+        display: none;
+      }
+      @media (max-width: 700px) {
+        #profile-page .profile-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        #gallery-page .gallery-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        #profile-page .profile-mark {
+          height: 64vw;
+          max-height: 390px;
+        }
+      }
+    </style>
+    <style>
+      #gallery-page .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 170px));
+        gap: 12px;
+      }
+      #gallery-page .gallery-photo {
+        max-height: 150px;
+        aspect-ratio: 1.08;
+      }
+      .manage-feature-count {
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .manage-work {
+        grid-template-columns: 50px minmax(0, 1fr) auto;
+      }
+      .manage-work-thumb {
+        width: 50px;
+        height: 46px;
+        background-size: cover;
+        background-position: center;
+      }
+      .manage-work-tools {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 7px;
+        padding: 8px 2px 2px;
+        border-top: 1px solid var(--line);
+      }
+      .manage-work-tools label {
+        color: #625d62;
+        font-size: 9px;
+        font-weight: 800;
+      }
+      .manage-work-tools textarea,
+      .manage-work-tools input {
+        width: 100%;
+        padding: 8px 9px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        font: 11px/1.5 var(--sans);
+      }
+      .manage-work-tools textarea {
+        min-height: 52px;
+        resize: vertical;
+      }
+      .manage-work-tools .manage-save-work {
+        justify-self: start;
+        padding: 7px 10px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--pink);
+        color: white;
+        font-size: 9px;
+        font-weight: 800;
+      }
+      .manage-work .manage-feature-toggle {
+        width: 100%;
+        padding: 7px 9px;
+        border: 1px solid #e9e1e5;
+        border-radius: 11px;
+        background: #fff;
+        color: var(--ink);
+        text-align: left;
+        white-space: normal;
+      }
+      .manage-work .manage-feature-toggle.selected {
+        border-color: #f5a7d3;
+        background: #fff0f8;
+        color: #ad0870;
+      }
+      .manage-work details {
+        margin-top: 7px;
+      }
+      .manage-work details summary {
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 9px;
+      }
+      .manage-work .manage-work-tools {
+        margin-top: 7px;
+      }
+      .manage-work .manage-feature-toggle:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .manage-delete-list {
+        display: grid;
+        gap: 7px;
+        margin: 12px 0;
+      }
+      .manage-dropdown {
+        position: relative;
+        margin: 10px 0;
+      }
+      .manage-dropdown > summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 13px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 700;
+        list-style: none;
+      }
+      .manage-dropdown > summary::-webkit-details-marker {
+        display: none;
+      }
+      .manage-dropdown > summary:after {
+        content: "⌄";
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .manage-dropdown[open] > summary {
+        border-color: #f4a8d5;
+        border-radius: 12px 12px 0 0;
+      }
+      .manage-dropdown-options {
+        display: grid;
+        max-height: 230px;
+        gap: 2px;
+        padding: 6px;
+        overflow-y: auto;
+        border: 1px solid #f4a8d5;
+        border-top: 0;
+        border-radius: 0 0 12px 12px;
+        background: white;
+      }
+      .manage-dropdown-option {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+        padding: 8px;
+        border-radius: 8px;
+        font-size: 10px;
+        cursor: pointer;
+      }
+      .manage-dropdown-option:hover {
+        background: #fff5fa;
+      }
+      .manage-dropdown-option input {
+        flex: none;
+        accent-color: var(--pink);
+      }
+      .manage-dropdown-option span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .manage-video-description {
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px solid var(--line);
+      }
+      .manage-video-description > summary {
+        color: #625d62;
+        cursor: pointer;
+        font-size: 10px;
+        font-weight: 800;
+      }
+      .manage-video-description-fields {
+        display: grid;
+        gap: 7px;
+        margin-top: 10px;
+      }
+      .manage-video-description-fields label {
+        color: #625d62;
+        font-size: 9px;
+        font-weight: 800;
+      }
+      .manage-video-description-fields select,
+      .manage-video-description-fields input,
+      .manage-video-description-fields textarea {
+        width: 100%;
+        padding: 9px 10px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: white;
+        font: 11px/1.5 var(--sans);
+      }
+      .manage-video-description-fields textarea {
+        min-height: 82px;
+        resize: vertical;
+      }
+      .manage-video-description-fields .action-button {
+        justify-self: start;
+        padding: 8px 12px;
+        font-size: 10px;
+      }
+      .manage-upload-dropdown {
+        min-width: 0;
+        padding: 11px 12px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        background: #fff;
+      }
+      .manage-upload-dropdown[open] {
+        border-color: #f4a8d5;
+      }
+      .manage-upload-dropdown > summary {
+        color: #29262a;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 800;
+        list-style: none;
+      }
+      .manage-upload-dropdown > summary::-webkit-details-marker {
+        display: none;
+      }
+      .manage-upload-dropdown > summary:after {
+        content: "⌄";
+        float: right;
+        color: var(--muted);
+      }
+      .manage-upload-dropdown[open] > summary {
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--line);
+      }
+      .manage-upload-dropdown .url-form {
+        margin-top: 11px;
+      }
+      .manage-edit-list {
+        display: grid;
+        gap: 6px;
+        margin-top: 12px;
+      }
+      .manage-work-edit > summary {
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 9px;
+      }
+      .manage-work-edit .manage-work-tools {
+        margin-top: 7px;
+      }
+      .manage-delete-row {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 10px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: white;
+        font-size: 10px;
+      }
+      .manage-delete-row input {
+        accent-color: var(--pink);
+      }
+      .manage-delete-row span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      #delete-selected-works {
+        background: #c83262;
+      }
+      .manage-delete-card {
+        margin: 0;
+      }
+      .photo-settings-card {
+        grid-column: 1 / -1;
+        grid-row: 1;
+      }
+      .manage-upload-card {
+        grid-column: 1;
+        grid-row: 2;
+      }
+      .manage-feature-column {
+        grid-column: 2;
+        grid-row: 2;
+        display: grid;
+        align-content: start;
+        gap: 0;
+      }
+      .manage-work {
+        display: block;
+        padding: 9px;
+      }
+      .photo-url-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 15px;
+      }
+      .studio-upload-list {
+        display: grid;
+        max-height: min(68vh, 590px);
+        gap: 12px;
+        margin-top: 14px;
+        padding: 2px 7px 2px 2px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-gutter: stable;
+      }
+      #studio-page.has-uploaded-videos .studio-showcase {
+        display: none;
+      }
+      .studio-upload-card {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(150px, 0.75fr) minmax(0, 1.25fr);
+        align-items: center;
+        gap: 16px;
+        padding: 12px;
+        border: 1px solid #ece4e8;
+        border-radius: 18px;
+        background: #fffdfd;
+        box-shadow: 0 5px 16px #281b2408;
+      }
+      .studio-upload-thumb {
+        width: 100%;
+        aspect-ratio: 1.5;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #f4a8d4, #c2d7f0);
+        background-size: cover;
+        background-position: center;
+      }
+      .studio-upload-media {
+        position: relative;
+      }
+      .studio-upload-copy small {
+        color: #948b91;
+        font-size: 8px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+      }
+      .studio-upload-copy h2 {
+        margin: 5px 0;
+        font-size: 16px;
+      }
+      .studio-upload-copy p {
+        margin: 0;
+        color: #817b80;
+        font-size: 10px;
+        line-height: 1.6;
+      }
+      .studio-upload-meta {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px 12px;
+        margin-top: 10px;
+        padding-top: 9px;
+        border-top: 1px solid var(--line);
+      }
+      .studio-upload-meta div {
+        min-width: 0;
+      }
+      .studio-upload-meta small {
+        display: block;
+        font-size: 7px;
+      }
+      .studio-upload-meta span {
+        display: block;
+        margin-top: 3px;
+        color: #625d62;
+        font-size: 9px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+      }
+      .studio-upload-play {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 42px;
+        height: 42px;
+        transform: translate(-50%, -50%);
+        border: 0;
+        border-radius: 50%;
+        background: var(--yellow);
+        font-size: 16px;
+      }
+      #home-page .frame-stage {
+        container-type: inline-size;
+      }
+      #home-page .frame-title {
+        right: clamp(10px, 3cqw, 24px);
+        width: min(62%, 340px);
+        max-width: none;
+        font-size: clamp(13px, 5.4cqw, 47px);
+        overflow-wrap: anywhere;
+      }
+      #home-page .frame-title small {
+        font-size: clamp(6px, 1.1cqw, 9px);
+        overflow-wrap: normal;
+      }
+      #home-page #frame-title {
+        display: block;
+        max-height: none;
+        overflow: visible;
+        overflow-wrap: anywhere;
+      }
+      #home-page .frame-caption {
+        right: 12px;
+        max-width: calc(100% - 29px);
+      }
+      #home-page .frame-caption span {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+      @media (max-width: 700px) {
+        .photo-settings-card,
+        .manage-upload-card,
+        .manage-feature-column {
+          grid-column: 1;
+          grid-row: auto;
+        }
+        #gallery-page .gallery-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .studio-upload-card {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 10px;
+        }
+        .studio-upload-thumb {
+          aspect-ratio: 1.65;
+        }
+        .photo-url-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+    </style>
+    <style>
+      /* Mobile layout refinements */
+      @media (max-width: 700px) {
+        html,
+        body {
+          width: 100%;
+          max-width: 100%;
+          overflow-x: clip;
+        }
+        body.portfolio-visible {
+          padding: 8px;
+          background-size: contain;
+          background-position: center;
+        }
+        .app-window {
+          width: 100%;
+          min-height: calc(100dvh - 16px);
+          border: 1px solid #e5dfe2;
+          border-radius: 18px;
+          grid-template-rows: 48px minmax(0, 1fr);
+        }
+        .app-body {
+          min-height: 0;
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: minmax(0, 1fr) auto;
+        }
+        .topbar {
+          grid-template-columns: 38px minmax(0, 1fr);
+          padding-inline: 10px;
+        }
+        .traffic { gap: 4px; }
+        .traffic i { width: 7px; height: 7px; }
+        .window-title {
+          min-width: 0;
+          overflow: hidden;
+          text-align: center;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 9px;
+        }
+        .top-right { display: none; }
+        .main-area {
+          grid-row: 1;
+          grid-column: 1;
+          min-width: 0;
+          min-height: 0;
+          padding: 14px 12px calc(16px + env(safe-area-inset-bottom));
+          overflow-x: hidden;
+          overflow-y: auto;
+          overscroll-behavior-y: contain;
+          -webkit-overflow-scrolling: touch;
+        }
+        .sidebar {
+          position: relative;
+          grid-row: 2;
+          grid-column: 1;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          gap: 4px;
+          min-width: 0;
+          min-height: 62px;
+          padding: 6px 7px calc(6px + env(safe-area-inset-bottom));
+          border-top: 1px solid var(--line);
+          border-right: 0;
+          background: #fffdfdf5;
+        }
+        .brand {
+          display: grid;
+          flex: 0 0 34px;
+          width: 34px;
+          height: 34px;
+          min-width: 34px;
+          margin: 0;
+          border-radius: 11px;
+          font-size: 17px;
+        }
+        .sidebar-spacer { display: none; }
+        .side-nav {
+          display: flex;
+          flex: 1 1 auto;
+          justify-content: space-around;
+          gap: 2px;
+          width: auto;
+          min-width: 0;
+        }
+        .nav-btn {
+          flex: 1 1 0;
+          width: auto;
+          min-width: 0;
+          min-height: 48px;
+          padding: 4px 1px;
+          border-radius: 11px;
+          font-size: clamp(7px, 2vw, 9px);
+        }
+        .nav-btn .nav-icon { font-size: 15px; }
+        .avatar {
+          flex: 0 0 32px;
+          width: 32px;
+          height: 32px;
+          margin: 0;
+        }
+        .page-heading {
+          align-items: flex-start;
+          flex-wrap: wrap;
+          gap: 6px 12px;
+          margin-bottom: 14px;
+        }
+        .page-heading > :last-child { margin-left: auto; }
+        .page-heading h1 {
+          font-size: clamp(27px, 8vw, 38px);
+          overflow-wrap: anywhere;
+        }
+        .page-heading p {
+          max-width: 100%;
+          font-size: 11px;
+          line-height: 1.65;
+        }
+        .home-feature-grid,
+        #home-page .home-feature-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 11px;
+        }
+        #home-page .frame-card { padding: 10px; }
+        #home-page .frame-stage {
+          min-height: 0;
+          aspect-ratio: 1.22;
+        }
+        #home-page .frame-title {
+          top: 12px;
+          right: 12px;
+          width: min(62%, 240px);
+          font-size: clamp(18px, 6cqw, 34px);
+          line-height: 0.9;
+        }
+        #home-page .frame-title small {
+          margin-bottom: 5px;
+          font-size: clamp(7px, 1.5cqw, 9px);
+        }
+        #home-page .frame-caption {
+          left: 9px;
+          right: 9px;
+          bottom: 9px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          gap: 5px;
+          max-width: calc(100% - 18px);
+        }
+        #home-page .frame-caption span {
+          padding: 6px 8px;
+          font-size: 9px;
+          line-height: 1.3;
+        }
+        #home-page .home-right {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: auto;
+          gap: 10px;
+        }
+        #home-page .profile-widget,
+        #home-page .home-profile-banner,
+        #home-page .home-prompt-card,
+        #home-page .focus-card {
+          grid-column: 1;
+          min-width: 0;
+        }
+        #profile-page .profile-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 11px;
+        }
+        #profile-page .profile-mark {
+          height: min(64vw, 360px);
+          min-height: 210px;
+        }
+        #gallery-page .gallery-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+        }
+        #gallery-page .gallery-tile {
+          min-width: 0;
+          padding: 8px;
+        }
+        #gallery-page .gallery-photo {
+          width: 100%;
+          max-height: none;
+          aspect-ratio: 1;
+        }
+        .studio-showcase,
+        #studio-page.has-uploaded-videos .studio-showcase {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .studio-showcase .studio-feature,
+        .studio-showcase .studio-overlay {
+          min-width: 0;
+          min-height: 240px;
+        }
+        .studio-project-copy { padding: 20px; }
+        .studio-meta-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 12px;
+        }
+        .manage-grid { grid-template-columns: minmax(0, 1fr); }
+        .manage-feature-column,
+        .photo-settings-card,
+        .manage-upload-card {
+          grid-column: 1;
+          min-width: 0;
+        }
+        .manage-work { min-width: 0; }
+        .manage-work-tools textarea,
+        .url-form input,
+        .url-form textarea,
+        input,
+        textarea,
+        select {
+          font-size: 16px;
+        }
+        .url-form .action-button,
+        .manage-grid .action-button {
+          min-height: 42px;
+        }
+        .video-dialog {
+          width: calc(100vw - 20px);
+          max-width: 560px;
+          max-height: calc(100dvh - 24px);
+          overflow-y: auto;
+          padding: 10px;
+        }
+        .video-dialog video,
+        .video-dialog iframe {
+          max-height: 62dvh;
+        }
+        .intro-scene.is-fullscreen .safari-window {
+          position: fixed;
+          inset: 0;
+          width: 100vw;
+          height: 100dvh;
+        }
+      }
+      @media (max-width: 390px) {
+        body.portfolio-visible { padding: 5px; }
+        .app-window {
+          min-height: calc(100dvh - 10px);
+          border-radius: 15px;
+        }
+        .sidebar {
+          gap: 2px;
+          padding-inline: 5px;
+        }
+        .brand {
+          flex-basis: 31px;
+          width: 31px;
+          height: 31px;
+          min-width: 31px;
+        }
+        .nav-btn { font-size: 7px; }
+        .avatar {
+          flex-basis: 30px;
+          width: 30px;
+          height: 30px;
+        }
+        .main-area { padding-inline: 9px; }
+        #home-page .frame-card { padding: 8px; }
+        #home-page .frame-stage { aspect-ratio: 1.16; }
+        #home-page .frame-title { width: 64%; }
+        .manage-card,
+        .card { padding: 13px; }
+      }
+      @media (max-width: 700px) and (orientation: landscape) {
+        .app-window { min-height: calc(100dvh - 16px); }
+        .app-body { min-height: 0; }
+        .sidebar { min-height: 56px; }
+        .main-area { padding-block: 10px; }
+      }
+    </style>
   </head>
-  <body>
+  <body class="intro-pending">
+    <section
+      class="intro-scene"
+      id="intro-scene"
+      aria-label="Mac 바탕화면에서 포트폴리오 열기"
+      hidden
+    >
+      <div class="stage" id="stage">
+        <img
+          class="desktop-image"
+          id="desktop-image"
+          src="빈티지%20감성의%20macOS%20크리에이티브%20데스크톱.png"
+          alt="맥북 바탕화면 스크린샷"
+        />
+        <div class="scene-dock" aria-label="Dock 앱">
+          <button
+            class="dock-app"
+            data-app="premiere"
+            aria-label="Premiere Pro"
+            tabindex="-1"
+          >
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect width="64" height="64" rx="14" fill="#17115b" />
+              <text
+                x="9"
+                y="45"
+                fill="#9d92ff"
+                font-size="39"
+                font-family="Arial"
+                font-weight="700"
+              >
+                Pr
+              </text>
+            </svg>
+          </button>
+          <button
+            class="dock-app"
+            data-app="after-effects"
+            aria-label="After Effects"
+            tabindex="-1"
+          >
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect width="64" height="64" rx="14" fill="#17115b" />
+              <text
+                x="7"
+                y="44"
+                fill="#a79cff"
+                font-size="31"
+                font-family="Arial"
+                font-weight="700"
+              >
+                Ae
+              </text>
+            </svg>
+          </button>
+          <button
+            class="dock-app"
+            data-app="photoshop"
+            aria-label="Photoshop"
+            tabindex="-1"
+          >
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect width="64" height="64" rx="14" fill="#062e50" />
+              <text
+                x="6"
+                y="45"
+                fill="#39baff"
+                font-size="36"
+                font-family="Arial"
+                font-weight="700"
+              >
+                Ps
+              </text>
+            </svg>
+          </button>
+          <button
+            class="dock-app"
+            data-app="illustrator"
+            aria-label="Illustrator"
+            tabindex="-1"
+          >
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect width="64" height="64" rx="14" fill="#541a05" />
+              <text
+                x="8"
+                y="45"
+                fill="#ff9c27"
+                font-size="36"
+                font-family="Arial"
+                font-weight="700"
+              >
+                Ai
+              </text>
+            </svg>
+          </button>
+          <button
+            class="dock-app"
+            data-app="photos"
+            aria-label="사진"
+            tabindex="-1"
+          >
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect width="64" height="64" rx="14" fill="#fff" />
+              <g transform="translate(32 32)">
+                <path d="M0-23Q8-23 7-12L0 0-7-12Q-8-23 0-23" fill="#f45b69" />
+                <path
+                  d="M20-12Q27-7 20 2L6 4 13-8Q19-14 20-12"
+                  fill="#ff9d3d"
+                />
+                <path
+                  d="M20 12Q16 20 6 14L0 2 14 2Q23 5 20 12"
+                  fill="#ffe04a"
+                />
+                <path d="M0 23Q-8 23-7 12L0 0 7 12Q8 23 0 23" fill="#69c85b" />
+                <path
+                  d="M-20 12Q-27 7-20-2L-6-4-13 8Q-19 14-20 12"
+                  fill="#45bfc7"
+                />
+                <path
+                  d="M-20-12Q-16-20-6-14L0-2-14-2Q-23-5-20-12"
+                  fill="#8d6be8"
+                />
+              </g>
+            </svg>
+          </button>
+          <button
+            class="dock-app"
+            data-app="messages"
+            aria-label="메시지"
+            tabindex="-1"
+          >
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect width="64" height="64" rx="16" fill="#39cf62" />
+              <path
+                d="M13 20q0-7 9-7h21q9 0 9 8v17q0 8-9 8H31l-12 7 2-8q-8-3-8-10Z"
+                fill="#fff"
+              />
+            </svg>
+          </button>
+          <button
+            class="dock-app"
+            data-app="phone"
+            aria-label="전화"
+            tabindex="-1"
+          >
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect width="64" height="64" rx="16" fill="#44c95a" />
+              <path
+                d="M20 12q-5 0-7 7-2 9 9 22t20 15q8 2 11-4l3-7-13-8-6 6q-5-2-9-7t-5-9l5-6-8-9Z"
+                fill="#fff"
+              />
+            </svg>
+          </button>
+          <button
+            class="dock-app"
+            data-app="safari"
+            id="safari-icon"
+            aria-label="Safari 열기"
+          >
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <circle cx="32" cy="32" r="31" fill="#f7faff" />
+              <circle cx="32" cy="32" r="26" fill="#1e9be8" />
+              <circle cx="32" cy="32" r="22" fill="#b5e9ff" />
+              <path
+                d="m42 17-7 20-17 10 8-19Z"
+                fill="#f04444"
+                stroke="#fff"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+              <path
+                d="m22 47 7-19 17-11-8 20Z"
+                fill="#fff"
+                stroke="#fff"
+                stroke-width="1"
+                stroke-linejoin="round"
+              />
+              <circle cx="32" cy="32" r="3" fill="#fff" />
+            </svg>
+          </button>
+          <button
+            class="dock-app"
+            data-app="settings"
+            aria-label="시스템 설정"
+            tabindex="-1"
+          >
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect width="64" height="64" rx="15" fill="#d8dce1" />
+              <circle cx="32" cy="32" r="22" fill="#858c95" />
+              <circle cx="32" cy="32" r="17" fill="#c9cdd2" />
+              <path
+                d="M32 11v42M11 32h42M17 17l30 30m0-30L17 47"
+                stroke="#8a9098"
+                stroke-width="5"
+              />
+              <circle cx="32" cy="32" r="9" fill="#737b84" />
+            </svg>
+          </button>
+        </div>
+        <div class="desktop-cursor" id="desktop-cursor" aria-hidden="true">
+          <svg viewBox="0 0 36 48">
+            <path
+              d="M2 2v37l10-10 7 16 7-3-7-15h14Z"
+              fill="#fff"
+              stroke="#111"
+              stroke-width="2.4"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <div
+          class="safari-window"
+          id="safari-window"
+          aria-label="Safari 포트폴리오 창"
+        >
+          <div class="safari-toolbar">
+            <div class="safari-lights" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
+            <div class="safari-address"><span id="typed-address"></span></div>
+            <div class="safari-actions" aria-hidden="true">↻ ⋯</div>
+          </div>
+          <div class="safari-content">
+            <section class="safari-portfolio-hero">
+              <div class="safari-portfolio-copy">
+                <p class="eyebrow">VIDEO EDITOR · PORTFOLIO</p>
+                <h1>YEOM<br />OKSEON</h1>
+                <p>
+                  이야기의 리듬과 장면의 흐름을 편집하는 영상 편집자
+                  염옥선입니다.
+                </p>
+              </div>
+            </section>
+            <section class="safari-lower-section">
+              <p class="eyebrow">SELECTED WORKS</p>
+              <h2>영상으로 이어지는 이야기</h2>
+            </section>
+          </div>
+        </div>
+      </div>
+      <button class="skip-intro" id="skip-intro" type="button">건너뛰기</button>
+      <button
+        class="sound-toggle"
+        id="sound-toggle"
+        type="button"
+        aria-pressed="false"
+      >
+        소리 켜기
+      </button>
+    </section>
+    <div class="intro-tools">
+      <button
+        class="intro-tool-button"
+        id="intro-replay"
+        type="button"
+        aria-label="인트로 다시 보기"
+        title="인트로 다시 보기"
+      >
+        ↻
+      </button>
+    </div>
     <div class="app-window">
       <header class="topbar">
         <div class="traffic" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -2058,19 +3966,19 @@
           <button class="brand" data-page="home" aria-label="홈">Y</button>
           <nav class="side-nav" aria-label="페이지 메뉴">
             <button class="nav-btn active" data-page="home">
-              <span class="nav-icon">⌂</span><span>홈</span>
+              <span class="nav-icon">⌂</span><span>HOME</span>
             </button>
             <button class="nav-btn" data-page="profile">
-              <span class="nav-icon">◉</span><span>프로필</span>
+              <span class="nav-icon">◉</span><span>PROFLE</span>
             </button>
             <button class="nav-btn" data-page="studio">
-              <span class="nav-icon">▷</span><span>스튜디오</span>
+              <span class="nav-icon">▷</span><span>STUDIO</span>
             </button>
             <button class="nav-btn" data-page="gallery">
-              <span class="nav-icon">▧</span><span>갤러리</span>
+              <span class="nav-icon">▧</span><span>GALLERY</span>
             </button>
             <button class="nav-btn" data-page="tags">
-              <span class="nav-icon">#</span><span>태그</span>
+              <span class="nav-icon">#</span><span>TAGS</span>
             </button>
           </nav>
           <div class="sidebar-spacer"></div>
@@ -2131,18 +4039,40 @@
                 <article class="card profile-widget">
                   <div class="profile-photo-wrap" id="profile-photo-wrap">
                     <span id="profile-initial">R</span
-                    ><img id="profile-photo" alt="염옥선 프로필 사진" hidden />
+                    ><img id="profile-photo" alt="사진" hidden />
                   </div>
                   <div class="profile-widget-copy">
-                    <span class="mini-label">PERSONAL PORTFOLIO · 2026</span
-                    ><strong>YEOM OKSEON</strong>
+                    <span class="mini-label">CREATIVE WORKSPACE</span
+                    ><strong>RE:FRAME STUDIO</strong>
                     <p>염옥선<br />SHORT-FORM · YOUTUBE EDITOR</p>
                   </div>
                 </article>
+                <article class="card home-profile-banner">
+                  <div class="home-profile-photo">
+                    <span id="home-profile-initial">Y</span>
+                    <img
+                      id="home-profile-banner-image"
+                      alt="프로필 사진"
+                      hidden
+                    />
+                  </div>
+                  <div class="home-profile-copy">
+                    <small>PROFILE · VIDEO EDITOR</small>
+                    <strong>염옥선</strong>
+                    <p>SHORT-FORM · YOUTUBE EDITOR</p>
+                  </div>
+                </article>
+                <article class="card home-prompt-card">
+                  <div class="home-prompt-head">
+                    <h2>Current Prompt</h2>
+                    <small id="home-prompt-count">00 tags</small>
+                  </div>
+                  <div class="home-prompt-tags" id="home-prompt-tags"></div>
+                </article>
                 <article class="card focus-card">
                   <div class="panel-heading">
-                    <h2>CURRENT FOCUS</h2>
-                    <span id="focus-count">SELECTED 00</span>
+                    <h2>Recent Frames</h2>
+                    <span id="focus-count">00 videos</span>
                   </div>
                   <div class="focus-list" id="focus-list">
                     <button class="focus-item active" data-work="0">
@@ -2179,25 +4109,21 @@
           <section class="page" id="profile-page" hidden>
             <div class="page-heading">
               <div>
-                <span class="kicker">01 / PROFILE · RESUME</span>
-                <h1>프로필</h1>
-                <p>
-                  관찰한 것을 나만의 시선으로 정리하고 결과물로 만드는
-                  크리에이터입니다.
-                </p>
+                <span class="kicker">PROFILE · RESUME</span>
+                <h1>About Me</h1>
+                <p>영상 편집자 염옥선의 소개와 프로그램 숙련도</p>
               </div>
             </div>
             <div class="profile-grid">
               <article class="card profile-intro">
                 <div class="profile-mark">
                   <span id="profile-mark-initial">R.</span
-                  ><img
-                    id="profile-mark-image"
-                    alt="염옥선 프로필 사진"
-                    hidden
-                  />
+                  ><img id="profile-mark-image" alt="사진" hidden />
                 </div>
-                <h2>안녕하세요,<br />영상편집자 염옥선입니다.</h2>
+                <span class="profile-card-label"
+                  >VIDEO EDITOR · YEOM OKSEON</span
+                >
+                <h2>염옥선</h2>
                 <p>
                   숏폼의 빠른 호흡부터 유튜브 콘텐츠의 긴 이야기까지, 콘텐츠에
                   어울리는 리듬과 감정선을 고민합니다.
@@ -2264,8 +4190,8 @@
             <div class="page-heading studio-heading">
               <div>
                 <span class="kicker">A SELECTION OF STORIES</span>
-                <h1>스튜디오</h1>
-                <p>장면과 감정이 만나는 순간을 편집합니다.</p>
+                <h1>Studio</h1>
+                <p>등록한 영상 작업을 순서대로 확인하세요.</p>
               </div>
             </div>
             <div class="studio-showcase">
@@ -2312,15 +4238,14 @@
                 </div>
               </article>
             </div>
+            <div class="studio-upload-list" id="studio-upload-list"></div>
           </section>
           <section class="page" id="gallery-page" hidden>
             <div class="page-heading">
               <div>
-                <span class="kicker">03 / GALLERY · STILL IMAGE</span>
-                <h1>이미지편집</h1>
-                <p>
-                  빛과 색, 사물을 다른시선으로 편집한 이미지 작업을 모았습니다.
-                </p>
+                <span class="kicker">RE:FRAME · IMAGE COLLECTION</span>
+                <h1>Gallery</h1>
+                <p>업로드한 이미지 작업을 작은 미리보기로 모았습니다.</p>
               </div>
             </div>
             <div class="gallery-grid" id="gallery-grid"></div>
@@ -2328,12 +4253,9 @@
           <section class="page" id="tags-page" hidden>
             <div class="page-heading">
               <div>
-                <span class="kicker">04 / TAGS · KEYWORD INDEX</span>
-                <h1>태그</h1>
-                <p>
-                  작업을 이루는 관심사와 키워드입니다. 태그를 눌러 선택해
-                  보세요.
-                </p>
+                <span class="kicker">KEYWORDS · MEDIA INDEX</span>
+                <h1>Tags</h1>
+                <p>업로드한 이미지와 영상에 연결된 키워드입니다.</p>
               </div>
             </div>
             <div class="card tag-cloud" id="tag-cloud">
@@ -2351,10 +4273,11 @@
               ><button class="tag">#협업</button>
             </div>
             <article class="card tag-result">
-              <h2 id="tag-title">키워드를 선택하세요</h2>
-              <p id="tag-copy">
-                선택한 키워드를 포트폴리오의 관심 분야로 표시합니다.
-              </p>
+              <div class="tag-result-head">
+                <h2 id="tag-title">Tagged media</h2>
+                <span id="tag-result-count">0 items</span>
+              </div>
+              <p id="tag-copy">태그를 선택하면 연결된 작업을 표시합니다.</p>
               <div
                 class="tag-work-results"
                 id="tag-work-results"
@@ -2369,168 +4292,256 @@
                 <h1>위젯 관리</h1>
                 <p>스튜디오·갤러리 작업물과 홈 대표 작업을 관리하세요.</p>
               </div>
-              <button class="secondary-button" id="manage-home">
-                홈으로 돌아가기
-              </button>
             </div>
             <div class="manage-grid">
-              <article class="card">
+              <article class="card photo-settings-card">
                 <div class="panel-heading">
-                  <h2>홈 프로필 사진</h2>
-                  <span>HOME CARD</span>
+                  <h2>프로필 사진 배너</h2>
+                  <span>HOME · PROFILE</span>
                 </div>
-                <div class="url-form">
-                  <label for="home-photo-url">홈 프로필 사진 URL</label>
-                  <input
-                    id="home-photo-url"
-                    type="url"
-                    placeholder="https://example.com/home-profile.jpg"
-                  />
-                  <button
-                    class="action-button"
-                    id="save-home-photo"
-                    type="button"
-                  >
-                    홈 사진 적용
-                  </button>
-                  <p class="manage-note" id="home-photo-note">
-                    홈 화면 프로필 카드에 표시할 사진 링크입니다.
-                  </p>
+                <div class="photo-url-grid">
+                  <div class="url-form">
+                    <label for="home-photo-url">홈 프로필 사진 URL</label>
+                    <input
+                      id="home-photo-url"
+                      type="url"
+                      placeholder="이미지 URL"
+                    />
+                    <button
+                      class="action-button"
+                      id="save-home-photo"
+                      type="button"
+                    >
+                      홈 사진 적용
+                    </button>
+                    <p class="manage-note" id="home-photo-note">
+                      홈 프로필 배너에 표시할 사진 링크입니다.
+                    </p>
+                  </div>
+                  <div class="url-form">
+                    <label for="profile-page-photo-url"
+                      >프로필 페이지 사진 URL</label
+                    >
+                    <input
+                      id="profile-page-photo-url"
+                      type="url"
+                      placeholder="이미지 URL"
+                    />
+                    <button
+                      class="action-button"
+                      id="save-profile-page-photo"
+                      type="button"
+                    >
+                      프로필 사진 적용
+                    </button>
+                    <p class="manage-note" id="profile-page-photo-note">
+                      프로필 페이지 배너에 표시할 사진 링크입니다.
+                    </p>
+                  </div>
                 </div>
               </article>
-              <article class="card">
-                <div class="panel-heading">
-                  <h2>프로필 페이지 사진</h2>
-                  <span>PROFILE PAGE</span>
-                </div>
-                <div class="url-form">
-                  <label for="profile-page-photo-url"
-                    >프로필 페이지 사진 URL</label
-                  >
-                  <input
-                    id="profile-page-photo-url"
-                    type="url"
-                    placeholder="https://example.com/profile-page.jpg"
-                  />
-                  <button
-                    class="action-button"
-                    id="save-profile-page-photo"
-                    type="button"
-                  >
-                    프로필 사진 적용
-                  </button>
-                  <p class="manage-note" id="profile-page-photo-note">
-                    프로필 페이지 소개 카드에 표시할 사진 링크입니다.
-                  </p>
-                </div>
-              </article>
-              <article class="card">
+              <article class="card manage-upload-card">
                 <div class="source-forms">
-                  <form class="url-form" id="studio-work-form">
-                    <h3>스튜디오 영상 추가</h3>
-                    <label for="studio-work-title">영상 제목</label
-                    ><input
-                      id="studio-work-title"
-                      required
-                      placeholder="작업 제목"
-                    /><label for="studio-work-url">영상 URL</label
-                    ><input
-                      id="studio-work-url"
-                      type="url"
-                      required
-                      placeholder="Google Drive 공유 링크 또는 직접 MP4 링크"
-                    /><label for="studio-work-description">영상 코멘트</label
-                    ><textarea
-                      id="studio-work-description"
-                      required
-                      placeholder="영상 소개"
-                    ></textarea
-                    ><label for="studio-work-editing-notes">편집 노트</label
-                    ><textarea
-                      id="studio-work-editing-notes"
-                      required
-                      placeholder="편집 방식과 영상 흐름"
-                    ></textarea
-                    ><label for="studio-work-tags">해시태그</label
-                    ><input
-                      id="studio-work-tags"
-                      placeholder="#영상제작, #브랜딩, #스토리텔링"
-                    /><label for="studio-work-tools">사용 도구</label
-                    ><input
-                      id="studio-work-tools"
-                      required
-                      placeholder="예: 프리미어 프로"
-                    /><label for="studio-work-year">제작 연도</label
-                    ><input
-                      id="studio-work-year"
-                      inputmode="numeric"
-                      required
-                      placeholder="2026"
-                    /><label for="studio-work-duration"
-                      >재생 시간 (예: 01:23)</label
-                    ><input
-                      id="studio-work-duration"
-                      placeholder="03:12"
-                    /><button class="action-button" type="submit">
-                      스튜디오 영상 등록
-                    </button>
-                  </form>
-                  <form class="url-form" id="gallery-work-form">
-                    <h3>갤러리 이미지 추가</h3>
-                    <label for="gallery-work-title">이미지 제목</label
-                    ><input
-                      id="gallery-work-title"
-                      required
-                      placeholder="작업 제목"
-                    /><label for="gallery-work-url">이미지 URL</label
-                    ><input
-                      id="gallery-work-url"
-                      type="url"
-                      required
-                      placeholder="Google Drive 공유 링크 또는 이미지 URL"
-                    /><label for="gallery-work-description">이미지 코멘트</label
-                    ><textarea
-                      id="gallery-work-description"
-                      placeholder="짧은 소개와 코멘트"
-                    ></textarea
-                    ><label for="gallery-work-tags">해시태그</label
-                    ><input
-                      id="gallery-work-tags"
-                      placeholder="#사진, #디자인, #기록"
-                    /><button class="action-button" type="submit">
-                      갤러리 이미지 등록
-                    </button>
-                  </form>
+                  <details class="manage-upload-dropdown">
+                    <summary>스튜디오 영상 추가</summary>
+                    <form class="url-form" id="studio-work-form">
+                      <label for="studio-work-title">영상 제목</label
+                      ><input
+                        id="studio-work-title"
+                        required
+                        placeholder="작업 제목"
+                      /><label for="studio-work-url">영상 URL</label
+                      ><input
+                        id="studio-work-url"
+                        type="url"
+                        required
+                        placeholder="Google Drive 공유 링크 또는 직접 MP4 링크"
+                      /><label for="studio-work-description">영상 코멘트</label
+                      ><textarea
+                        id="studio-work-description"
+                        required
+                        placeholder="영상 소개"
+                      ></textarea
+                      ><label for="studio-work-editing-notes">편집 노트</label
+                      ><textarea
+                        id="studio-work-editing-notes"
+                        required
+                        placeholder="편집 방식과 영상 흐름"
+                      ></textarea
+                      ><label for="studio-work-tags">해시태그</label
+                      ><input
+                        id="studio-work-tags"
+                        placeholder="#영상제작, #브랜딩, #스토리텔링"
+                      /><label for="studio-work-tools">사용 도구</label
+                      ><input
+                        id="studio-work-tools"
+                        required
+                        placeholder="예: 프리미어 프로"
+                      /><label for="studio-work-year">제작 연도</label
+                      ><input
+                        id="studio-work-year"
+                        inputmode="numeric"
+                        required
+                        placeholder="2026"
+                      /><label for="studio-work-duration"
+                        >재생 시간 (예: 01:23)</label
+                      ><input
+                        id="studio-work-duration"
+                        placeholder="03:12"
+                      /><button class="action-button" type="submit">
+                        스튜디오 영상 등록
+                      </button>
+                    </form>
+                  </details>
+                  <details class="manage-upload-dropdown">
+                    <summary>갤러리 이미지 추가</summary>
+                    <form class="url-form" id="gallery-work-form">
+                      <label for="gallery-work-title">이미지 제목</label
+                      ><input
+                        id="gallery-work-title"
+                        required
+                        placeholder="작업 제목"
+                      /><label for="gallery-work-url">이미지 URL</label
+                      ><input
+                        id="gallery-work-url"
+                        type="url"
+                        required
+                        placeholder="Google Drive 공유 링크 또는 이미지 URL"
+                      /><label for="gallery-work-description"
+                        >이미지 코멘트</label
+                      ><textarea
+                        id="gallery-work-description"
+                        placeholder="짧은 소개와 코멘트"
+                      ></textarea
+                      ><label for="gallery-work-tags">해시태그</label
+                      ><input
+                        id="gallery-work-tags"
+                        placeholder="#사진, #디자인, #기록"
+                      /><button class="action-button" type="submit">
+                        갤러리 이미지 등록
+                      </button>
+                    </form>
+                  </details>
                 </div>
                 <p class="manage-note" id="manage-note">
                   등록한 작업물은 홈 대표 작업 목록에서 선택할 수 있습니다.
                 </p>
+                <details class="manage-video-description">
+                  <summary>업로드 영상 정보 수정</summary>
+                  <div class="manage-video-description-fields">
+                    <label for="manage-video-editor-select">수정할 영상</label>
+                    <select id="manage-video-editor-select">
+                      <option value="">영상 제목 선택</option>
+                    </select>
+                    <label for="manage-video-editor-title">영상 제목</label>
+                    <input
+                      id="manage-video-editor-title"
+                      type="text"
+                      placeholder="영상 제목"
+                      disabled
+                    />
+                    <label for="manage-video-editor-url">영상 URL</label>
+                    <input
+                      id="manage-video-editor-url"
+                      type="url"
+                      placeholder="영상 URL"
+                      disabled
+                    />
+                    <label for="manage-video-editor-comment">영상 코멘트</label>
+                    <textarea
+                      id="manage-video-editor-comment"
+                      placeholder="영상 코멘트"
+                      disabled
+                    ></textarea>
+                    <label for="manage-video-editor-notes">편집 노트</label>
+                    <textarea
+                      id="manage-video-editor-notes"
+                      placeholder="편집 노트"
+                      disabled
+                    ></textarea>
+                    <label for="manage-video-editor-tags">해시태그</label>
+                    <input
+                      id="manage-video-editor-tags"
+                      type="text"
+                      placeholder="#브랜딩, #영상편집"
+                      disabled
+                    />
+                    <label for="manage-video-editor-tools">사용 도구</label>
+                    <input
+                      id="manage-video-editor-tools"
+                      type="text"
+                      placeholder="사용 도구"
+                      disabled
+                    />
+                    <label for="manage-video-editor-year">제작 연도</label>
+                    <input
+                      id="manage-video-editor-year"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="2026"
+                      disabled
+                    />
+                    <label for="manage-video-editor-duration">재생 시간</label>
+                    <input
+                      id="manage-video-editor-duration"
+                      type="text"
+                      placeholder="03:12"
+                      disabled
+                    />
+                    <button
+                      class="action-button"
+                      id="save-video-editor"
+                      type="button"
+                      disabled
+                    >
+                      영상 정보 저장
+                    </button>
+                    <p
+                      class="manage-note"
+                      id="video-editor-note"
+                      aria-live="polite"
+                    >
+                      등록한 영상의 정보를 선택해 수정하세요.
+                    </p>
+                  </div>
+                </details>
               </article>
-              <article class="card">
-                <div class="panel-heading">
-                  <h2>홈 대표 작업</h2>
-                  <span id="manage-work-count">00 WORKS</span>
-                </div>
-                <p class="manage-help">
-                  스튜디오 영상과 갤러리 이미지 중 홈 프리뷰에 표시할 작업을
-                  선택하세요.
-                </p>
-                <div class="manage-work-list" id="manage-work-list"></div>
-                <label class="mini-label" for="manage-comment"
-                  >선택 작업 코멘트</label
-                ><textarea
-                  id="manage-comment"
-                  class="manage-comment"
-                  placeholder="선택한 작업의 짧은 코멘트"
-                ></textarea
-                ><button
-                  class="action-button"
-                  id="save-comment"
-                  style="margin-top: 9px"
-                >
-                  코멘트 저장
-                </button>
-              </article>
+              <div class="manage-feature-column">
+                <article class="card manage-featured-card">
+                  <div class="panel-heading">
+                    <h2>홈 대표 작업</h2>
+                    <span id="manage-work-count">00 / 03 SELECTED</span>
+                  </div>
+                  <p class="manage-help">
+                    스튜디오와 갤러리에 등록한 작업 중 홈에 표시할 대표 작업을
+                    최대 3개 선택하세요. 업로드 순서대로 표시됩니다.
+                  </p>
+                  <div class="manage-work-list" id="manage-work-list"></div>
+                </article>
+                <article class="card manage-delete-card">
+                  <div class="panel-heading">
+                    <h2>업로드 작업 삭제</h2>
+                    <span id="delete-work-count">00 ITEMS</span>
+                  </div>
+                  <p class="manage-help">
+                    삭제할 작업을 선택하세요. 등록된 브라우저 저장 목록에서 해당
+                    작업을 제거합니다.
+                  </p>
+                  <div class="manage-delete-list" id="manage-delete-list"></div>
+                  <button
+                    class="action-button"
+                    id="delete-selected-works"
+                    type="button"
+                  >
+                    선택 작업 삭제
+                  </button>
+                  <p
+                    class="manage-note"
+                    id="delete-work-note"
+                    aria-live="polite"
+                  ></p>
+                </article>
+              </div>
             </div>
           </section>
         </main>
@@ -2546,6 +4557,7 @@
         allowfullscreen
         hidden
       ></iframe>
+      <img id="dialog-image" alt="" hidden />
       <p id="dialog-title"></p>
       <p id="dialog-help" class="media-help"></p>
       <a id="drive-open-link" target="_blank" rel="noopener" hidden
@@ -2611,7 +4623,11 @@
           history.replaceState(null, "", "#" + name);
           if (name === "home") {
             paused = true;
-            showWork(currentWork, false);
+            const selected = featuredIndices();
+            if (selected.length) {
+              if (!selected.includes(currentWork)) currentWork = selected[0];
+              showWork(currentWork, false);
+            } else stopFrame();
           } else stopFrame();
           main.scrollTop = 0;
         }
@@ -2640,7 +4656,8 @@
           });
         const videoDialog = document.querySelector("#video-dialog"),
           player = document.querySelector("#video-player"),
-          videoEmbed = document.querySelector("#video-embed");
+          videoEmbed = document.querySelector("#video-embed"),
+          dialogImage = document.querySelector("#dialog-image");
         let studioWork = MEDIA_CONFIG.find((work) => work.kind === "VIDEO");
         function isConfiguredURL(value) {
           return Boolean(
@@ -2712,6 +4729,8 @@
           return "재생할 수 없습니다. URL을 확인하고 Google Drive 공유 권한을 “링크가 있는 모든 사용자”로 설정해 주세요. 용량이 큰 파일은 Drive 미리보기 제한이 있을 수 있습니다.";
         }
         function openStudioVideo() {
+          dialogImage.hidden = true;
+          dialogImage.removeAttribute("src");
           if (!studioWork || !isConfiguredURL(studioWork.url)) {
             document.querySelector("#dialog-title").textContent =
               studioWork?.title || "스튜디오 영상";
@@ -2760,13 +4779,32 @@
           player.pause();
           player.removeAttribute("src");
           videoEmbed.src = "about:blank";
+          dialogImage.removeAttribute("src");
+          dialogImage.hidden = true;
         });
+        function openGalleryImage(work) {
+          const source = work?.thumbnail || driveImageURL(work?.url || "");
+          if (!source) return;
+          player.pause();
+          player.removeAttribute("src");
+          player.hidden = true;
+          videoEmbed.src = "about:blank";
+          videoEmbed.hidden = true;
+          document.querySelector("#drive-open-link").hidden = true;
+          document.querySelector("#dialog-help").textContent = "";
+          document.querySelector("#dialog-title").textContent = work.title;
+          dialogImage.src = source;
+          dialogImage.alt = work.title + " 확대 이미지";
+          dialogImage.hidden = false;
+          videoDialog.showModal();
+        }
         const grid = document.querySelector("#gallery-grid"),
           MANAGED_WORKS_KEY = "rPortfolioManagedWorks",
           PROFILE_PHOTO_KEY = "rPortfolioProfilePhoto",
           HOME_PHOTO_KEY = "rPortfolioHomeProfilePhoto",
           PROFILE_PAGE_PHOTO_KEY = "rPortfolioProfilePagePhoto",
           HOME_WORK_KEY = "rPortfolioHomeWork",
+          HOME_FEATURED_KEY = "rPortfolioHomeFeaturedWorks",
           COMMENTS_KEY = "rPortfolioComments";
         function readJSON(key, fallback) {
           try {
@@ -2785,20 +4823,62 @@
             : [];
         }
         const works = MEDIA_CONFIG.concat(readManagedWorks());
+        function workKey(work) {
+          return work.id || [work.kind, work.title, work.url].join("|");
+        }
+        const savedFeaturedWorks = readJSON(HOME_FEATURED_KEY, null);
+        let featuredWorkKeys = Array.isArray(savedFeaturedWorks)
+          ? savedFeaturedWorks
+          : (works.filter((work) => work.managed).length
+              ? works.filter((work) => work.managed)
+              : works
+            )
+              .slice(0, 3)
+              .map(workKey);
+        const selectableFeaturedKeys = new Set(
+          works
+            .filter((work) => work.managed)
+            .map(workKey)
+            .concat(
+              works.some((work) => work.managed) ? [] : works.map(workKey),
+            ),
+        );
+        featuredWorkKeys = [...new Set(featuredWorkKeys)]
+          .filter((key) => selectableFeaturedKeys.has(key))
+          .slice(0, 3);
+        function featuredIndices() {
+          return works
+            .map((work, index) => ({ work, index }))
+            .filter(({ work }) => featuredWorkKeys.includes(workKey(work)))
+            .map(({ index }) => index);
+        }
+        function persistFeaturedWorks() {
+          try {
+            localStorage.setItem(
+              HOME_FEATURED_KEY,
+              JSON.stringify(featuredWorkKeys),
+            );
+          } catch {}
+        }
         function renderTagCloud() {
           const cloud = document.querySelector("#tag-cloud"),
+            selectedText = cloud
+              .querySelector(".tag.selected")
+              ?.textContent.trim(),
             known = new Set(
-              [...cloud.querySelectorAll(".tag")].map((tag) =>
+              [...cloud.querySelectorAll(".tag:not(.managed-tag)")].map((tag) =>
                 tag.textContent.trim(),
               ),
             );
+          cloud.querySelectorAll(".managed-tag").forEach((tag) => tag.remove());
           works.forEach((work) =>
             (work.tags || []).forEach((tag) => {
               const normalized = tag.startsWith("#") ? tag : "#" + tag;
               if (known.has(normalized)) return;
               known.add(normalized);
               const button = document.createElement("button");
-              button.className = "tag";
+              button.className = "tag managed-tag";
+              button.classList.toggle("selected", normalized === selectedText);
               button.type = "button";
               button.textContent = normalized;
               cloud.append(button);
@@ -2807,18 +4887,21 @@
         }
         function renderTagResults(tag) {
           const results = document.querySelector("#tag-work-results");
-          document.querySelector("#tag-title").textContent = tag + " 작업물";
+          document.querySelector("#tag-title").textContent = "Tagged media";
           const matched = works.filter((work) =>
             (work.tags || []).some(
               (item) => (item.startsWith("#") ? item : "#" + item) === tag,
             ),
           );
           document.querySelector("#tag-copy").textContent = matched.length
-            ? tag + " 태그가 설정된 작업물입니다."
+            ? tag + " 태그의 연결 작업입니다."
             : "이 태그가 설정된 작업물이 아직 없습니다.";
+          document.querySelector("#tag-result-count").textContent =
+            matched.length + (matched.length === 1 ? " item" : " items");
           results.replaceChildren();
           matched.forEach((work) => {
             const item = document.createElement("article"),
+              thumb = document.createElement("div"),
               heading = document.createElement("div"),
               title = document.createElement("strong"),
               open = document.createElement("button"),
@@ -2826,6 +4909,21 @@
               notes = document.createElement("small"),
               hashtags = document.createElement("div");
             item.className = "tag-work-item";
+            thumb.className = "tag-work-thumb";
+            const source = thumbnailURL(work);
+            if (source)
+              thumb.style.backgroundImage =
+                'url("' + source.replace(/"/g, "%22") + '")';
+            thumb.setAttribute("role", "button");
+            thumb.tabIndex = 0;
+            thumb.setAttribute("aria-label", work.title + " 작업 보기");
+            thumb.addEventListener("click", () => openTaggedWork(work));
+            thumb.addEventListener("keydown", (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openTaggedWork(work);
+              }
+            });
             heading.className = "tag-work-heading";
             title.textContent = work.title;
             open.type = "button";
@@ -2837,7 +4935,7 @@
             notes.textContent = "EDITING NOTES · " + (work.editingNotes || "—");
             hashtags.className = "tag-work-hashtags";
             hashtags.textContent = (work.tags || []).join("  ");
-            item.append(heading, description, notes, hashtags);
+            item.append(thumb, heading, description, notes, hashtags);
             results.append(item);
           });
         }
@@ -2852,8 +4950,8 @@
             showPage("studio");
             return;
           }
-          renderGallery();
           showPage("gallery");
+          renderGallery();
           const tile = document.querySelector(
             '.gallery-tile[data-work-index="' + works.indexOf(work) + '"]',
           );
@@ -2864,6 +4962,22 @@
           }
         }
         renderTagCloud();
+        const firstTaggedWork = works.find(
+            (work) => Array.isArray(work.tags) && work.tags.length,
+          ),
+          firstTag = firstTaggedWork?.tags[0];
+        if (firstTag) {
+          const normalizedTag = firstTag.startsWith("#")
+            ? firstTag
+            : "#" + firstTag;
+          document.querySelectorAll("#tag-cloud .tag").forEach((button) => {
+            button.classList.toggle(
+              "selected",
+              button.textContent.trim() === normalizedTag,
+            );
+          });
+          renderTagResults(normalizedTag);
+        }
         studioWork =
           [...works]
             .reverse()
@@ -2886,6 +5000,75 @@
           document.querySelector("#studio-year").textContent =
             studioWork.year || String(new Date().getFullYear());
         }
+        function renderStudioUploads() {
+          const container = document.querySelector("#studio-upload-list"),
+            studioPage = document.querySelector("#studio-page"),
+            uploads = works.filter(
+              (work) => work.managed && work.kind === "VIDEO",
+            );
+          container.replaceChildren();
+          studioPage.classList.toggle(
+            "has-uploaded-videos",
+            uploads.length > 0,
+          );
+          uploads.forEach((work, index) => {
+            const card = document.createElement("article"),
+              media = document.createElement("div"),
+              thumb = document.createElement("div"),
+              copy = document.createElement("div"),
+              label = document.createElement("small"),
+              title = document.createElement("h2"),
+              description = document.createElement("p"),
+              metadata = document.createElement("div"),
+              play = document.createElement("button");
+            card.className = "studio-upload-card";
+            media.className = "studio-upload-media";
+            thumb.className = "studio-upload-thumb";
+            const source = thumbnailURL(work);
+            if (source)
+              thumb.style.backgroundImage =
+                'url("' + source.replace(/"/g, "%22") + '")';
+            copy.className = "studio-upload-copy";
+            label.textContent =
+              String(index + 1).padStart(2, "0") +
+              " / VIDEO · " +
+              (work.year || "");
+            title.textContent = work.title;
+            description.textContent =
+              work.description ||
+              work.editingNotes ||
+              "등록된 영상 작업입니다.";
+            metadata.className = "studio-upload-meta";
+            [
+              ["EDITING NOTE", work.editingNotes || "—"],
+              ["HASHTAGS", (work.tags || []).join("  ") || "—"],
+              ["TOOLS", work.tools || "—"],
+              ["YEAR", work.year || "—"],
+              ["DURATION", work.duration || "—"],
+            ].forEach(([name, value]) => {
+              const item = document.createElement("div"),
+                itemLabel = document.createElement("small"),
+                itemValue = document.createElement("span");
+              itemLabel.textContent = name;
+              itemValue.textContent = value;
+              item.append(itemLabel, itemValue);
+              metadata.append(item);
+            });
+            play.type = "button";
+            play.className = "studio-upload-play";
+            play.textContent = "▶";
+            play.setAttribute("aria-label", work.title + " 재생");
+            play.addEventListener("click", () => {
+              studioWork = work;
+              renderStudioInfo();
+              openStudioVideo();
+            });
+            copy.append(label, title, description, metadata);
+            media.append(thumb, play);
+            card.append(media, copy);
+            container.append(card);
+          });
+        }
         const savedComments = readJSON(COMMENTS_KEY, {});
         works.forEach((work) => {
           if (savedComments[work.title])
@@ -2901,10 +5084,42 @@
           driveAdvanceTimer,
           captionFadeTimer,
           paused = false;
+        const initialFeaturedIndices = featuredIndices();
+        if (
+          initialFeaturedIndices.length &&
+          !initialFeaturedIndices.includes(currentWork)
+        )
+          currentWork = initialFeaturedIndices[0];
         const frameImage = document.querySelector("#frame-image"),
           frameVideo = document.querySelector("#frame-video"),
           frameEmbed = document.querySelector("#frame-embed"),
           frameArt = document.querySelector("#frame-art");
+        function fitFrameTitle() {
+          const stage = document.querySelector("#frame-stage"),
+            wrapper = stage.querySelector(".frame-title"),
+            title = document.querySelector("#frame-title"),
+            width = stage.clientWidth,
+            height = stage.clientHeight;
+          if (!width || !height) return;
+          const titleWidth = Math.min(width * 0.76, 460),
+            titleHeight = height * 0.56;
+          wrapper.style.width = titleWidth + "px";
+          title.style.maxHeight = "none";
+          title.style.overflow = "visible";
+          title.style.overflowWrap = "anywhere";
+          let fontSize = Math.min(42.3, width * 0.0585);
+          title.style.fontSize = fontSize + "px";
+          title.style.lineHeight = "1.056";
+          while (title.scrollHeight > titleHeight + 1 && fontSize > 5) {
+            fontSize -= 0.5;
+            title.style.fontSize = fontSize + "px";
+          }
+        }
+        if ("ResizeObserver" in window)
+          new ResizeObserver(fitFrameTitle).observe(
+            document.querySelector("#frame-stage"),
+          );
+        else window.addEventListener("resize", fitFrameTitle);
         function driveImageURL(value) {
           const id = driveFileId(value);
           return id
@@ -2941,6 +5156,37 @@
               stage.classList.add("captions-faded");
           }, 4200);
         }
+        function renderHomePrompt() {
+          const container = document.querySelector("#home-prompt-tags");
+          if (!container) return;
+          const counts = new Map();
+          let firstSeen = 0;
+          works.forEach((item) => {
+            [
+              ...new Set(
+                (item.tags || []).map((tag) =>
+                  tag.startsWith("#") ? tag : "#" + tag,
+                ),
+              ),
+            ].forEach((tag) => {
+              const entry = counts.get(tag);
+              if (entry) entry.count += 1;
+              else counts.set(tag, { tag, count: 1, firstSeen: firstSeen++ });
+            });
+          });
+          const tags = [...counts.values()]
+            .sort((a, b) => b.count - a.count || a.firstSeen - b.firstSeen)
+            .slice(0, 5)
+            .map((entry) => entry.tag);
+          container.replaceChildren();
+          tags.forEach((tag) => {
+            const chip = document.createElement("span");
+            chip.textContent = tag;
+            container.append(chip);
+          });
+          document.querySelector("#home-prompt-count").textContent =
+            String(tags.length).padStart(2, "0") + " tags";
+        }
         function stopFrame() {
           clearTimeout(slideTimer);
           clearTimeout(driveAdvanceTimer);
@@ -2957,7 +5203,9 @@
         function renderFocusButtons() {
           const list = document.querySelector("#focus-list");
           list.replaceChildren();
-          works.forEach((work, index) => {
+          const selectedIndices = featuredIndices();
+          selectedIndices.forEach((index) => {
+            const work = works[index];
             const button = document.createElement("button");
             button.type = "button";
             button.className =
@@ -2987,8 +5235,24 @@
             });
             list.append(button);
           });
+          if (!selectedIndices.length) {
+            const empty = document.createElement("p");
+            empty.className = "gallery-empty";
+            empty.textContent =
+              "위젯 관리에서 홈 대표 작업을 최대 3개 선택하세요.";
+            list.append(empty);
+          }
           document.querySelector("#focus-count").textContent =
-            "SELECTED " + String(works.length).padStart(2, "0");
+            String(selectedIndices.length).padStart(2, "0") + " frames";
+          renderHomePrompt();
+        }
+        function advanceHomeWork() {
+          const selected = featuredIndices();
+          if (!selected.length) return;
+          const position = selected.indexOf(currentWork);
+          showWork(
+            selected[(position + 1 + selected.length) % selected.length],
+          );
         }
         function formatDuration(seconds) {
           const total = Math.max(0, Math.floor(seconds));
@@ -3020,22 +5284,29 @@
           renderManager();
         });
         function showWork(index, play = true) {
-          if (!works.length) return;
-          currentWork = (index + works.length) % works.length;
+          const selected = featuredIndices();
+          if (!selected.length) return;
+          if (!selected.includes(index)) index = selected[0];
+          currentWork = index;
           persistHomeWork();
           const work = works[currentWork],
             buttons = [...document.querySelectorAll(".focus-item")];
-          buttons.forEach((button, i) =>
-            button.classList.toggle("active", i === currentWork),
+          buttons.forEach((button) =>
+            button.classList.toggle(
+              "active",
+              Number(button.dataset.work) === currentWork,
+            ),
           );
           document
             .querySelector("#frame-stage")
             .classList.remove("captions-faded");
+          const visiblePosition = selected.indexOf(currentWork);
           document.querySelector("#frame-number").textContent =
-            String(currentWork + 1).padStart(2, "0") +
+            String(visiblePosition + 1).padStart(2, "0") +
             " / " +
-            String(works.length).padStart(2, "0");
+            String(selected.length).padStart(2, "0");
           document.querySelector("#frame-title").textContent = work.title;
+          fitFrameTitle();
           document.querySelector("#frame-caption").textContent =
             work.title + " · " + work.duration;
           document.querySelector("#frame-kind").textContent = work.kind;
@@ -3074,7 +5345,7 @@
               if (work.kind === "VIDEO" && !paused) {
                 fadeFrameTitleSoon();
                 driveAdvanceTimer = setTimeout(
-                  () => showWork(currentWork + 1, true),
+                  advanceHomeWork,
                   Math.max(5, Number(work.durationSeconds) || 30) * 1000,
                 );
               }
@@ -3100,42 +5371,10 @@
             document.querySelector("#media-error").hidden = false;
           }
           if (play && !paused && work.kind === "IMAGE")
-            slideTimer = setTimeout(
-              () => showWork(currentWork + 1, true),
-              6500,
-            );
+            slideTimer = setTimeout(advanceHomeWork, 6500);
         }
         function renderGallery() {
           grid.replaceChildren();
-          const samples = [
-            ["OBJECT", "Still life, 01"],
-            ["FORM", "Soft geometry"],
-            ["PORTRAIT", "Quiet afternoon"],
-            ["NATURE", "Growing slowly"],
-            ["EDITORIAL", "Blue hour"],
-            ["OBJECT", "Everyday ritual"],
-          ];
-          samples.forEach((sample, position) => {
-            if (
-              works.some(
-                (work) =>
-                  work.kind === "IMAGE" &&
-                  work.title === sample[1] &&
-                  (isConfiguredURL(work.url) || work.managed),
-              )
-            )
-              return;
-            const tile = document.createElement("button");
-            tile.className = "gallery-tile";
-            tile.type = "button";
-            const label = document.createElement("small"),
-              title = document.createElement("strong");
-            label.textContent =
-              String(position + 1).padStart(2, "0") + " / " + sample[0];
-            title.textContent = sample[1];
-            tile.append(label, title);
-            grid.append(tile);
-          });
           const imageWorks = works
             .map((work, index) => ({ work, index }))
             .filter(
@@ -3144,31 +5383,30 @@
                 (isConfiguredURL(item.work.url) || item.work.managed),
             );
           imageWorks.forEach(({ work, index }, position) => {
-            const tile = document.createElement("button");
+            const tile = document.createElement("article");
             tile.className = "gallery-tile has-image";
-            tile.type = "button";
             tile.dataset.workIndex = String(index);
+            const photo = document.createElement("span");
+            photo.className = "gallery-photo";
             const source = thumbnailURL(work);
-            if (source) {
-              tile.style.backgroundImage =
-                'linear-gradient(0deg,#171318aa,transparent 60%),url("' +
-                source +
-                '")';
-              tile.style.backgroundSize = "cover";
-              tile.style.backgroundPosition = "center";
-            }
+            if (source)
+              photo.style.backgroundImage =
+                'url("' + source.replace(/"/g, "%22") + '")';
             const label = document.createElement("small"),
-              title = document.createElement("strong"),
-              hashtags = document.createElement("small");
+              title = document.createElement("strong");
             label.textContent =
               String(position + 1).padStart(2, "0") + " / IMAGE";
             title.textContent = work.title;
-            hashtags.className = "gallery-work-tags";
-            hashtags.textContent = (work.tags || []).join("  ");
-            tile.append(label, title, hashtags);
-            tile.addEventListener("click", () => {
-              showWork(index, false);
-              showPage("home");
+            tile.append(photo, label, title);
+            tile.setAttribute("role", "button");
+            tile.tabIndex = 0;
+            tile.setAttribute("aria-label", work.title + " 이미지 확대 보기");
+            tile.addEventListener("click", () => openGalleryImage(work));
+            tile.addEventListener("keydown", (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openGalleryImage(work);
+              }
             });
             grid.append(tile);
           });
@@ -3196,6 +5434,12 @@
             input = document.querySelector(
               home ? "#home-photo-url" : "#profile-page-photo-url",
             ),
+            homeBannerImage = home
+              ? document.querySelector("#home-profile-banner-image")
+              : null,
+            homeBannerInitial = home
+              ? document.querySelector("#home-profile-initial")
+              : null,
             storageKey = home ? HOME_PHOTO_KEY : PROFILE_PAGE_PHOTO_KEY;
           image.onload = () => {
             image.hidden = false;
@@ -3207,6 +5451,17 @@
             image.hidden = true;
           };
           image.src = photoURL;
+          if (homeBannerImage) {
+            homeBannerImage.onload = () => {
+              homeBannerImage.hidden = false;
+              homeBannerInitial.hidden = true;
+            };
+            homeBannerImage.onerror = () => {
+              homeBannerImage.hidden = true;
+              homeBannerInitial.hidden = false;
+            };
+            homeBannerImage.src = photoURL;
+          }
           if (!home) {
             const intro = document.querySelector(".profile-intro");
             intro.style.backgroundImage =
@@ -3256,48 +5511,276 @@
               note.textContent = "사진 링크를 적용했습니다.";
             });
         });
+        [
+          ["home", "#home-photo-url", "#home-photo-note"],
+          ["profile", "#profile-page-photo-url", "#profile-page-photo-note"],
+        ].forEach(([scope, inputSelector, noteSelector]) => {
+          document
+            .querySelector(inputSelector)
+            .addEventListener("change", (event) => {
+              const value = event.target.value.trim();
+              if (!value) return;
+              if (!isConfiguredURL(value)) return;
+              setProfilePhoto(scope, value, true);
+              document.querySelector(noteSelector).textContent =
+                "사진 링크를 자동 저장하고 적용했습니다.";
+            });
+        });
         function renderManager() {
           const list = document.querySelector("#manage-work-list");
           list.replaceChildren();
-          works.forEach((work, index) => {
-            const row = document.createElement("div");
-            row.className = "manage-work";
-            const thumb = document.createElement("span");
-            thumb.className = "manage-work-thumb";
-            const source = thumbnailURL(work);
-            if (source)
-              thumb.style.backgroundImage =
-                'center/cover no-repeat url("' + source + '")';
-            const info = document.createElement("span"),
-              title = document.createElement("strong"),
-              meta = document.createElement("small"),
-              select = document.createElement("button");
-            title.textContent = work.title;
-            meta.textContent =
-              (work.kind === "VIDEO" ? "스튜디오 영상" : "갤러리 이미지") +
-              " · " +
-              work.duration;
-            select.type = "button";
-            select.textContent =
-              index === currentWork ? "선택됨" : "대표로 설정";
-            select.addEventListener("click", () => {
-              currentWork = index;
+          const uploadedWorks = works.filter((work) => work.managed),
+            selectedCount = uploadedWorks.filter((work) =>
+              featuredWorkKeys.includes(workKey(work)),
+            ).length,
+            dropdown = document.createElement("details"),
+            summary = document.createElement("summary"),
+            options = document.createElement("div");
+          dropdown.className = "manage-dropdown featured-work-dropdown";
+          summary.textContent = "홈 대표 작업 선택 (" + selectedCount + "/3)";
+          options.className = "manage-dropdown-options";
+          uploadedWorks.forEach((work) => {
+            const index = works.indexOf(work),
+              selected = featuredWorkKeys.includes(workKey(work)),
+              option = document.createElement("label"),
+              checkbox = document.createElement("input"),
+              optionTitle = document.createElement("span");
+            option.className = "manage-dropdown-option";
+            checkbox.type = "checkbox";
+            checkbox.className = "featured-work-checkbox";
+            checkbox.value = workKey(work);
+            checkbox.checked = selected;
+            optionTitle.textContent = work.title;
+            option.append(checkbox, optionTitle);
+            checkbox.addEventListener("change", () => {
+              if (checkbox.checked) {
+                if (featuredWorkKeys.length >= 3) {
+                  checkbox.checked = false;
+                  document.querySelector("#manage-note").textContent =
+                    "홈 대표 작업은 최대 3개까지 선택할 수 있습니다.";
+                  return;
+                }
+                featuredWorkKeys.push(workKey(work));
+                currentWork = index;
+              } else {
+                featuredWorkKeys = featuredWorkKeys.filter(
+                  (key) => key !== workKey(work),
+                );
+                if (currentWork === index)
+                  currentWork = featuredIndices()[0] ?? 0;
+              }
+              persistFeaturedWorks();
+              const selectedIndices = featuredIndices();
+              if (!selectedIndices.includes(currentWork))
+                currentWork = selectedIndices[0] ?? 0;
               persistHomeWork();
               renderFocusButtons();
               renderManager();
-              showPage("home");
+              if (selectedIndices.length) showWork(currentWork, false);
             });
-            info.append(title, meta);
-            row.append(thumb, info, select);
-            list.append(row);
+            options.append(option);
           });
+          if (!uploadedWorks.length) {
+            const empty = document.createElement("p");
+            empty.className = "gallery-empty";
+            empty.textContent =
+              "스튜디오 영상이나 갤러리 이미지를 추가하면 여기에서 홈 대표 작업으로 선택할 수 있습니다.";
+            options.append(empty);
+          }
+          dropdown.append(summary, options);
+          list.append(dropdown);
           document.querySelector("#manage-work-count").textContent =
-            String(works.length).padStart(2, "0") + " WORKS";
-          document.querySelector("#manage-comment").value =
-            works[currentWork]?.comment ||
-            works[currentWork]?.description ||
-            "";
+            String(selectedCount).padStart(2, "0") + " / 03 SELECTED";
+          renderDeleteManager();
+          renderVideoEditorManager();
         }
+        function renderDeleteManager() {
+          const list = document.querySelector("#manage-delete-list"),
+            uploadedWorks = works.filter((work) => work.managed),
+            dropdown = document.createElement("details"),
+            summary = document.createElement("summary"),
+            options = document.createElement("div");
+          list.replaceChildren();
+          dropdown.className = "manage-dropdown delete-work-dropdown";
+          summary.textContent = "삭제할 업로드 작업 선택 (0)";
+          options.className = "manage-dropdown-options";
+          uploadedWorks.forEach((work) => {
+            const label = document.createElement("label"),
+              checkbox = document.createElement("input"),
+              title = document.createElement("span");
+            label.className = "manage-dropdown-option";
+            checkbox.type = "checkbox";
+            checkbox.value = workKey(work);
+            checkbox.className = "delete-work-checkbox";
+            title.textContent =
+              work.title +
+              " · " +
+              (work.kind === "VIDEO" ? "스튜디오 영상" : "갤러리 이미지");
+            label.append(checkbox, title);
+            checkbox.addEventListener("change", () => {
+              const count = options.querySelectorAll(
+                ".delete-work-checkbox:checked",
+              ).length;
+              summary.textContent = "삭제할 업로드 작업 선택 (" + count + ")";
+            });
+            options.append(label);
+          });
+          if (!uploadedWorks.length) {
+            const empty = document.createElement("p");
+            empty.className = "manage-note";
+            empty.textContent = "삭제할 업로드 작업이 없습니다.";
+            options.append(empty);
+          }
+          dropdown.append(summary, options);
+          list.append(dropdown);
+          document.querySelector("#delete-work-count").textContent =
+            String(uploadedWorks.length).padStart(2, "0") + " ITEMS";
+        }
+        function renderVideoEditorManager() {
+          const select = document.querySelector("#manage-video-editor-select"),
+            fields = {
+              title: document.querySelector("#manage-video-editor-title"),
+              url: document.querySelector("#manage-video-editor-url"),
+              comment: document.querySelector("#manage-video-editor-comment"),
+              editingNotes: document.querySelector(
+                "#manage-video-editor-notes",
+              ),
+              tags: document.querySelector("#manage-video-editor-tags"),
+              tools: document.querySelector("#manage-video-editor-tools"),
+              year: document.querySelector("#manage-video-editor-year"),
+              duration: document.querySelector("#manage-video-editor-duration"),
+            },
+            save = document.querySelector("#save-video-editor"),
+            note = document.querySelector("#video-editor-note"),
+            previousKey = select.value,
+            videos = works.filter(
+              (work) => work.managed && work.kind === "VIDEO",
+            );
+          select.replaceChildren();
+          const placeholder = document.createElement("option");
+          placeholder.value = "";
+          placeholder.textContent = "영상 제목 선택";
+          select.append(placeholder);
+          videos.forEach((work) => {
+            const option = document.createElement("option");
+            option.value = workKey(work);
+            option.textContent = work.title;
+            select.append(option);
+          });
+          if (videos.some((work) => workKey(work) === previousKey))
+            select.value = previousKey;
+          const selectedWork = videos.find(
+            (work) => workKey(work) === select.value,
+          );
+          fields.title.value = selectedWork?.title || "";
+          fields.url.value = selectedWork?.url || "";
+          fields.comment.value = selectedWork?.description || "";
+          fields.editingNotes.value = selectedWork?.editingNotes || "";
+          fields.tags.value = (selectedWork?.tags || []).join(", ");
+          fields.tools.value = selectedWork?.tools || "";
+          fields.year.value = selectedWork?.year || "";
+          fields.duration.value = selectedWork?.duration || "";
+          Object.values(fields).forEach((field) => {
+            field.disabled = !selectedWork;
+          });
+          save.disabled = !selectedWork;
+          note.textContent = videos.length
+            ? "영상 제목을 선택해 정보를 수정하세요."
+            : "수정할 업로드 영상이 없습니다.";
+        }
+        document
+          .querySelector("#manage-video-editor-select")
+          .addEventListener("change", renderVideoEditorManager);
+        document
+          .querySelector("#save-video-editor")
+          .addEventListener("click", () => {
+            const select = document.querySelector(
+                "#manage-video-editor-select",
+              ),
+              key = select.value,
+              work = works.find(
+                (item) =>
+                  item.managed &&
+                  item.kind === "VIDEO" &&
+                  workKey(item) === key,
+              );
+            if (!work) return;
+            const nextTitle = document
+                .querySelector("#manage-video-editor-title")
+                .value.trim(),
+              nextURL = document
+                .querySelector("#manage-video-editor-url")
+                .value.trim();
+            if (!nextTitle || !isConfiguredURL(nextURL)) {
+              document.querySelector("#video-editor-note").textContent =
+                "영상 제목과 유효한 영상 URL을 입력해 주세요.";
+              return;
+            }
+            const previousKey = workKey(work),
+              previousTitle = work.title,
+              previousComment = work.comment,
+              selectedTagText = document
+                .querySelector("#tag-cloud .tag.selected")
+                ?.textContent.trim();
+            work.title = nextTitle;
+            work.url = nextURL;
+            work.description = document
+              .querySelector("#manage-video-editor-comment")
+              .value.trim();
+            work.comment = work.description;
+            work.editingNotes = document
+              .querySelector("#manage-video-editor-notes")
+              .value.trim();
+            work.tags = (
+              document
+                .querySelector("#manage-video-editor-tags")
+                .value.match(/#[^\s,，]+|[^\s,，]+/g) || []
+            )
+              .map((tag) => "#" + tag.replace(/^#/, "").trim())
+              .filter((tag) => tag.length > 1);
+            work.tools = document
+              .querySelector("#manage-video-editor-tools")
+              .value.trim();
+            work.year = document
+              .querySelector("#manage-video-editor-year")
+              .value.trim();
+            work.duration = document
+              .querySelector("#manage-video-editor-duration")
+              .value.trim();
+            work.durationSeconds = durationSeconds(work.duration);
+            const nextKey = workKey(work);
+            featuredWorkKeys = featuredWorkKeys.map((itemKey) =>
+              itemKey === previousKey ? nextKey : itemKey,
+            );
+            const comments = readJSON(COMMENTS_KEY, {});
+            if (
+              previousTitle !== work.title &&
+              comments[previousTitle] === previousComment
+            )
+              delete comments[previousTitle];
+            comments[work.title] = work.comment;
+            try {
+              localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+            } catch {}
+            persistFeaturedWorks();
+            persistHomeWork();
+            persistManagedWorks();
+            select.value = nextKey;
+            renderTagCloud();
+            renderFocusButtons();
+            renderManager();
+            renderGallery();
+            renderStudioUploads();
+            if (studioWork === work) renderStudioInfo();
+            const feature = document.querySelector(".studio-feature");
+            feature.classList.remove("has-thumbnail");
+            feature.style.backgroundImage = "";
+            setStudioThumbnail();
+            if (works[currentWork] === work) showWork(currentWork, false);
+            if (selectedTagText) renderTagResults(selectedTagText);
+            document.querySelector("#video-editor-note").textContent =
+              "영상 정보를 저장했습니다.";
+          });
         function registerWork(event, kind) {
           event.preventDefault();
           const prefix = kind === "VIDEO" ? "studio-work" : "gallery-work",
@@ -3341,6 +5824,7 @@
                     .value.trim() || "00:30"
                 : "01",
             work = {
+              id: "managed-" + Date.now() + "-" + works.length,
               title,
               kind,
               url,
@@ -3355,16 +5839,31 @@
               art: kind === "VIDEO" ? "art-one" : "art-two",
               managed: true,
             };
+          const hadUploadedWorks = works.some((item) => item.managed);
+          if (!hadUploadedWorks) featuredWorkKeys = [];
           works.push(work);
+          const addedToHome = featuredWorkKeys.length < 3;
+          if (addedToHome) {
+            featuredWorkKeys.push(workKey(work));
+            currentWork = works.length - 1;
+          } else if (!featuredIndices().includes(currentWork)) {
+            currentWork = featuredIndices()[0] ?? 0;
+          }
+          persistFeaturedWorks();
+          persistHomeWork();
           persistManagedWorks();
           renderTagCloud();
           renderFocusButtons();
           renderManager();
           renderGallery();
+          renderStudioUploads();
           event.target.reset();
           document.querySelector("#manage-note").textContent =
             (kind === "VIDEO" ? "스튜디오 영상" : "갤러리 이미지") +
-            "을 등록했습니다. 오른쪽 홈 대표 작업에서 선택할 수 있습니다.";
+            "을 등록하고 순서대로 저장했습니다." +
+            (addedToHome
+              ? " 홈 대표 작업에 추가했습니다."
+              : " 홈 대표 작업은 이미 3개가 선택되어 있습니다.");
           if (kind === "VIDEO") {
             studioWork = work;
             const titleNode = document.querySelector("#studio-project-title"),
@@ -3392,24 +5891,71 @@
           .querySelector("#gallery-work-form")
           .addEventListener("submit", (event) => registerWork(event, "IMAGE"));
         document
-          .querySelector("#save-comment")
+          .querySelector("#delete-selected-works")
           .addEventListener("click", () => {
-            if (!works[currentWork]) return;
-            works[currentWork].comment =
-              document.querySelector("#manage-comment").value.trim() ||
-              works[currentWork].description ||
-              "대표 작업으로 선정한 프로젝트입니다.";
+            const selectedKeys = new Set(
+              [
+                ...document.querySelectorAll(".delete-work-checkbox:checked"),
+              ].map((checkbox) => checkbox.value),
+            );
+            if (!selectedKeys.size) {
+              document.querySelector("#delete-work-note").textContent =
+                "삭제할 작업을 먼저 선택해 주세요.";
+              return;
+            }
+            const removedWorks = works.filter(
+                (work) => work.managed && selectedKeys.has(workKey(work)),
+              ),
+              removedSet = new Set(removedWorks),
+              previousCurrentWork = works[currentWork],
+              selectedTagText = document
+                .querySelector("#tag-cloud .tag.selected")
+                ?.textContent.trim();
+            for (let index = works.length - 1; index >= 0; index -= 1) {
+              if (
+                works[index].managed &&
+                selectedKeys.has(workKey(works[index]))
+              )
+                works.splice(index, 1);
+            }
+            featuredWorkKeys = featuredWorkKeys.filter(
+              (key) => !selectedKeys.has(key),
+            );
+            if (!works.some((work) => work.managed) && !featuredWorkKeys.length)
+              featuredWorkKeys = works.slice(0, 3).map(workKey);
             const comments = readJSON(COMMENTS_KEY, {});
-            comments[works[currentWork].title] = works[currentWork].comment;
+            removedWorks.forEach((work) => delete comments[work.title]);
             try {
               localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
             } catch {}
-            document.querySelector("#manage-note").textContent =
-              "코멘트를 저장했습니다.";
-            document.querySelector("#focus-comment").textContent =
-              works[currentWork].comment;
             persistManagedWorks();
+            persistFeaturedWorks();
+            if (videoDialog.open) videoDialog.close();
+            if (studioWork && removedSet.has(studioWork))
+              studioWork =
+                [...works]
+                  .reverse()
+                  .find(
+                    (work) =>
+                      work.kind === "VIDEO" && isConfiguredURL(work.url),
+                  ) || MEDIA_CONFIG.find((work) => work.kind === "VIDEO");
+            const retainedIndex = works.indexOf(previousCurrentWork);
+            currentWork =
+              retainedIndex >= 0 ? retainedIndex : (featuredIndices()[0] ?? 0);
+            persistHomeWork();
+            renderTagCloud();
+            renderFocusButtons();
             renderManager();
+            renderGallery();
+            renderStudioUploads();
+            renderStudioInfo();
+            const feature = document.querySelector(".studio-feature");
+            feature.classList.remove("has-thumbnail");
+            feature.style.backgroundImage = "";
+            setStudioThumbnail();
+            if (selectedTagText) renderTagResults(selectedTagText);
+            document.querySelector("#delete-work-note").textContent =
+              removedWorks.length + "개 작업을 업로드 목록에서 삭제했습니다.";
           });
         document
           .querySelector("#manage-button")
@@ -3417,12 +5963,7 @@
             renderManager();
             showPage("manage");
           });
-        document
-          .querySelector("#manage-home")
-          .addEventListener("click", () => showPage("home"));
-        frameVideo.addEventListener("ended", () =>
-          showWork(currentWork + 1, true),
-        );
+        frameVideo.addEventListener("ended", advanceHomeWork);
         frameVideo.addEventListener("error", () => {
           if (isConfiguredURL(works[currentWork]?.url)) {
             document.querySelector("#media-error").textContent =
@@ -3439,11 +5980,287 @@
         renderManager();
         renderGallery();
         renderStudioInfo();
+        renderStudioUploads();
         setStudioThumbnail();
         const hash = location.hash.slice(1);
         if (hash && document.getElementById(hash + "-page")) {
           showPage(hash);
         } else showPage("home");
+      })();
+    </script>
+    <script>
+      (() => {
+        const scene = document.querySelector("#intro-scene");
+        const desktopImage = document.querySelector("#desktop-image");
+        const cursor = document.querySelector("#desktop-cursor");
+        const safari = document.querySelector("#safari-icon");
+        const address = document.querySelector("#typed-address");
+        const skipButton = document.querySelector("#skip-intro");
+        const soundButton = document.querySelector("#sound-toggle");
+        const replayButton = document.querySelector("#intro-replay");
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        );
+        const storageKey = "yeom-portfolio-intro-seen";
+        const timers = [];
+        let started = false;
+        let finished = false;
+        let clickTriggered = false;
+        let soundEnabled = false;
+        let audioContext = null;
+        let typeTimer = 0;
+        let imageLoadFailed = false;
+
+        function later(callback, delay) {
+          const id = window.setTimeout(callback, delay);
+          timers.push(id);
+        }
+        function clearTimeline() {
+          timers.splice(0).forEach((id) => window.clearTimeout(id));
+          window.clearInterval(typeTimer);
+        }
+        function showPortfolio() {
+          if (finished) return;
+          finished = true;
+          clearTimeline();
+          document.body.classList.remove("intro-pending", "intro-active");
+          document.body.classList.add("portfolio-visible");
+          scene.classList.add("is-leaving");
+          window.scrollTo({ top: 0, behavior: "auto" });
+          try {
+            sessionStorage.setItem(storageKey, "1");
+          } catch {}
+          window.setTimeout(
+            () => {
+              scene.hidden = true;
+            },
+            reduceMotion.matches ? 0 : 320,
+          );
+        }
+        function playClickSound() {
+          if (!soundEnabled || !audioContext) return;
+          const oscillator = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          oscillator.type = "sine";
+          oscillator.frequency.setValueAtTime(720, audioContext.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(
+            430,
+            audioContext.currentTime + 0.055,
+          );
+          gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+          gain.gain.exponentialRampToValueAtTime(
+            0.12,
+            audioContext.currentTime + 0.008,
+          );
+          gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            audioContext.currentTime + 0.075,
+          );
+          oscillator.connect(gain).connect(audioContext.destination);
+          oscillator.start();
+          oscillator.stop(audioContext.currentTime + 0.08);
+        }
+        function typeAddress() {
+          const text = "portfolio.com";
+          address.textContent = "";
+          address.parentElement.classList.remove("is-complete");
+          window.clearInterval(typeTimer);
+          let index = 0;
+          typeTimer = window.setInterval(() => {
+            address.textContent = text.slice(0, ++index);
+            if (index >= text.length) {
+              window.clearInterval(typeTimer);
+              address.parentElement.classList.add("is-complete");
+            }
+          }, 62);
+        }
+        function moveCursorToSafari() {
+          const style = getComputedStyle(document.documentElement);
+          const x = parseFloat(style.getPropertyValue("--safari-x")) || 67.8;
+          const y = parseFloat(style.getPropertyValue("--safari-y")) || 95.1;
+          cursor.style.left = x - 0.12 + "%";
+          cursor.style.top = y - 0.2 + "%";
+        }
+        function triggerSafari(direct = false) {
+          if (finished || clickTriggered) return;
+          clickTriggered = true;
+          clearTimeline();
+          cursor.getAnimations().forEach((animation) => animation.cancel());
+          moveCursorToSafari();
+          cursor.style.opacity = "1";
+          safari.classList.add("is-hovered", "is-bouncing");
+          document
+            .querySelector('[data-app="phone"]')
+            .classList.add("is-neighbor");
+          document
+            .querySelector('[data-app="settings"]')
+            .classList.add("is-neighbor");
+          cursor.classList.add("is-clicking");
+          playClickSound();
+          const rootStyle = getComputedStyle(document.documentElement);
+          const clickAt =
+            parseFloat(rootStyle.getPropertyValue("--t-click")) || 2600;
+          const windowAt =
+            parseFloat(rootStyle.getPropertyValue("--t-window")) || 3200;
+          const fullscreenAt =
+            parseFloat(rootStyle.getPropertyValue("--t-fullscreen")) || 4200;
+          const windowDelay = direct ? 360 : Math.max(0, windowAt - clickAt);
+          const fullscreenDelay = direct
+            ? windowDelay + 850
+            : Math.max(windowDelay, fullscreenAt - clickAt);
+          later(() => {
+            cursor.classList.remove("is-clicking");
+            scene.classList.add("is-window-open");
+            typeAddress();
+          }, windowDelay);
+          later(() => scene.classList.add("is-fullscreen"), fullscreenDelay);
+          later(
+            showPortfolio,
+            direct ? windowDelay + 1750 : fullscreenDelay + 850,
+          );
+        }
+        function startIntro() {
+          if (started || finished) return;
+          started = true;
+          scene.hidden = false;
+          scene.classList.remove("is-leaving");
+          document.body.classList.remove("intro-pending", "portfolio-visible");
+          document.body.classList.add("intro-active");
+          window.scrollTo({ top: 0, behavior: "auto" });
+          if (reduceMotion.matches) {
+            showPortfolio();
+            return;
+          }
+          scene.classList.add("is-started");
+          const rootStyle = getComputedStyle(document.documentElement);
+          const startX =
+            rootStyle.getPropertyValue("--cursor-start-x").trim() || "50%";
+          const startY =
+            rootStyle.getPropertyValue("--cursor-start-y").trim() || "35%";
+          const targetX =
+            (parseFloat(rootStyle.getPropertyValue("--safari-x")) || 67.8) -
+            0.12;
+          const targetY =
+            (parseFloat(rootStyle.getPropertyValue("--safari-y")) || 95.1) -
+            0.2;
+          later(() => {
+            cursor.animate(
+              [
+                { left: startX, top: startY, opacity: 0 },
+                { left: startX, top: startY, opacity: 1, offset: 0.08 },
+                { left: "53.8%", top: "49%", offset: 0.32 },
+                { left: "61.5%", top: "66%", offset: 0.62 },
+                { left: "65.4%", top: "83%", offset: 0.84 },
+                {
+                  left: targetX + "%",
+                  top: targetY + "%",
+                  opacity: 1,
+                  offset: 0.93,
+                },
+                { left: targetX + "%", top: targetY + "%", opacity: 1 },
+              ],
+              {
+                duration:
+                  parseFloat(rootStyle.getPropertyValue("--t-cursor")) || 1800,
+                easing: "cubic-bezier(.45,0,.25,1)",
+                fill: "forwards",
+              },
+            );
+          }, 800);
+          later(() => {
+            safari.classList.add("is-hovered");
+            document
+              .querySelector('[data-app="phone"]')
+              .classList.add("is-neighbor");
+            document
+              .querySelector('[data-app="settings"]')
+              .classList.add("is-neighbor");
+          }, 2100);
+          later(
+            () => triggerSafari(false),
+            parseFloat(rootStyle.getPropertyValue("--t-click")) || 2600,
+          );
+        }
+        function resetIntro() {
+          clearTimeline();
+          started = false;
+          finished = false;
+          clickTriggered = false;
+          scene.hidden = false;
+          scene.classList.remove(
+            "is-started",
+            "is-window-open",
+            "is-fullscreen",
+            "is-leaving",
+          );
+          safari.classList.remove("is-hovered", "is-bouncing");
+          document
+            .querySelector('[data-app="phone"]')
+            .classList.remove("is-neighbor");
+          document
+            .querySelector('[data-app="settings"]')
+            .classList.remove("is-neighbor");
+          cursor.classList.remove("is-clicking");
+          cursor.style.opacity = "";
+          cursor.style.left = "";
+          cursor.style.top = "";
+          address.textContent = "";
+          address.parentElement.classList.remove("is-complete");
+          document.body.classList.remove("portfolio-visible");
+          document.body.classList.add("intro-active");
+          if (desktopImage.complete && desktopImage.naturalWidth) startIntro();
+          else if (imageLoadFailed) showPortfolio();
+        }
+        desktopImage.addEventListener("error", () => {
+          imageLoadFailed = true;
+          showPortfolio();
+        });
+        desktopImage.addEventListener("load", startIntro);
+        safari.addEventListener("click", () => {
+          if (!started) startIntro();
+          triggerSafari(true);
+        });
+        skipButton.addEventListener("click", showPortfolio);
+        replayButton.addEventListener("click", () => {
+          try {
+            sessionStorage.removeItem(storageKey);
+          } catch {}
+          resetIntro();
+        });
+        document.querySelector(".brand").addEventListener("click", () => {
+          try {
+            sessionStorage.removeItem(storageKey);
+          } catch {}
+          resetIntro();
+        });
+        soundButton.addEventListener("click", async () => {
+          soundEnabled = !soundEnabled;
+          soundButton.setAttribute("aria-pressed", String(soundEnabled));
+          soundButton.textContent = soundEnabled ? "소리 끄기" : "소리 켜기";
+          if (soundEnabled) {
+            const AudioContextClass =
+              window.AudioContext || window.webkitAudioContext;
+            if (AudioContextClass) {
+              audioContext ||= new AudioContextClass();
+              await audioContext.resume();
+            }
+          }
+        });
+        let previouslySeen = false;
+        try {
+          previouslySeen = sessionStorage.getItem(storageKey) === "1";
+        } catch {}
+        if (previouslySeen || reduceMotion.matches) {
+          document.body.classList.remove("intro-pending", "intro-active");
+          document.body.classList.add("portfolio-visible");
+          scene.hidden = true;
+        } else {
+          document.body.classList.add("intro-pending", "intro-active");
+          if (desktopImage.complete) {
+            if (desktopImage.naturalWidth) startIntro();
+            else desktopImage.dispatchEvent(new Event("error"));
+          }
+        }
       })();
     </script>
   </body>
