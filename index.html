@@ -1257,7 +1257,7 @@
       }
       .manage-grid {
         display: grid;
-        grid-template-columns: minmax(230px, 0.8fr) minmax(0, 1.2fr);
+        grid-template-columns: minmax(0, 1fr);
         gap: 15px;
       }
       .manage-actions {
@@ -2076,43 +2076,6 @@
         border-radius: inherit;
         background: linear-gradient(90deg, var(--pink), #ff8bc9);
       }
-      .url-form {
-        display: grid;
-        gap: 8px;
-      }
-      .url-form h3 {
-        margin: 8px 0 2px;
-        font-size: 13px;
-      }
-      .url-form label {
-        margin-top: 5px;
-        font-size: 10px;
-        font-weight: 800;
-        color: #625d62;
-      }
-      .url-form input,
-      .url-form textarea {
-        width: 100%;
-        padding: 10px 11px;
-        border: 1px solid var(--line);
-        border-radius: 11px;
-        background: #fff;
-        font: 11px/1.5 var(--sans);
-      }
-      .url-form textarea {
-        min-height: 64px;
-        resize: vertical;
-      }
-      .url-form .action-button {
-        justify-self: start;
-        margin-top: 4px;
-        font-size: 11px;
-      }
-      .source-forms {
-        display: grid;
-        gap: 16px;
-        margin-top: 20px;
-      }
       .manage-grid {
         align-items: start;
       }
@@ -2262,17 +2225,6 @@
         .manage-work button {
           grid-column: 2;
           justify-self: start;
-        }
-        .url-form input,
-        .url-form textarea {
-          font-size: 16px;
-        }
-        .url-form .action-button {
-          width: 100%;
-          min-height: 42px;
-        }
-        .source-forms {
-          gap: 18px;
         }
         .studio-page {
           min-width: 0;
@@ -3215,9 +3167,6 @@
         padding-bottom: 10px;
         border-bottom: 1px solid var(--line);
       }
-      .manage-upload-dropdown .url-form {
-        margin-top: 11px;
-      }
       .manage-edit-list {
         display: grid;
         gap: 6px;
@@ -3256,17 +3205,9 @@
       .manage-delete-card {
         margin: 0;
       }
-      .photo-settings-card {
-        grid-column: 1 / -1;
-        grid-row: 1;
-      }
-      .manage-upload-card {
-        grid-column: 1;
-        grid-row: 2;
-      }
       .manage-feature-column {
-        grid-column: 2;
-        grid-row: 2;
+        grid-column: 1;
+        grid-row: 1;
         display: grid;
         align-content: start;
         gap: 0;
@@ -3274,12 +3215,6 @@
       .manage-work {
         display: block;
         padding: 9px;
-      }
-      .photo-url-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
-        margin-top: 15px;
       }
       .studio-upload-list {
         display: grid;
@@ -3397,8 +3332,6 @@
         overflow-wrap: anywhere;
       }
       @media (max-width: 700px) {
-        .photo-settings-card,
-        .manage-upload-card,
         .manage-feature-column {
           grid-column: 1;
           grid-row: auto;
@@ -3412,9 +3345,6 @@
         }
         .studio-upload-thumb {
           aspect-ratio: 1.65;
-        }
-        .photo-url-grid {
-          grid-template-columns: minmax(0, 1fr);
         }
       }
     </style>
@@ -3448,8 +3378,13 @@
           grid-template-columns: 38px minmax(0, 1fr);
           padding-inline: 10px;
         }
-        .traffic { gap: 4px; }
-        .traffic i { width: 7px; height: 7px; }
+        .traffic {
+          gap: 4px;
+        }
+        .traffic i {
+          width: 7px;
+          height: 7px;
+        }
         .window-title {
           min-width: 0;
           overflow: hidden;
@@ -3458,7 +3393,9 @@
           white-space: nowrap;
           font-size: 9px;
         }
-        .top-right { display: none; }
+        .top-right {
+          display: none;
+        }
         .main-area {
           grid-row: 1;
           grid-column: 1;
@@ -3495,7 +3432,9 @@
           border-radius: 11px;
           font-size: 17px;
         }
-        .sidebar-spacer { display: none; }
+        .sidebar-spacer {
+          display: none;
+        }
         .side-nav {
           display: flex;
           flex: 1 1 auto;
@@ -3513,7 +3452,9 @@
           border-radius: 11px;
           font-size: clamp(7px, 2vw, 9px);
         }
-        .nav-btn .nav-icon { font-size: 15px; }
+        .nav-btn .nav-icon {
+          font-size: 15px;
+        }
         .avatar {
           flex: 0 0 32px;
           width: 32px;
@@ -3526,7 +3467,9 @@
           gap: 6px 12px;
           margin-bottom: 14px;
         }
-        .page-heading > :last-child { margin-left: auto; }
+        .page-heading > :last-child {
+          margin-left: auto;
+        }
         .page-heading h1 {
           font-size: clamp(27px, 8vw, 38px);
           overflow-wrap: anywhere;
@@ -3541,7 +3484,9 @@
           grid-template-columns: minmax(0, 1fr);
           gap: 11px;
         }
-        #home-page .frame-card { padding: 10px; }
+        #home-page .frame-card {
+          padding: 10px;
+        }
         #home-page .frame-stage {
           min-height: 0;
           aspect-ratio: 1.22;
@@ -3614,28 +3559,29 @@
           min-width: 0;
           min-height: 240px;
         }
-        .studio-project-copy { padding: 20px; }
+        .studio-project-copy {
+          padding: 20px;
+        }
         .studio-meta-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 12px;
         }
-        .manage-grid { grid-template-columns: minmax(0, 1fr); }
-        .manage-feature-column,
-        .photo-settings-card,
-        .manage-upload-card {
+        .manage-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .manage-feature-column {
           grid-column: 1;
           min-width: 0;
         }
-        .manage-work { min-width: 0; }
+        .manage-work {
+          min-width: 0;
+        }
         .manage-work-tools textarea,
-        .url-form input,
-        .url-form textarea,
         input,
         textarea,
         select {
           font-size: 16px;
         }
-        .url-form .action-button,
         .manage-grid .action-button {
           min-height: 42px;
         }
@@ -3658,7 +3604,9 @@
         }
       }
       @media (max-width: 390px) {
-        body.portfolio-visible { padding: 5px; }
+        body.portfolio-visible {
+          padding: 5px;
+        }
         .app-window {
           min-height: calc(100dvh - 10px);
           border-radius: 15px;
@@ -3673,24 +3621,44 @@
           height: 31px;
           min-width: 31px;
         }
-        .nav-btn { font-size: 7px; }
+        .nav-btn {
+          font-size: 7px;
+        }
         .avatar {
           flex-basis: 30px;
           width: 30px;
           height: 30px;
         }
-        .main-area { padding-inline: 9px; }
-        #home-page .frame-card { padding: 8px; }
-        #home-page .frame-stage { aspect-ratio: 1.16; }
-        #home-page .frame-title { width: 64%; }
+        .main-area {
+          padding-inline: 9px;
+        }
+        #home-page .frame-card {
+          padding: 8px;
+        }
+        #home-page .frame-stage {
+          aspect-ratio: 1.16;
+        }
+        #home-page .frame-title {
+          width: 64%;
+        }
         .manage-card,
-        .card { padding: 13px; }
+        .card {
+          padding: 13px;
+        }
       }
       @media (max-width: 700px) and (orientation: landscape) {
-        .app-window { min-height: calc(100dvh - 16px); }
-        .app-body { min-height: 0; }
-        .sidebar { min-height: 56px; }
-        .main-area { padding-block: 10px; }
+        .app-window {
+          min-height: calc(100dvh - 16px);
+        }
+        .app-body {
+          min-height: 0;
+        }
+        .sidebar {
+          min-height: 56px;
+        }
+        .main-area {
+          padding-block: 10px;
+        }
       }
     </style>
   </head>
@@ -4290,222 +4258,13 @@
               <div>
                 <span class="kicker">R WIDGET · OWNER TOOLS</span>
                 <h1>위젯 관리</h1>
-                <p>스튜디오·갤러리 작업물과 홈 대표 작업을 관리하세요.</p>
+                <p>
+                  프로필 사진과 작업 링크는 HTML에서 직접 수정하세요. 여기서는
+                  홈 대표 작업 선택과 등록 작업 삭제를 관리합니다.
+                </p>
               </div>
             </div>
             <div class="manage-grid">
-              <article class="card photo-settings-card">
-                <div class="panel-heading">
-                  <h2>프로필 사진 배너</h2>
-                  <span>HOME · PROFILE</span>
-                </div>
-                <div class="photo-url-grid">
-                  <div class="url-form">
-                    <label for="home-photo-url">홈 프로필 사진 URL</label>
-                    <input
-                      id="home-photo-url"
-                      type="url"
-                      placeholder="이미지 URL"
-                    />
-                    <button
-                      class="action-button"
-                      id="save-home-photo"
-                      type="button"
-                    >
-                      홈 사진 적용
-                    </button>
-                    <p class="manage-note" id="home-photo-note">
-                      홈 프로필 배너에 표시할 사진 링크입니다.
-                    </p>
-                  </div>
-                  <div class="url-form">
-                    <label for="profile-page-photo-url"
-                      >프로필 페이지 사진 URL</label
-                    >
-                    <input
-                      id="profile-page-photo-url"
-                      type="url"
-                      placeholder="이미지 URL"
-                    />
-                    <button
-                      class="action-button"
-                      id="save-profile-page-photo"
-                      type="button"
-                    >
-                      프로필 사진 적용
-                    </button>
-                    <p class="manage-note" id="profile-page-photo-note">
-                      프로필 페이지 배너에 표시할 사진 링크입니다.
-                    </p>
-                  </div>
-                </div>
-              </article>
-              <article class="card manage-upload-card">
-                <div class="source-forms">
-                  <details class="manage-upload-dropdown">
-                    <summary>스튜디오 영상 추가</summary>
-                    <form class="url-form" id="studio-work-form">
-                      <label for="studio-work-title">영상 제목</label
-                      ><input
-                        id="studio-work-title"
-                        required
-                        placeholder="작업 제목"
-                      /><label for="studio-work-url">영상 URL</label
-                      ><input
-                        id="studio-work-url"
-                        type="url"
-                        required
-                        placeholder="Google Drive 공유 링크 또는 직접 MP4 링크"
-                      /><label for="studio-work-description">영상 코멘트</label
-                      ><textarea
-                        id="studio-work-description"
-                        required
-                        placeholder="영상 소개"
-                      ></textarea
-                      ><label for="studio-work-editing-notes">편집 노트</label
-                      ><textarea
-                        id="studio-work-editing-notes"
-                        required
-                        placeholder="편집 방식과 영상 흐름"
-                      ></textarea
-                      ><label for="studio-work-tags">해시태그</label
-                      ><input
-                        id="studio-work-tags"
-                        placeholder="#영상제작, #브랜딩, #스토리텔링"
-                      /><label for="studio-work-tools">사용 도구</label
-                      ><input
-                        id="studio-work-tools"
-                        required
-                        placeholder="예: 프리미어 프로"
-                      /><label for="studio-work-year">제작 연도</label
-                      ><input
-                        id="studio-work-year"
-                        inputmode="numeric"
-                        required
-                        placeholder="2026"
-                      /><label for="studio-work-duration"
-                        >재생 시간 (예: 01:23)</label
-                      ><input
-                        id="studio-work-duration"
-                        placeholder="03:12"
-                      /><button class="action-button" type="submit">
-                        스튜디오 영상 등록
-                      </button>
-                    </form>
-                  </details>
-                  <details class="manage-upload-dropdown">
-                    <summary>갤러리 이미지 추가</summary>
-                    <form class="url-form" id="gallery-work-form">
-                      <label for="gallery-work-title">이미지 제목</label
-                      ><input
-                        id="gallery-work-title"
-                        required
-                        placeholder="작업 제목"
-                      /><label for="gallery-work-url">이미지 URL</label
-                      ><input
-                        id="gallery-work-url"
-                        type="url"
-                        required
-                        placeholder="Google Drive 공유 링크 또는 이미지 URL"
-                      /><label for="gallery-work-description"
-                        >이미지 코멘트</label
-                      ><textarea
-                        id="gallery-work-description"
-                        placeholder="짧은 소개와 코멘트"
-                      ></textarea
-                      ><label for="gallery-work-tags">해시태그</label
-                      ><input
-                        id="gallery-work-tags"
-                        placeholder="#사진, #디자인, #기록"
-                      /><button class="action-button" type="submit">
-                        갤러리 이미지 등록
-                      </button>
-                    </form>
-                  </details>
-                </div>
-                <p class="manage-note" id="manage-note">
-                  등록한 작업물은 홈 대표 작업 목록에서 선택할 수 있습니다.
-                </p>
-                <details class="manage-video-description">
-                  <summary>업로드 영상 정보 수정</summary>
-                  <div class="manage-video-description-fields">
-                    <label for="manage-video-editor-select">수정할 영상</label>
-                    <select id="manage-video-editor-select">
-                      <option value="">영상 제목 선택</option>
-                    </select>
-                    <label for="manage-video-editor-title">영상 제목</label>
-                    <input
-                      id="manage-video-editor-title"
-                      type="text"
-                      placeholder="영상 제목"
-                      disabled
-                    />
-                    <label for="manage-video-editor-url">영상 URL</label>
-                    <input
-                      id="manage-video-editor-url"
-                      type="url"
-                      placeholder="영상 URL"
-                      disabled
-                    />
-                    <label for="manage-video-editor-comment">영상 코멘트</label>
-                    <textarea
-                      id="manage-video-editor-comment"
-                      placeholder="영상 코멘트"
-                      disabled
-                    ></textarea>
-                    <label for="manage-video-editor-notes">편집 노트</label>
-                    <textarea
-                      id="manage-video-editor-notes"
-                      placeholder="편집 노트"
-                      disabled
-                    ></textarea>
-                    <label for="manage-video-editor-tags">해시태그</label>
-                    <input
-                      id="manage-video-editor-tags"
-                      type="text"
-                      placeholder="#브랜딩, #영상편집"
-                      disabled
-                    />
-                    <label for="manage-video-editor-tools">사용 도구</label>
-                    <input
-                      id="manage-video-editor-tools"
-                      type="text"
-                      placeholder="사용 도구"
-                      disabled
-                    />
-                    <label for="manage-video-editor-year">제작 연도</label>
-                    <input
-                      id="manage-video-editor-year"
-                      type="text"
-                      inputmode="numeric"
-                      placeholder="2026"
-                      disabled
-                    />
-                    <label for="manage-video-editor-duration">재생 시간</label>
-                    <input
-                      id="manage-video-editor-duration"
-                      type="text"
-                      placeholder="03:12"
-                      disabled
-                    />
-                    <button
-                      class="action-button"
-                      id="save-video-editor"
-                      type="button"
-                      disabled
-                    >
-                      영상 정보 저장
-                    </button>
-                    <p
-                      class="manage-note"
-                      id="video-editor-note"
-                      aria-live="polite"
-                    >
-                      등록한 영상의 정보를 선택해 수정하세요.
-                    </p>
-                  </div>
-                </details>
-              </article>
               <div class="manage-feature-column">
                 <article class="card manage-featured-card">
                   <div class="panel-heading">
@@ -4513,10 +4272,15 @@
                     <span id="manage-work-count">00 / 03 SELECTED</span>
                   </div>
                   <p class="manage-help">
-                    스튜디오와 갤러리에 등록한 작업 중 홈에 표시할 대표 작업을
-                    최대 3개 선택하세요. 업로드 순서대로 표시됩니다.
+                    위젯 관리에 등록했거나 MEDIA_CONFIG에 URL을 입력한 작업 중
+                    홈 대표 작업을 최대 3개 선택하세요.
                   </p>
                   <div class="manage-work-list" id="manage-work-list"></div>
+                  <p
+                    class="manage-note"
+                    id="manage-note"
+                    aria-live="polite"
+                  ></p>
                 </article>
                 <article class="card manage-delete-card">
                   <div class="panel-heading">
@@ -4524,8 +4288,9 @@
                     <span id="delete-work-count">00 ITEMS</span>
                   </div>
                   <p class="manage-help">
-                    삭제할 작업을 선택하세요. 등록된 브라우저 저장 목록에서 해당
-                    작업을 제거합니다.
+                    위젯 관리 작업은 브라우저 저장 목록에서 삭제됩니다. HTML로
+                    직접 등록한 작업은 이 브라우저에서 숨겨지며, 모든 기기에서
+                    지우려면 MEDIA_CONFIG에서도 제거하세요.
                   </p>
                   <div class="manage-delete-list" id="manage-delete-list"></div>
                   <button
@@ -4565,16 +4330,74 @@
       >
     </dialog>
     <script>
-      // 미디어 링크 설정: 각 url에 Google Drive의 공유 링크를 넣으세요.
-      // 공유 권한은 '링크가 있는 모든 사용자'로 설정해야 합니다. 직접 MP4 URL도 사용할 수 있습니다.
-      // Drive 공유 페이지는 미리보기 iframe, 직접 미디어 주소는 브라우저 video/img 요소로 표시합니다.
-      // durationSeconds는 Drive iframe 영상의 자동 다음 작업 전환 시간(초)입니다.
+      /*
+       * 작품을 직접 추가할 때는 아래 MEDIA_CONFIG 배열 안에 항목을 넣으세요.
+       * 항목과 항목 사이에는 쉼표(,)를 넣습니다. 마지막 항목 뒤에는 쉼표가 없어도 됩니다.
+       *
+       * 입력 항목:
+       * title          작업 제목
+       * kind           영상이면 "VIDEO", 이미지면 "IMAGE"
+       * description    작업 소개글
+       * comment        홈 대표 작업 아래에 표시할 코멘트
+       * editingNotes   편집 노트 (영상 작업)
+       * tags           해시태그 배열. 예: ["#브이로그", "#여행"]
+       * tools          사용한 프로그램/도구
+       * year           제작 연도. 문자열로 입력: "2026"
+       * url            공유 링크 또는 직접 파일 링크 (https://로 시작)
+       * duration       화면에 표시할 재생시간. 예: "03:12"
+       * durationSeconds 영상 재생시간을 초 단위 숫자로 입력. 03:12라면 192
+       * art            링크 미리보기가 없을 때의 배경: "art-one", "art-two", "art-three"
+       *
+       * 영상 항목 복사 템플릿:
+       * {
+       *   title: "영상 제목",
+       *   kind: "VIDEO",
+       *   description: "영상 소개글",
+       *   comment: "홈 대표 작업 코멘트",
+       *   editingNotes: "편집 노트",
+       *   tags: ["#해시태그1", "#해시태그2"],
+       *   tools: "프리미어 프로",
+       *   year: "2026",
+       *   url: "https://drive.google.com/file/d/공유ID/view?usp=sharing",
+       *   duration: "03:12",
+       *   durationSeconds: 192,
+       *   art: "art-one",
+       * },
+       *
+       * 이미지 항목 복사 템플릿:
+       * {
+       *   title: "이미지 제목",
+       *   kind: "IMAGE",
+       *   description: "이미지 소개글",
+       *   tags: ["#해시태그"],
+       *   url: "https://drive.google.com/file/d/공유ID/view?usp=sharing",
+       *   duration: "01",
+       *   durationSeconds: 6,
+       *   art: "art-two",
+       * },
+       *
+       * Google Drive 링크를 쓸 때는 공유 권한을 '링크가 있는 모든 사용자'로 설정하세요.
+       * URL을 이곳에 직접 적은 뒤 index.html을 저장하고 GitHub에 올리면 모든 기기에 반영됩니다.
+       */
+      /*
+       * 프로필 사진을 코드에서 직접 설정하려면 아래 따옴표 안에 이미지 URL을 입력하세요.
+       * 홈 사진과 프로필 페이지 사진은 각각 따로 지정할 수 있습니다.
+       * Google Drive 링크는 '링크가 있는 모든 사용자'로 공유해야 합니다.
+       */
+      const PROFILE_CONFIG = {
+        homePhotoURL:
+          "https://drive.google.com/file/d/1yZaqnhlbkS-QTCFwe9zJ0ThyM6MlxAAj/view?usp=drive_link", // 홈 화면 프로필 배너 사진 URL
+        profilePagePhotoURL:
+          "https://drive.google.com/file/d/1rW5yLxyCBnc-7oJxFhpdrDZgoIFzaHg8/view?usp=drive_link", // 프로필 페이지 사진 URL
+      };
+
       const MEDIA_CONFIG = [
         {
-          title: "강민호 우승 영상",
+          title:
+            "강민호 | 23년의 기다림, 마침내 우승의 순간 – 스포츠 헌정 영상",
           kind: "VIDEO",
           description:
-            "강민호의 우승을 기념하는 스포츠 하이라이트. 경기의 흐름을 따라 긴장감을 쌓고 승리의 순간을 중심에 둡니다.",
+            "우승의 순간을 중심으로 경기의 흐름과 승리의 감정을 압축한 스포츠 하이라이트입니다.",
           comment:
             "우승의 순간을 중심으로 경기의 흐름과 승리의 감정을 압축한 스포츠 하이라이트입니다.",
           style: "긴장감을 단계적으로 쌓고 클라이맥스를 강조하는 스포츠 편집",
@@ -4583,32 +4406,37 @@
           tags: ["#컷편집"],
           tools: "프리미어 프로",
           year: "2026",
-          summary:
-            "강민호의 우승 순간을 중심으로 경기의 흐름과 승리의 감정을 전하는 하이라이트",
+
           url: "https://drive.google.com/file/d/1p-NeMWZ-RmQcppQuptBhNNyNYxFknoMf/view?usp=sharing",
           duration: "03:12",
           durationSeconds: 192,
-          art: "art-one",
         },
         {
           title: "Growing slowly",
-          kind: "IMAGE",
-          description:
-            "조용히 자라나는 식물의 형태와 색을 가까이에서 기록한 이미지 에세이입니다.",
-          url: "여기에 Growing slowly 이미지의 Google Drive 공유 링크 입력",
-          duration: "01",
-          durationSeconds: 6,
-          art: "art-two",
-        },
-        {
-          title: "Blue hour",
           kind: "VIDEO",
           description:
-            "해가 진 뒤 도시의 푸른 빛과 그 안을 걷는 사람들의 리듬을 담았습니다.",
-          url: "여기에 Blue hour 영상의 Google Drive 공유 링크 입력",
-          duration: "00:28",
-          durationSeconds: 28,
-          art: "art-three",
+            "다양한 의상과 공간에서 촬영된 멤버별 퍼포먼스 및 단체 안무 장면을 교차 편집해 아일릿의 개성 있는 콘셉트와 역동적인 분위기를 담았습니다.",
+          comment:
+            "다양한 의상과 공간에서 촬영된 멤버별 퍼포먼스 및 단체 안무 장면을 교차 편집해 아일릿의 개성 있는 콘셉트와 역동적인 분위기를 담았습니다.",
+          style: "긴장감을 단계적으로 쌓고 클라이맥스를 강조하는 스포츠 편집",
+          editingNotes:
+            "멤버별 퍼포먼스 컷 편집 · 단체 안무 교차 편집 · 장면 전환 · 리듬 싱크",
+          tags: ["#아일릿 #ILLIT #체포하겠어 #KPOP쇼츠 #영상편집 #컷편집"],
+          tools: "프리미어 프로",
+          year: "2026",
+
+          url: "https://drive.google.com/file/d/1W-lG_fmrnLpbbPsEMO6MfAKc8Ae6PvDb/view?usp=drive_link",
+          duration: "00:40",
+          durationSeconds: 40,
+        },
+        {
+          title: "아일릿 체포하겠어 포스터",
+          kind: "IMAGE",
+          description: "이미지 소개글",
+          tags: ["#포스터 #아일릿 #체포하겠어"],
+          url: "https://drive.google.com/file/d/1r_HpSkuzgt0EHZDjZjMRISQsfl7kI8Nm/view?usp=drive_link",
+          duration: "01",
+          durationSeconds: 6,
         },
       ];
       (() => {
@@ -4658,7 +4486,7 @@
           player = document.querySelector("#video-player"),
           videoEmbed = document.querySelector("#video-embed"),
           dialogImage = document.querySelector("#dialog-image");
-        let studioWork = MEDIA_CONFIG.find((work) => work.kind === "VIDEO");
+        let studioWork = null;
         function isConfiguredURL(value) {
           return Boolean(
             value &&
@@ -4805,7 +4633,8 @@
           PROFILE_PAGE_PHOTO_KEY = "rPortfolioProfilePagePhoto",
           HOME_WORK_KEY = "rPortfolioHomeWork",
           HOME_FEATURED_KEY = "rPortfolioHomeFeaturedWorks",
-          COMMENTS_KEY = "rPortfolioComments";
+          COMMENTS_KEY = "rPortfolioComments",
+          DELETED_WORKS_KEY = "rPortfolioDeletedWorks";
         function readJSON(key, fallback) {
           try {
             return JSON.parse(localStorage.getItem(key)) ?? fallback;
@@ -4822,26 +4651,27 @@
               )
             : [];
         }
-        const works = MEDIA_CONFIG.concat(readManagedWorks());
+        let works = MEDIA_CONFIG.concat(readManagedWorks());
         function workKey(work) {
           return work.id || [work.kind, work.title, work.url].join("|");
         }
+        const deletedWorkKeys = new Set(readJSON(DELETED_WORKS_KEY, []));
+        works = works.filter((work) => !deletedWorkKeys.has(workKey(work)));
+        studioWork =
+          works.find(
+            (work) => work.kind === "VIDEO" && isConfiguredURL(work.url),
+          ) ||
+          works.find((work) => work.kind === "VIDEO") ||
+          null;
         const savedFeaturedWorks = readJSON(HOME_FEATURED_KEY, null);
         let featuredWorkKeys = Array.isArray(savedFeaturedWorks)
           ? savedFeaturedWorks
-          : (works.filter((work) => work.managed).length
-              ? works.filter((work) => work.managed)
-              : works
-            )
+          : works
+              .filter((work) => isConfiguredURL(work.url))
               .slice(0, 3)
               .map(workKey);
         const selectableFeaturedKeys = new Set(
-          works
-            .filter((work) => work.managed)
-            .map(workKey)
-            .concat(
-              works.some((work) => work.managed) ? [] : works.map(workKey),
-            ),
+          works.filter((work) => isConfiguredURL(work.url)).map(workKey),
         );
         featuredWorkKeys = [...new Set(featuredWorkKeys)]
           .filter((key) => selectableFeaturedKeys.has(key))
@@ -4857,6 +4687,14 @@
             localStorage.setItem(
               HOME_FEATURED_KEY,
               JSON.stringify(featuredWorkKeys),
+            );
+          } catch {}
+        }
+        function persistDeletedWorks() {
+          try {
+            localStorage.setItem(
+              DELETED_WORKS_KEY,
+              JSON.stringify([...deletedWorkKeys]),
             );
           } catch {}
         }
@@ -5418,7 +5256,7 @@
             grid.append(empty);
           }
         }
-        function setProfilePhoto(scope, value, save = true) {
+        function setProfilePhoto(scope, value) {
           const photoURL = driveImageURL(value);
           if (!photoURL) return;
           const home = scope === "home",
@@ -5428,27 +5266,19 @@
             initial = document.querySelector(
               home ? "#profile-initial" : "#profile-mark-initial",
             ),
-            note = document.querySelector(
-              home ? "#home-photo-note" : "#profile-page-photo-note",
-            ),
-            input = document.querySelector(
-              home ? "#home-photo-url" : "#profile-page-photo-url",
-            ),
             homeBannerImage = home
               ? document.querySelector("#home-profile-banner-image")
               : null,
             homeBannerInitial = home
               ? document.querySelector("#home-profile-initial")
-              : null,
-            storageKey = home ? HOME_PHOTO_KEY : PROFILE_PAGE_PHOTO_KEY;
+              : null;
           image.onload = () => {
             image.hidden = false;
             initial.hidden = true;
           };
           image.onerror = () => {
-            note.textContent =
-              "이미지를 불러오지 못했습니다. 링크와 공유 권한을 확인하세요.";
             image.hidden = true;
+            if (initial) initial.hidden = false;
           };
           image.src = photoURL;
           if (homeBannerImage) {
@@ -5470,66 +5300,40 @@
               ")";
             intro.classList.add("has-photo");
           }
-          input.value = value;
-          if (save) {
-            try {
-              localStorage.setItem(storageKey, value);
-            } catch {}
-          }
         }
-        const savedHomePhoto = localStorage.getItem(HOME_PHOTO_KEY),
+        const configuredHomePhoto = isConfiguredURL(PROFILE_CONFIG.homePhotoURL)
+            ? PROFILE_CONFIG.homePhotoURL
+            : "",
+          configuredProfilePagePhoto = isConfiguredURL(
+            PROFILE_CONFIG.profilePagePhotoURL,
+          )
+            ? PROFILE_CONFIG.profilePagePhotoURL
+            : "",
+          savedHomePhoto = localStorage.getItem(HOME_PHOTO_KEY),
           savedProfilePagePhoto = localStorage.getItem(PROFILE_PAGE_PHOTO_KEY),
           legacyProfilePhoto = localStorage.getItem(PROFILE_PHOTO_KEY);
-        if (savedHomePhoto || legacyProfilePhoto)
-          setProfilePhoto("home", savedHomePhoto || legacyProfilePhoto, false);
-        if (savedProfilePagePhoto || legacyProfilePhoto)
+        if (configuredHomePhoto || savedHomePhoto || legacyProfilePhoto)
+          setProfilePhoto(
+            "home",
+            configuredHomePhoto || savedHomePhoto || legacyProfilePhoto,
+          );
+        if (
+          configuredProfilePagePhoto ||
+          savedProfilePagePhoto ||
+          legacyProfilePhoto
+        )
           setProfilePhoto(
             "profile",
-            savedProfilePagePhoto || legacyProfilePhoto,
-            false,
+            configuredProfilePagePhoto ||
+              savedProfilePagePhoto ||
+              legacyProfilePhoto,
           );
-        [
-          ["home", "#save-home-photo"],
-          ["profile", "#save-profile-page-photo"],
-        ].forEach(([scope, buttonSelector]) => {
-          document
-            .querySelector(buttonSelector)
-            .addEventListener("click", () => {
-              const home = scope === "home",
-                input = document.querySelector(
-                  home ? "#home-photo-url" : "#profile-page-photo-url",
-                ),
-                note = document.querySelector(
-                  home ? "#home-photo-note" : "#profile-page-photo-note",
-                ),
-                value = input.value.trim();
-              if (!value) {
-                note.textContent = "사진 URL을 입력해 주세요.";
-                return;
-              }
-              setProfilePhoto(scope, value, true);
-              note.textContent = "사진 링크를 적용했습니다.";
-            });
-        });
-        [
-          ["home", "#home-photo-url", "#home-photo-note"],
-          ["profile", "#profile-page-photo-url", "#profile-page-photo-note"],
-        ].forEach(([scope, inputSelector, noteSelector]) => {
-          document
-            .querySelector(inputSelector)
-            .addEventListener("change", (event) => {
-              const value = event.target.value.trim();
-              if (!value) return;
-              if (!isConfiguredURL(value)) return;
-              setProfilePhoto(scope, value, true);
-              document.querySelector(noteSelector).textContent =
-                "사진 링크를 자동 저장하고 적용했습니다.";
-            });
-        });
         function renderManager() {
           const list = document.querySelector("#manage-work-list");
           list.replaceChildren();
-          const uploadedWorks = works.filter((work) => work.managed),
+          const uploadedWorks = works.filter((work) =>
+              isConfiguredURL(work.url),
+            ),
             selectedCount = uploadedWorks.filter((work) =>
               featuredWorkKeys.includes(workKey(work)),
             ).length,
@@ -5584,7 +5388,7 @@
             const empty = document.createElement("p");
             empty.className = "gallery-empty";
             empty.textContent =
-              "스튜디오 영상이나 갤러리 이미지를 추가하면 여기에서 홈 대표 작업으로 선택할 수 있습니다.";
+              "MEDIA_CONFIG에 URL을 입력하거나 위젯 관리에서 작업을 등록하면 여기에서 선택할 수 있습니다.";
             options.append(empty);
           }
           dropdown.append(summary, options);
@@ -5592,11 +5396,10 @@
           document.querySelector("#manage-work-count").textContent =
             String(selectedCount).padStart(2, "0") + " / 03 SELECTED";
           renderDeleteManager();
-          renderVideoEditorManager();
         }
         function renderDeleteManager() {
           const list = document.querySelector("#manage-delete-list"),
-            uploadedWorks = works.filter((work) => work.managed),
+            uploadedWorks = works.filter((work) => isConfiguredURL(work.url)),
             dropdown = document.createElement("details"),
             summary = document.createElement("summary"),
             options = document.createElement("div");
@@ -5615,7 +5418,8 @@
             title.textContent =
               work.title +
               " · " +
-              (work.kind === "VIDEO" ? "스튜디오 영상" : "갤러리 이미지");
+              (work.kind === "VIDEO" ? "스튜디오 영상" : "갤러리 이미지") +
+              (work.managed ? "" : " · HTML");
             label.append(checkbox, title);
             checkbox.addEventListener("change", () => {
               const count = options.querySelectorAll(
@@ -5628,7 +5432,8 @@
           if (!uploadedWorks.length) {
             const empty = document.createElement("p");
             empty.className = "manage-note";
-            empty.textContent = "삭제할 업로드 작업이 없습니다.";
+            empty.textContent =
+              "URL이 설정된 작업은 MEDIA_CONFIG 또는 위젯 관리에서 등록하면 여기에 표시됩니다.";
             options.append(empty);
           }
           dropdown.append(summary, options);
@@ -5636,260 +5441,6 @@
           document.querySelector("#delete-work-count").textContent =
             String(uploadedWorks.length).padStart(2, "0") + " ITEMS";
         }
-        function renderVideoEditorManager() {
-          const select = document.querySelector("#manage-video-editor-select"),
-            fields = {
-              title: document.querySelector("#manage-video-editor-title"),
-              url: document.querySelector("#manage-video-editor-url"),
-              comment: document.querySelector("#manage-video-editor-comment"),
-              editingNotes: document.querySelector(
-                "#manage-video-editor-notes",
-              ),
-              tags: document.querySelector("#manage-video-editor-tags"),
-              tools: document.querySelector("#manage-video-editor-tools"),
-              year: document.querySelector("#manage-video-editor-year"),
-              duration: document.querySelector("#manage-video-editor-duration"),
-            },
-            save = document.querySelector("#save-video-editor"),
-            note = document.querySelector("#video-editor-note"),
-            previousKey = select.value,
-            videos = works.filter(
-              (work) => work.managed && work.kind === "VIDEO",
-            );
-          select.replaceChildren();
-          const placeholder = document.createElement("option");
-          placeholder.value = "";
-          placeholder.textContent = "영상 제목 선택";
-          select.append(placeholder);
-          videos.forEach((work) => {
-            const option = document.createElement("option");
-            option.value = workKey(work);
-            option.textContent = work.title;
-            select.append(option);
-          });
-          if (videos.some((work) => workKey(work) === previousKey))
-            select.value = previousKey;
-          const selectedWork = videos.find(
-            (work) => workKey(work) === select.value,
-          );
-          fields.title.value = selectedWork?.title || "";
-          fields.url.value = selectedWork?.url || "";
-          fields.comment.value = selectedWork?.description || "";
-          fields.editingNotes.value = selectedWork?.editingNotes || "";
-          fields.tags.value = (selectedWork?.tags || []).join(", ");
-          fields.tools.value = selectedWork?.tools || "";
-          fields.year.value = selectedWork?.year || "";
-          fields.duration.value = selectedWork?.duration || "";
-          Object.values(fields).forEach((field) => {
-            field.disabled = !selectedWork;
-          });
-          save.disabled = !selectedWork;
-          note.textContent = videos.length
-            ? "영상 제목을 선택해 정보를 수정하세요."
-            : "수정할 업로드 영상이 없습니다.";
-        }
-        document
-          .querySelector("#manage-video-editor-select")
-          .addEventListener("change", renderVideoEditorManager);
-        document
-          .querySelector("#save-video-editor")
-          .addEventListener("click", () => {
-            const select = document.querySelector(
-                "#manage-video-editor-select",
-              ),
-              key = select.value,
-              work = works.find(
-                (item) =>
-                  item.managed &&
-                  item.kind === "VIDEO" &&
-                  workKey(item) === key,
-              );
-            if (!work) return;
-            const nextTitle = document
-                .querySelector("#manage-video-editor-title")
-                .value.trim(),
-              nextURL = document
-                .querySelector("#manage-video-editor-url")
-                .value.trim();
-            if (!nextTitle || !isConfiguredURL(nextURL)) {
-              document.querySelector("#video-editor-note").textContent =
-                "영상 제목과 유효한 영상 URL을 입력해 주세요.";
-              return;
-            }
-            const previousKey = workKey(work),
-              previousTitle = work.title,
-              previousComment = work.comment,
-              selectedTagText = document
-                .querySelector("#tag-cloud .tag.selected")
-                ?.textContent.trim();
-            work.title = nextTitle;
-            work.url = nextURL;
-            work.description = document
-              .querySelector("#manage-video-editor-comment")
-              .value.trim();
-            work.comment = work.description;
-            work.editingNotes = document
-              .querySelector("#manage-video-editor-notes")
-              .value.trim();
-            work.tags = (
-              document
-                .querySelector("#manage-video-editor-tags")
-                .value.match(/#[^\s,，]+|[^\s,，]+/g) || []
-            )
-              .map((tag) => "#" + tag.replace(/^#/, "").trim())
-              .filter((tag) => tag.length > 1);
-            work.tools = document
-              .querySelector("#manage-video-editor-tools")
-              .value.trim();
-            work.year = document
-              .querySelector("#manage-video-editor-year")
-              .value.trim();
-            work.duration = document
-              .querySelector("#manage-video-editor-duration")
-              .value.trim();
-            work.durationSeconds = durationSeconds(work.duration);
-            const nextKey = workKey(work);
-            featuredWorkKeys = featuredWorkKeys.map((itemKey) =>
-              itemKey === previousKey ? nextKey : itemKey,
-            );
-            const comments = readJSON(COMMENTS_KEY, {});
-            if (
-              previousTitle !== work.title &&
-              comments[previousTitle] === previousComment
-            )
-              delete comments[previousTitle];
-            comments[work.title] = work.comment;
-            try {
-              localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
-            } catch {}
-            persistFeaturedWorks();
-            persistHomeWork();
-            persistManagedWorks();
-            select.value = nextKey;
-            renderTagCloud();
-            renderFocusButtons();
-            renderManager();
-            renderGallery();
-            renderStudioUploads();
-            if (studioWork === work) renderStudioInfo();
-            const feature = document.querySelector(".studio-feature");
-            feature.classList.remove("has-thumbnail");
-            feature.style.backgroundImage = "";
-            setStudioThumbnail();
-            if (works[currentWork] === work) showWork(currentWork, false);
-            if (selectedTagText) renderTagResults(selectedTagText);
-            document.querySelector("#video-editor-note").textContent =
-              "영상 정보를 저장했습니다.";
-          });
-        function registerWork(event, kind) {
-          event.preventDefault();
-          const prefix = kind === "VIDEO" ? "studio-work" : "gallery-work",
-            title = document
-              .querySelector("#" + prefix + "-title")
-              .value.trim(),
-            url = document.querySelector("#" + prefix + "-url").value.trim(),
-            description = document
-              .querySelector("#" + prefix + "-description")
-              .value.trim(),
-            editingNotes =
-              kind === "VIDEO"
-                ? document
-                    .querySelector("#studio-work-editing-notes")
-                    .value.trim()
-                : "",
-            tags = (
-              document
-                .querySelector("#" + prefix + "-tags")
-                .value.match(/#[^\s,，]+|[^\s,，]+/g) || []
-            )
-              .map((tag) => "#" + tag.replace(/^#/, "").trim())
-              .filter((tag) => tag.length > 1),
-            tools =
-              kind === "VIDEO"
-                ? document.querySelector("#studio-work-tools").value.trim()
-                : "",
-            year =
-              kind === "VIDEO"
-                ? document.querySelector("#studio-work-year").value.trim()
-                : "";
-          if (!title || !isConfiguredURL(url)) {
-            document.querySelector("#manage-note").textContent =
-              "제목과 유효한 공유 링크를 입력해 주세요.";
-            return;
-          }
-          const duration =
-              kind === "VIDEO"
-                ? document
-                    .querySelector("#studio-work-duration")
-                    .value.trim() || "00:30"
-                : "01",
-            work = {
-              id: "managed-" + Date.now() + "-" + works.length,
-              title,
-              kind,
-              url,
-              description,
-              comment: description,
-              editingNotes: editingNotes || "—",
-              tags,
-              tools: tools || "—",
-              year: year || String(new Date().getFullYear()),
-              duration,
-              durationSeconds: kind === "VIDEO" ? durationSeconds(duration) : 6,
-              art: kind === "VIDEO" ? "art-one" : "art-two",
-              managed: true,
-            };
-          const hadUploadedWorks = works.some((item) => item.managed);
-          if (!hadUploadedWorks) featuredWorkKeys = [];
-          works.push(work);
-          const addedToHome = featuredWorkKeys.length < 3;
-          if (addedToHome) {
-            featuredWorkKeys.push(workKey(work));
-            currentWork = works.length - 1;
-          } else if (!featuredIndices().includes(currentWork)) {
-            currentWork = featuredIndices()[0] ?? 0;
-          }
-          persistFeaturedWorks();
-          persistHomeWork();
-          persistManagedWorks();
-          renderTagCloud();
-          renderFocusButtons();
-          renderManager();
-          renderGallery();
-          renderStudioUploads();
-          event.target.reset();
-          document.querySelector("#manage-note").textContent =
-            (kind === "VIDEO" ? "스튜디오 영상" : "갤러리 이미지") +
-            "을 등록하고 순서대로 저장했습니다." +
-            (addedToHome
-              ? " 홈 대표 작업에 추가했습니다."
-              : " 홈 대표 작업은 이미 3개가 선택되어 있습니다.");
-          if (kind === "VIDEO") {
-            studioWork = work;
-            const titleNode = document.querySelector("#studio-project-title"),
-              summaryNode = document.querySelector("#studio-project-summary");
-            titleNode.textContent = work.title;
-            summaryNode.textContent =
-              work.description || "등록한 스튜디오 영상입니다.";
-            document.querySelector("#studio-editing-notes").textContent =
-              work.editingNotes;
-            document.querySelector("#studio-editing-tags").textContent = (
-              work.tags || []
-            ).join("  ");
-            document.querySelector("#studio-tools").textContent = work.tools;
-            document.querySelector("#studio-year").textContent = work.year;
-            const feature = document.querySelector(".studio-feature");
-            feature.classList.remove("has-thumbnail");
-            feature.style.backgroundImage = "";
-            setStudioThumbnail();
-          }
-        }
-        document
-          .querySelector("#studio-work-form")
-          .addEventListener("submit", (event) => registerWork(event, "VIDEO"));
-        document
-          .querySelector("#gallery-work-form")
-          .addEventListener("submit", (event) => registerWork(event, "IMAGE"));
         document
           .querySelector("#delete-selected-works")
           .addEventListener("click", () => {
@@ -5903,32 +5454,36 @@
                 "삭제할 작업을 먼저 선택해 주세요.";
               return;
             }
-            const removedWorks = works.filter(
-                (work) => work.managed && selectedKeys.has(workKey(work)),
+            const removedWorks = works.filter((work) =>
+                selectedKeys.has(workKey(work)),
               ),
               removedSet = new Set(removedWorks),
               previousCurrentWork = works[currentWork],
               selectedTagText = document
                 .querySelector("#tag-cloud .tag.selected")
                 ?.textContent.trim();
+            removedWorks
+              .filter((work) => !work.managed)
+              .forEach((work) => deletedWorkKeys.add(workKey(work)));
             for (let index = works.length - 1; index >= 0; index -= 1) {
-              if (
-                works[index].managed &&
-                selectedKeys.has(workKey(works[index]))
-              )
+              if (selectedKeys.has(workKey(works[index])))
                 works.splice(index, 1);
             }
             featuredWorkKeys = featuredWorkKeys.filter(
               (key) => !selectedKeys.has(key),
             );
             if (!works.some((work) => work.managed) && !featuredWorkKeys.length)
-              featuredWorkKeys = works.slice(0, 3).map(workKey);
+              featuredWorkKeys = works
+                .filter((work) => isConfiguredURL(work.url))
+                .slice(0, 3)
+                .map(workKey);
             const comments = readJSON(COMMENTS_KEY, {});
             removedWorks.forEach((work) => delete comments[work.title]);
             try {
               localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
             } catch {}
             persistManagedWorks();
+            persistDeletedWorks();
             persistFeaturedWorks();
             if (videoDialog.open) videoDialog.close();
             if (studioWork && removedSet.has(studioWork))
@@ -5938,7 +5493,7 @@
                   .find(
                     (work) =>
                       work.kind === "VIDEO" && isConfiguredURL(work.url),
-                  ) || MEDIA_CONFIG.find((work) => work.kind === "VIDEO");
+                  ) || null;
             const retainedIndex = works.indexOf(previousCurrentWork);
             currentWork =
               retainedIndex >= 0 ? retainedIndex : (featuredIndices()[0] ?? 0);
@@ -5955,7 +5510,11 @@
             setStudioThumbnail();
             if (selectedTagText) renderTagResults(selectedTagText);
             document.querySelector("#delete-work-note").textContent =
-              removedWorks.length + "개 작업을 업로드 목록에서 삭제했습니다.";
+              removedWorks.length +
+              "개 작업을 목록에서 삭제했습니다." +
+              (removedWorks.some((work) => !work.managed)
+                ? " HTML에 직접 등록한 작업은 다른 기기에서도 제거하려면 MEDIA_CONFIG에서도 삭제해 주세요."
+                : "");
           });
         document
           .querySelector("#manage-button")
