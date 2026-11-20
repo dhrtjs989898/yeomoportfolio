@@ -4841,9 +4841,9 @@
         function renderStudioUploads() {
           const container = document.querySelector("#studio-upload-list"),
             studioPage = document.querySelector("#studio-page"),
-            uploads = works.filter(
-              (work) => work.managed && work.kind === "VIDEO",
-            );
+            // MEDIA_CONFIG에 직접 적은 영상도 관리 화면에서 빠지지 않도록
+            // 위젯에서 추가한 영상과 함께 스튜디오 작업 목록에 표시합니다.
+            uploads = works.filter((work) => work.kind === "VIDEO");
           container.replaceChildren();
           studioPage.classList.toggle(
             "has-uploaded-videos",
