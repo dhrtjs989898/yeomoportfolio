@@ -3646,6 +3646,28 @@
           padding: 13px;
         }
       }
+      @media (max-width: 700px) {
+        /* 모바일 하단 내비게이션의 Y 홈 버튼 제거 */
+        .sidebar > .brand {
+          display: none;
+        }
+        /* About Me, Studio, Gallery, Tags의 제목과 안내 문구를 왼쪽 정렬 */
+        #profile-page .page-heading,
+        #studio-page .page-heading,
+        #gallery-page .page-heading,
+        #tags-page .page-heading {
+          justify-content: flex-start;
+          text-align: left;
+        }
+        #profile-page .page-heading > *,
+        #studio-page .page-heading > *,
+        #gallery-page .page-heading > *,
+        #tags-page .page-heading > * {
+          width: 100%;
+          margin-left: 0;
+          text-align: left;
+        }
+      }
       @media (max-width: 700px) and (orientation: landscape) {
         .app-window {
           min-height: calc(100dvh - 16px);
