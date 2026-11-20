@@ -4665,6 +4665,23 @@
             : [];
         }
         let works = MEDIA_CONFIG.concat(readManagedWorks());
+        // 태그를 한 문자열로 입력해도 공백·쉼표마다 나눠 개별 해시태그로 처리합니다.
+        works.forEach((work) => {
+          const rawTags = Array.isArray(work.tags)
+            ? work.tags
+            : work.tags
+              ? [work.tags]
+              : [];
+          work.tags = [
+            ...new Set(
+              rawTags
+                .flatMap((tag) => String(tag).split(/[\s,，]+/))
+                .map((tag) => tag.trim())
+                .filter(Boolean)
+                .map((tag) => (tag.startsWith("#") ? tag : "#" + tag)),
+            ),
+          ];
+        });
         function workKey(work) {
           return work.id || [work.kind, work.title, work.url].join("|");
         }
